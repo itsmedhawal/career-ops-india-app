@@ -1,4 +1,5 @@
-# Career-Ops-India App
+# Career-Ops-India App aka COI-App
+<img width="2816" height="1536" alt="Gemini_Generated_for-COI-App-by-Dhawal" src="https://github.com/user-attachments/assets/c6f79a14-36b9-40ee-805c-1b0e97749c85" />
 
 > AI-powered job evaluation for the Indian job market.
 > Score any job in 60 seconds. Zero setup. Privacy-first. PIN-encrypted.
