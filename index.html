@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Career-Ops-India App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0d1117; --surface:#161b22; --surface-2:#1c2128;
+  --border:#30363d; --border-light:#21262d;
+  --saffron:#FF9933; --saffron-dim:rgba(255,153,51,0.12);
+  --saffron-glow:0 0 28px rgba(255,153,51,0.10);
+  --green:#3fb950; --cyan:#58a6ff;
+  --text-1:#f0f6fc; --text-2:#8b949e; --text-3:#484f58;
+  --red:#f85149; --amber:#e3b341;
+  --r-sm:8px; --r-md:12px; --r-lg:16px; --r-pill:24px;
+  --shadow:0 4px 16px rgba(0,0,0,0.4);
+  --fh:'Space Grotesk',sans-serif; --fb:'DM Sans',sans-serif; --fm:'JetBrains Mono',monospace;
+  --nav-h:56px; --bot-h:64px;
+  --ga:#238636; --gb:#1f6feb; --gc:#9e6a03; --gd:#da6820; --gf:#b62324;
+  --gls-l:#238636; --gls-m:#9e6a03; --gls-h:#da6820; --gls-v:#b62324;
+}
+[data-theme="light"] {
+  --bg:#ffffff; --surface:#f6f8fa; --surface-2:#eaeef2;
+  --border:#d0d7de; --border-light:#e4e8ec;
+  --text-1:#1f2328; --text-2:#656d76; --text-3:#818b98;
+  --shadow:0 4px 16px rgba(0,0,0,0.08);
+  --saffron-dim:rgba(255,153,51,0.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-tap-highlight-color:transparent;}
+body{
+  font-family:var(--fb);background:var(--bg);color:var(--text-1);
+  min-height:100vh;font-size:15px;line-height:1.6;
+  transition:background .2s,color .2s;
+  padding-bottom:calc(var(--bot-h) + env(safe-area-inset-bottom));
+  overflow-x:hidden;
+}
+@media(min-width:768px){body{padding-bottom:0;}}
+
+/* ── HEADER ── */
+.hdr{
+  position:sticky;top:0;z-index:100;
+  background:var(--bg);border-bottom:1px solid var(--border);
+  height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px;backdrop-filter:blur(12px);
+}
+.logo{font-family:var(--fh);font-weight:700;font-size:16px;color:var(--text-1);text-decoration:none;display:flex;align-items:center;gap:8px;letter-spacing:-.3px;}
+.logo-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--saffron),#e67e00);box-shadow:0 0 8px rgba(255,153,51,.5);}
+.logo em{font-style:normal;color:var(--saffron);}
+.hdr-r{display:flex;align-items:center;gap:8px;}
+.theme-btn{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-pill);padding:5px 12px;font-size:13px;font-family:var(--fb);color:var(--text-2);cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s;}
+.theme-btn:hover{border-color:var(--saffron);color:var(--saffron);}
+.profile-ico{background:none;border:none;cursor:pointer;font-size:22px;padding:4px;color:var(--text-2);transition:color .2s;}
+.profile-ico:hover{color:var(--saffron);}
+
+/* ── TOP NAV (tablet/desktop) ── */
+.top-nav{display:none;border-bottom:1px solid var(--border);background:var(--bg);padding:0 16px;gap:2px;overflow-x:auto;scrollbar-width:none;}
+.top-nav::-webkit-scrollbar{display:none;}
+@media(min-width:768px){.top-nav{display:flex;}}
+.tnb{font-family:var(--fb);font-size:14px;font-weight:500;color:var(--text-2);background:none;border:none;padding:12px 14px;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
+.tnb:hover{color:var(--text-1);}
+.tnb.on{color:var(--saffron);border-bottom-color:var(--saffron);}
+
+/* ── BOTTOM NAV (mobile) ── */
+.bot-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--surface);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:8px 0 max(8px,env(safe-area-inset-bottom));}
+@media(min-width:768px){.bot-nav{display:none;}}
+.bnb{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;cursor:pointer;padding:4px 8px;color:var(--text-3);font-family:var(--fb);font-size:10px;font-weight:500;transition:color .2s;min-width:60px;}
+.bnb .bi{font-size:22px;line-height:1;}
+.bnb.on{color:var(--saffron);}
+
+/* ── MORE SHEET ── */
+.sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:none;backdrop-filter:blur(4px);}
+.sheet-bg.on{display:block;}
+.sheet{position:fixed;bottom:0;left:0;right:0;z-index:201;background:var(--surface);border-radius:var(--r-lg) var(--r-lg) 0 0;border-top:1px solid var(--border);padding:12px 0 max(24px,env(safe-area-inset-bottom));transform:translateY(100%);transition:transform .3s ease;}
+.sheet-bg.on .sheet{transform:translateY(0);}
+.sheet-handle{width:36px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 16px;}
+.sheet-row{display:flex;align-items:center;gap:14px;padding:14px 24px;font-size:15px;font-weight:500;color:var(--text-1);cursor:pointer;background:none;border:none;width:100%;text-align:left;font-family:var(--fb);transition:background .15s;}
+.sheet-row:hover{background:var(--surface-2);}
+.sheet-row .si{font-size:20px;width:24px;text-align:center;}
+
+/* ── PANELS ── */
+.panel{display:none;}
+.panel.on{display:block;}
+.pi{max-width:640px;margin:0 auto;padding:20px 16px;}
+@media(min-width:768px){.pi{padding:28px 24px;max-width:720px;}}
+@media(min-width:1024px){.pi{padding:32px 28px;max-width:860px;}}
+
+/* ── TYPOGRAPHY ── */
+h1{font-family:var(--fh);font-size:clamp(24px,5vw,36px);font-weight:700;line-height:1.2;}
+h2{font-family:var(--fh);font-size:clamp(17px,3vw,22px);font-weight:600;line-height:1.3;}
+h3{font-family:var(--fh);font-size:15px;font-weight:600;}
+p{color:var(--text-2);margin-bottom:10px;}
+a{color:var(--cyan);text-decoration:none;}
+a:hover{text-decoration:underline;}
+code{font-family:var(--fm);font-size:12px;background:var(--surface-2);padding:2px 6px;border-radius:4px;color:var(--saffron);}
+
+/* ── CARDS ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:16px;margin-bottom:12px;}
+.card-hi{border-color:var(--saffron);box-shadow:var(--saffron-glow);}
+
+/* ── BUTTONS ── */
+.btn{font-family:var(--fb);font-size:14px;font-weight:500;padding:10px 18px;border-radius:var(--r-sm);border:none;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;}
+.bp{background:var(--saffron);color:#000;}
+.bp:hover{background:#ffad47;transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,153,51,.3);}
+.bp:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.bs{background:var(--surface-2);color:var(--text-1);border:1px solid var(--border);}
+.bs:hover{border-color:var(--saffron);color:var(--saffron);}
+.bg{background:none;color:var(--text-2);border:1px solid var(--border);}
+.bg:hover{color:var(--text-1);background:var(--surface);}
+.bw{width:100%;justify-content:center;}
+.bl{padding:13px 24px;font-size:15px;}
+
+/* ── FORM ── */
+.fg{margin-bottom:14px;}
+label{display:block;font-size:13px;font-weight:500;color:var(--text-2);margin-bottom:5px;font-family:var(--fh);}
+.lr::after{content:' *';color:var(--red);}
+textarea,input,select{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;font-family:var(--fb);font-size:14px;color:var(--text-1);transition:border-color .2s;resize:vertical;}
+textarea:focus,input:focus,select:focus{outline:none;border-color:var(--saffron);box-shadow:0 0 0 3px var(--saffron-dim);}
+textarea::placeholder,input::placeholder{color:var(--text-3);}
+select option{background:var(--surface);}
+.hint{font-size:12px;color:var(--text-3);margin-top:4px;line-height:1.5;}
+.slabel{font-family:var(--fm);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:var(--text-3);margin-bottom:10px;}
+
+/* ── API KEY ── */
+.akw{position:relative;}
+.akw input{padding-right:44px;}
+.akeye{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-3);font-size:16px;padding:4px;transition:color .2s;}
+.akeye:hover{color:var(--text-1);}
+.ak-ok{display:flex;align-items:center;gap:8px;background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.2);border-radius:var(--r-sm);padding:8px 12px;margin-top:6px;font-size:12px;color:var(--green);}
+.warn-box{background:rgba(248,81,73,.05);border:1px solid rgba(248,81,73,.2);border-radius:var(--r-sm);padding:10px 12px;font-size:12px;color:var(--red);margin-top:8px;line-height:1.5;}
+.pbanner{background:rgba(63,185,80,.05);border:1px solid rgba(63,185,80,.2);border-radius:var(--r-md);padding:11px 14px;display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;font-size:12px;color:var(--green);line-height:1.5;}
+
+/* ── COLLAPSIBLE ── */
+.ctrig{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:13px 16px;cursor:pointer;margin-bottom:4px;font-family:var(--fh);font-weight:600;font-size:14px;transition:border-color .2s;user-select:none;}
+.ctrig:hover,.ctrig.on{border-color:var(--saffron);}
+.ctrig.on{border-radius:var(--r-md) var(--r-md) 0 0;}
+.carr{transition:transform .2s;color:var(--text-3);font-size:12px;}
+.ctrig.on .carr{transform:rotate(180deg);}
+.cbody{display:none;background:var(--surface);border:1px solid var(--saffron);border-top:none;border-radius:0 0 var(--r-md) var(--r-md);padding:16px;margin-bottom:8px;}
+.cbody.on{display:block;}
+
+/* ── ONBOARDING ── */
+.onb{position:fixed;inset:0;z-index:500;background:var(--bg);display:flex;flex-direction:column;}
+.onb.gone{display:none;}
+.onb-slides{flex:1;overflow:hidden;position:relative;}
+.onb-slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center;transition:transform .4s ease,opacity .4s ease;}
+.onb-slide.prev{transform:translateX(-100%);opacity:0;}
+.onb-slide.active{transform:translateX(0);opacity:1;}
+.onb-slide.next{transform:translateX(100%);opacity:0;}
+.onb-icon{font-size:64px;margin-bottom:24px;line-height:1;}
+.onb-title{font-family:var(--fh);font-size:clamp(22px,5vw,30px);font-weight:700;margin-bottom:12px;line-height:1.2;}
+.onb-title em{font-style:normal;color:var(--saffron);}
+.onb-sub{font-size:15px;color:var(--text-2);max-width:320px;line-height:1.6;margin-bottom:0;}
+.onb-footer{padding:20px 24px max(24px,env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px;align-items:center;}
+.onb-dots{display:flex;gap:7px;}
+.onb-dot{width:7px;height:7px;border-radius:50%;background:var(--border);transition:all .3s;}
+.onb-dot.on{background:var(--saffron);width:20px;border-radius:4px;}
+.onb-actions{display:flex;gap:10px;width:100%;max-width:340px;}
+.onb-skip{font-family:var(--fb);font-size:13px;color:var(--text-3);background:none;border:none;cursor:pointer;padding:8px;}
+.onb-skip:hover{color:var(--text-2);}
+
+/* ── EVALUATE TAB ── */
+.eval-hero{padding:28px 0 20px;}
+.eval-hero h1{margin-bottom:6px;}
+.eval-hero h1 em{font-style:normal;color:var(--saffron);}
+.eval-hero p{font-size:16px;color:var(--text-2);margin-bottom:0;}
+
+/* Mode toggle */
+.mtog{display:flex;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:3px;gap:3px;margin-bottom:16px;}
+.mb{flex:1;padding:9px;border:none;border-radius:6px;font-family:var(--fb);font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;color:var(--text-2);background:none;display:flex;align-items:center;justify-content:center;gap:6px;}
+.mb.on{background:var(--saffron);color:#000;}
+
+/* Desktop eval btn */
+.desk-eval{display:none;}
+@media(min-width:768px){.desk-eval{display:flex;}}
+
+/* Sticky eval btn (mobile) */
+.sticky-wrap{position:fixed;bottom:calc(var(--bot-h) + env(safe-area-inset-bottom));left:0;right:0;z-index:90;padding:10px 16px;background:linear-gradient(to top,var(--bg) 60%,transparent);}
+@media(min-width:768px){.sticky-wrap{display:none!important;}}
+
+/* Loading */
+.loading{display:none;text-align:center;padding:48px 20px;}
+.spin{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--saffron);border-radius:50%;animation:sp .8s linear infinite;margin:0 auto 14px;}
+@keyframes sp{to{transform:rotate(360deg);}}
+.lsteps{display:flex;flex-direction:column;gap:7px;margin-top:14px;max-width:260px;margin-left:auto;margin-right:auto;text-align:left;}
+.ls{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--text-3);transition:color .3s;}
+.ls.act{color:var(--saffron);}
+.ls.done{color:var(--green);}
+.lsd{width:18px;height:18px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;}
+.ls.act .lsd{border-color:var(--saffron);background:var(--saffron-dim);color:var(--saffron);}
+.ls.done .lsd{border-color:var(--green);background:rgba(63,185,80,.1);color:var(--green);}
+
+/* Empty state */
+.empty{text-align:center;padding:40px 20px;color:var(--text-3);}
+.ei{font-size:40px;margin-bottom:10px;}
+.et{font-family:var(--fh);font-size:16px;color:var(--text-2);margin-bottom:5px;}
+.ed{font-size:13px;}
+
+/* Results */
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+.sc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:14px 10px;text-align:center;}
+.scl{font-size:10px;font-family:var(--fm);color:var(--text-3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px;}
+.scv{font-family:var(--fh);font-size:28px;font-weight:700;line-height:1;}
+.scs{font-size:10px;color:var(--text-3);margin-top:3px;}
+.gls-bar-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:14px;margin-bottom:14px;}
+.glsh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.glst{font-family:var(--fh);font-weight:600;font-size:14px;}
+.glsn{font-family:var(--fh);font-size:26px;font-weight:700;}
+.glstr{background:var(--surface-2);border-radius:var(--r-pill);height:6px;overflow:hidden;margin-bottom:5px;}
+.glsfill{height:100%;border-radius:var(--r-pill);transition:width .8s ease;}
+.glssc{display:flex;justify-content:space-between;font-size:9px;color:var(--text-3);font-family:var(--fm);}
+
+/* Report blocks */
+.bhead{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:13px 16px;cursor:pointer;margin-bottom:3px;font-family:var(--fh);font-weight:600;font-size:14px;transition:border-color .2s;user-select:none;}
+.bhead:hover,.bhead.on{border-color:var(--saffron);}
+.bhead.on{border-radius:var(--r-md) var(--r-md) 0 0;}
+.barr{transition:transform .2s;color:var(--text-3);font-size:11px;}
+.bhead.on .barr{transform:rotate(180deg);}
+.bbody{display:none;background:var(--surface);border:1px solid var(--saffron);border-top:none;border-radius:0 0 var(--r-md) var(--r-md);padding:16px;margin-bottom:6px;}
+.bbody.on{display:block;}
+.rpt{font-size:13px;line-height:1.7;color:var(--text-2);}
+.rpt h2{font-size:14px;color:var(--saffron);margin:14px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.rpt h3{font-size:13px;margin:10px 0 4px;}
+.rpt p{margin-bottom:6px;}
+.rpt strong{color:var(--text-1);}
+.rpt table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;display:block;overflow-x:auto;}
+.rpt th{background:var(--surface-2);padding:7px 10px;text-align:left;font-family:var(--fh);font-size:11px;color:var(--text-3);border:1px solid var(--border);}
+.rpt td{padding:7px 10px;border:1px solid var(--border);color:var(--text-2);vertical-align:top;}
+.rpt ul{padding-left:16px;margin-bottom:8px;}
+.rpt li{margin-bottom:3px;}
+
+/* ── TRACKER ── */
+.tr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;}
+.stc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:12px 8px;text-align:center;}
+.stv{font-family:var(--fh);font-size:22px;font-weight:700;color:var(--saffron);}
+.stl{font-size:10px;color:var(--text-3);font-family:var(--fm);text-transform:uppercase;letter-spacing:.3px;margin-top:2px;}
+.frow{display:flex;gap:5px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px;scrollbar-width:none;}
+.frow::-webkit-scrollbar{display:none;}
+.fb{font-family:var(--fb);font-size:12px;padding:5px 12px;border-radius:var(--r-pill);border:1px solid var(--border);background:none;color:var(--text-2);cursor:pointer;white-space:nowrap;transition:all .2s;}
+.fb.on{background:var(--saffron);border-color:var(--saffron);color:#000;font-weight:500;}
+.fb:hover:not(.on){border-color:var(--saffron);color:var(--saffron);}
+.app-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:14px;margin-bottom:8px;}
+.ac-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px;}
+.aco{font-family:var(--fh);font-weight:600;font-size:15px;}
+.aro{font-size:12px;color:var(--text-2);margin-top:1px;}
+.abs{display:flex;gap:6px;align-items:center;flex-shrink:0;}
+.bdg{font-family:var(--fm);font-size:12px;font-weight:600;padding:3px 8px;border-radius:var(--r-sm);}
+.am{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+.mtag{font-size:11px;color:var(--text-3);font-family:var(--fm);}
+.aa{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.ssel{font-size:12px;padding:4px 8px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--surface-2);color:var(--text-1);font-family:var(--fm);cursor:pointer;}
+
+/* ── PROFILE ── */
+.extract-btn-wrap{background:var(--saffron-dim);border:1px solid rgba(255,153,51,.25);border-radius:var(--r-md);padding:14px;margin-top:10px;margin-bottom:16px;text-align:center;}
+.extract-btn-wrap p{font-size:12px;margin-bottom:10px;}
+.profile-fields{display:none;}
+.profile-fields.on{display:block;}
+.pf-summary{background:rgba(63,185,80,.05);border:1px solid rgba(63,185,80,.2);border-radius:var(--r-md);padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:14px;cursor:pointer;}
+.pf-summary-text{flex:1;}
+.pf-summary-title{font-family:var(--fh);font-weight:600;font-size:14px;color:var(--green);margin-bottom:2px;}
+.pf-summary-sub{font-size:12px;color:var(--text-2);}
+
+/* ── MORE / ABOUT / USAGE / CREDITS ── */
+.more-section{margin-bottom:28px;}
+.more-label{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-3);margin-bottom:12px;padding-bottom:7px;border-bottom:1px solid var(--border);}
+.pcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:18px;margin-bottom:10px;}
+.pname{font-family:var(--fh);font-size:17px;font-weight:700;margin-bottom:2px;}
+.prole{font-size:12px;color:var(--text-2);margin-bottom:10px;}
+.pdesc{font-size:13px;color:var(--text-2);margin-bottom:10px;line-height:1.6;}
+.plinks{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px;}
+.bwg{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;}
+.bwi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:10px;text-align:center;}
+.how-step{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:12px 14px;margin-bottom:6px;transition:border-color .2s;}
+.how-step:hover{border-color:var(--saffron);}
+.hs-icon{font-size:20px;flex-shrink:0;width:30px;text-align:center;}
+.hs-title{font-family:var(--fh);font-weight:600;font-size:14px;}
+.hs-desc{font-size:12px;color:var(--text-3);margin-top:1px;}
+.made-with{text-align:center;padding:24px 16px 8px;border-top:1px solid var(--border);margin-top:8px;}
+.made-with p{font-size:13px;color:var(--text-2);margin:0;}
+.made-with a{color:var(--saffron);font-weight:600;}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:var(--r-pill);font-size:12px;font-weight:500;font-family:var(--fm);}
+.ps{background:rgba(255,153,51,.1);border:1px solid rgba(255,153,51,.25);color:var(--saffron);}
+.pg{background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.25);color:var(--green);}
+.pc{background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.25);color:var(--cyan);}
+.atog{display:flex;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:3px;gap:3px;margin-bottom:20px;}
+.ab{flex:1;padding:9px;border:none;border-radius:6px;font-family:var(--fb);font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;color:var(--text-2);background:none;}
+.ab.on{background:var(--saffron);color:#000;}
+.ac-u{display:none;}
+.ac-u.on{display:block;}
+.wfc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:14px;margin-bottom:10px;}
+.ws{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light);}
+.ws:last-child{border:none;}
+.wn{font-family:var(--fm);font-size:12px;color:var(--saffron);font-weight:600;flex-shrink:0;width:20px;}
+.wt{font-size:13px;color:var(--text-2);}
+.wt strong{color:var(--text-1);}
+.tb{background:var(--saffron-dim);border:1px solid rgba(255,153,51,.2);border-radius:var(--r-md);padding:14px;margin-bottom:12px;}
+.tt{font-family:var(--fh);font-size:12px;font-weight:600;color:var(--saffron);margin-bottom:6px;}
+.tb p{font-size:13px;margin:0;}
+.catgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:16px;}
+.catc{background:var(--surface);border:2px solid var(--border);border-radius:var(--r-md);padding:12px 8px;text-align:center;cursor:pointer;transition:all .2s;font-family:var(--fb);color:var(--text-2);font-size:12px;font-weight:500;}
+.catc:hover,.catc.on{border-color:var(--saffron);}
+.catc.on{background:var(--saffron-dim);color:var(--saffron);}
+.cati{font-size:18px;display:block;margin-bottom:3px;}
+
+/* ── MODAL ── */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);}
+@media(min-width:640px){.mo{align-items:center;}}
+.mo.on{display:flex;}
+.md{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg) var(--r-lg) 0 0;width:100%;max-height:88vh;overflow-y:auto;padding:20px 16px;}
+@media(min-width:640px){.md{border-radius:var(--r-lg);max-width:680px;max-height:84vh;}}
+.mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.mtt{font-family:var(--fh);font-size:16px;font-weight:600;}
+.mc{background:none;border:none;color:var(--text-3);cursor:pointer;font-size:18px;padding:4px;line-height:1;}
+.mc:hover{color:var(--text-1);}
+
+/* ── TOAST ── */
+.tw{position:fixed;bottom:calc(var(--bot-h) + 16px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:400;display:flex;flex-direction:column;gap:6px;pointer-events:none;}
+@media(min-width:768px){.tw{bottom:24px;right:20px;left:auto;transform:none;}}
+.toast{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:10px 14px;font-size:13px;color:var(--text-1);box-shadow:var(--shadow);animation:ti .25s ease;white-space:nowrap;}
+.toast.ok{border-color:var(--green);color:var(--green);}
+.toast.err{border-color:var(--red);color:var(--red);}
+@keyframes ti{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+.mt{margin-top:16px;}
+.fw{display:flex;flex-wrap:wrap;gap:8px;}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     ONBOARDING
+══════════════════════════════════════════ -->
+<div class="onb" id="onb">
+  <div class="onb-slides">
+    <div class="onb-slide active" id="os0">
+      <div class="onb-icon">🎯</div>
+      <h1 class="onb-title">Found a job?<br>Know if it's worth your<br><em>time in 60 seconds.</em></h1>
+      <p class="onb-sub">Career-Ops-India App evaluates any job against your profile — score, grade, and ghost likelihood. Built for the Indian job market.</p>
+    </div>
+    <div class="onb-slide next" id="os1">
+      <div class="onb-icon">📄</div>
+      <h1 class="onb-title">Paste your CV once.<br><em>We handle the rest.</em></h1>
+      <p class="onb-sub">We extract your details automatically — CTC target, city, work mode, notice period. You review and tweak. Done in 30 seconds.</p>
+    </div>
+    <div class="onb-slide next" id="os2">
+      <div class="onb-icon">🔑</div>
+      <h1 class="onb-title">One API key.<br><em>That's all you need.</em></h1>
+      <p class="onb-sub">Your Anthropic API key powers every evaluation. Everything stays on your device — we have no servers, no accounts, no data collection.</p>
+    </div>
+  </div>
+  <div class="onb-footer">
+    <div class="onb-dots">
+      <div class="onb-dot on" id="od0"></div>
+      <div class="onb-dot" id="od1"></div>
+      <div class="onb-dot" id="od2"></div>
+    </div>
+    <div class="onb-actions">
+      <button class="onb-skip" onclick="skipOnb()">Skip</button>
+      <button class="btn bp bw bl" id="onb-next" onclick="nextOnb()">Get Started →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════ -->
+<header class="hdr">
+  <a class="logo" href="#" onclick="nav('evaluate');return false;">
+    <span class="logo-dot"></span>
+    Career-Ops-<em>India</em> App
+  </a>
+  <div class="hdr-r">
+    <button class="profile-ico" onclick="nav('profile')" title="Profile">👤</button>
+    <button class="theme-btn" onclick="toggleTheme()">
+      <span id="ti">☀️</span><span id="tl">Light</span>
+    </button>
+  </div>
+</header>
+
+<!-- TOP NAV (tablet/desktop) -->
+<nav class="top-nav">
+  <button class="tnb on" onclick="nav('evaluate')" id="tn-evaluate">🔍 Evaluate</button>
+  <button class="tnb" onclick="nav('tracker')" id="tn-tracker">📊 Tracker</button>
+  <button class="tnb" onclick="nav('profile')" id="tn-profile">👤 Profile</button>
+  <button class="tnb" onclick="nav('more')" id="tn-more">⋯ More</button>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     EVALUATE
+══════════════════════════════════════════ -->
+<div class="panel on" id="panel-evaluate"><div class="pi">
+
+  <div class="eval-hero">
+    <h1>Found a job?<br><em>Let's see if it's worth your time.</em></h1>
+    <p style="margin-top:8px;font-size:14px;">Paste the JD below and hit Evaluate. Takes about 30 seconds.</p>
+  </div>
+
+  <div class="mtog">
+    <button class="mb on" onclick="setMode('professional')" id="mp">💼 Professional</button>
+    <button class="mb" onclick="setMode('intern')" id="mi">🎓 Student / Intern</button>
+  </div>
+
+  <div class="card card-hi">
+    <div class="fg" style="margin-bottom:0;">
+      <label class="lr">Job Description</label>
+      <textarea id="jd-input" rows="6" placeholder="Paste the full job description here...
+
+Or paste a job URL — the system will extract the JD.
+
+The more complete the JD, the better the evaluation."></textarea>
+    </div>
+  </div>
+
+  <!-- Desktop button -->
+  <button class="btn bp bw bl mt desk-eval" onclick="runEval()" id="eval-btn">🚀 Evaluate Job</button>
+
+  <!-- Loading -->
+  <div class="loading" id="loading">
+    <div class="spin"></div>
+    <div style="font-size:13px;color:var(--text-2);">Evaluating your job match...</div>
+    <div class="lsteps">
+      <div class="ls" id="ls1"><div class="lsd">1</div>Loading evaluation context</div>
+      <div class="ls" id="ls2"><div class="lsd">2</div>Running GLS pre-check</div>
+      <div class="ls" id="ls3"><div class="lsd">3</div>Detecting archetype</div>
+      <div class="ls" id="ls4"><div class="lsd">4</div>Analysing CV match</div>
+      <div class="ls" id="ls5"><div class="lsd">5</div>Researching compensation</div>
+      <div class="ls" id="ls6"><div class="lsd">6</div>Generating report</div>
+    </div>
+  </div>
+
+  <!-- Empty -->
+  <div class="empty" id="eval-empty" style="padding-top:24px;">
+    <div class="ei">👆</div>
+    <div class="et">Paste a JD above</div>
+    <div class="ed">Results appear here — score, grade, ghost risk, full report.</div>
+  </div>
+
+  <!-- Results -->
+  <div id="eval-results" style="display:none;margin-top:20px;">
+    <div class="score-grid" id="sgrid"></div>
+    <div class="gls-bar-wrap" id="gcard"></div>
+    <div class="ctrig mt" onclick="toggleC(this)" id="report-toggle">📄 See Full Report (A–G) <span class="carr">▼</span></div>
+    <div class="cbody" id="report-cbody"><div id="rblocks"></div></div>
+    <div class="fw" style="margin-top:16px;">
+      <button class="btn bp" onclick="saveTracker()">💾 Save to Tracker</button>
+      <button class="btn bs" onclick="dlReport()">⬇️ Download</button>
+      <button class="btn bg" onclick="resetEval()">🔄 New Evaluation</button>
+    </div>
+  </div>
+
+</div></div>
+
+<!-- Sticky eval button (mobile only) -->
+<div class="sticky-wrap" id="sw">
+  <button class="btn bp bw bl" onclick="runEval()" id="seb">🚀 Evaluate Job</button>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TRACKER
+══════════════════════════════════════════ -->
+<div class="panel" id="panel-tracker"><div class="pi">
+  <div class="tr-top">
+    <h2 style="margin-bottom:0;">My Pipeline</h2>
+    <div style="display:flex;gap:7px;">
+      <button class="btn bs" style="font-size:12px;padding:6px 12px;" onclick="exportT()">⬇️ Export</button>
+      <button class="btn bs" style="font-size:12px;padding:6px 12px;" onclick="document.getElementById('imp').click()">⬆️ Import</button>
+      <input type="file" id="imp" accept=".json" style="display:none;" onchange="importT(this)">
+    </div>
+  </div>
+  <div class="stat-row">
+    <div class="stc"><div class="stv" id="st0">0</div><div class="stl">Total</div></div>
+    <div class="stc"><div class="stv" id="st1">0</div><div class="stl">Applied</div></div>
+    <div class="stc"><div class="stv" id="st2">0</div><div class="stl">Interview</div></div>
+    <div class="stc"><div class="stv" id="st3">0</div><div class="stl">Offer</div></div>
+  </div>
+  <div class="frow">
+    <button class="fb on" onclick="filt('all')" id="fb-all">All</button>
+    <button class="fb" onclick="filt('Evaluated')" id="fb-Evaluated">To Apply</button>
+    <button class="fb" onclick="filt('Applied')" id="fb-Applied">Applied</button>
+    <button class="fb" onclick="filt('Interview')" id="fb-Interview">Interview</button>
+    <button class="fb" onclick="filt('Offer')" id="fb-Offer">Offer</button>
+    <button class="fb" onclick="filt('Rejected')" id="fb-Rejected">Rejected</button>
+  </div>
+  <div id="tlist"></div>
+</div></div>
+
+<!-- ══════════════════════════════════════════
+     PROFILE
+══════════════════════════════════════════ -->
+<div class="panel" id="panel-profile"><div class="pi">
+  <h2 style="margin-bottom:4px;">Your Profile</h2>
+  <p style="margin-bottom:16px;font-size:13px;">Set up once. Powers every evaluation. Foundation for your custom CV later.</p>
+
+  <div class="pbanner"><span>🔒</span><span>Everything saved locally on your device. Nothing leaves your browser except the direct API call to Anthropic.</span></div>
+
+  <!-- API Key -->
+  <div class="slabel">Anthropic API Key</div>
+  <div class="card">
+    <div class="fg" style="margin-bottom:6px;">
+      <label class="lr">API Key</label>
+      <div class="akw">
+        <input type="password" id="api-key" placeholder="sk-ant-api03-..." autocomplete="off" oninput="onKey()">
+        <button class="akeye" onclick="toggleKey()" id="key-eye">👁</button>
+      </div>
+      <p class="hint">Get yours at <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com/settings/keys</a> →</p>
+    </div>
+    <div class="ak-ok" id="ak-ok" style="display:none;">✓ API key saved to this device</div>
+    <div class="warn-box">⚠️ Never share your API key with anyone. Remove it before sharing this device with others.</div>
+  </div>
+
+  <!-- CV -->
+  <div class="slabel" style="margin-top:16px;">Your CV</div>
+  <div class="card">
+    <div class="fg" style="margin-bottom:6px;">
+      <label class="lr">CV / Resume</label>
+      <textarea id="cv-input" rows="9" placeholder="Paste your CV in plain text or markdown...
+
+Professional summary
+Work experience with achievements and metrics
+Projects with outcomes (users, accuracy %, ₹ impact)
+Education (CGPA if > 8.0)
+Skills and certifications"></textarea>
+      <p class="hint">Paste once. We extract your details automatically.</p>
+    </div>
+    <div class="extract-btn-wrap">
+      <p>Let us extract your details from the CV — name, CTC target, city, work mode, notice period and more. Review and edit after.</p>
+      <button class="btn bp bw" onclick="extractFromCV()" id="extract-btn">✨ Extract from CV</button>
+    </div>
+  </div>
+
+  <!-- Profile fields (shown after extract or manually) -->
+  <div class="ctrig" onclick="toggleC(this)" id="pf-trigger">👤 Profile Details — review &amp; edit <span class="carr">▼</span></div>
+  <div class="cbody" id="pf-body">
+    <div class="fg"><label>Your Name</label><input type="text" id="profile-name" placeholder="e.g. Dhawal Shrivastava"></div>
+    <div class="fg"><label>Target CTC Range (LPA)</label><input type="text" id="profile-ctc" placeholder="e.g. 25–35 LPA"></div>
+    <div class="fg"><label>Current City</label><input type="text" id="profile-city" placeholder="e.g. Bangalore"></div>
+    <div class="fg"><label>Work Mode Preference</label>
+      <select id="profile-workmode">
+        <option value="remote-first">Remote First</option>
+        <option value="full-remote">Full Remote</option>
+        <option value="hybrid">Hybrid OK</option>
+        <option value="wfo">WFO Acceptable</option>
+      </select>
+    </div>
+    <div class="fg"><label>Notice Period</label>
+      <select id="profile-notice">
+        <option value="immediate">Immediate Joiner</option>
+        <option value="30">30 Days</option>
+        <option value="60" selected>60 Days</option>
+        <option value="90">90 Days</option>
+      </select>
+    </div>
+    <div class="fg"><label>Sector Preference</label>
+      <select id="profile-sector">
+        <option value="all">All Sectors</option>
+        <option value="startup">Product Startups Only</option>
+        <option value="gcc">GCCs Only</option>
+        <option value="ai-native">AI-Native Only</option>
+      </select>
+    </div>
+    <div class="fg"><label>College / University <span style="font-size:10px;color:var(--text-3);">(students)</span></label><input type="text" id="profile-college" placeholder="e.g. IIT Bombay, VIT Vellore"></div>
+    <div class="fg"><label>CGPA <span style="font-size:10px;color:var(--text-3);">(students)</span></label><input type="text" id="profile-cgpa" placeholder="e.g. 8.4"></div>
+    <div class="fg" style="margin-bottom:0;"><label>Expected Stipend ₹/month <span style="font-size:10px;color:var(--text-3);">(students)</span></label><input type="text" id="profile-stipend" placeholder="e.g. 25,000"></div>
+  </div>
+
+  <!-- GLS -->
+  <div class="slabel" style="margin-top:16px;">GLS Settings</div>
+  <div class="card" style="background:var(--saffron-dim);border-color:rgba(255,153,51,.25);">
+    <div class="fg" style="margin-bottom:0;"><label>Warn me if GLS exceeds</label>
+      <select id="gls-threshold">
+        <option value="40">40 — Conservative</option>
+        <option value="50" selected>50 — Recommended</option>
+        <option value="65">65 — Tolerant</option>
+        <option value="100">100 — Never warn</option>
+      </select>
+      <p class="hint">A warning appears before you apply to roles above this score.</p>
+    </div>
+  </div>
+
+  <button class="btn bp bw mt" onclick="saveManual()">✓ Save Profile</button>
+</div></div>
+
+<!-- ══════════════════════════════════════════
+     MORE
+══════════════════════════════════════════ -->
+<div class="panel" id="panel-more"><div class="pi">
+
+  <!-- About -->
+  <div class="more-section">
+    <div class="more-label">About</div>
+    <div style="margin-bottom:16px;">
+      <p style="font-size:15px;color:var(--text-1);margin-bottom:8px;">Career-Ops-India App evaluates any job against your profile — in 60 seconds.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
+        <span class="pill ps">👻 Ghost Likelihood Score</span>
+        <span class="pill pg">🇮🇳 7 India Archetypes</span>
+        <span class="pill pc">🎓 Intern Mode</span>
+        <span class="pill ps">🔒 Privacy First</span>
+      </div>
+    </div>
+    <div class="how-step"><span class="hs-icon">📋</span><div><div class="hs-title">Paste a Job Description</div><div class="hs-desc">From Naukri, LinkedIn, iimjobs, any company careers page</div></div></div>
+    <div class="how-step" style="border-color:var(--saffron);box-shadow:var(--saffron-glow);"><span class="hs-icon">👻</span><div><div class="hs-title" style="color:var(--saffron);">GLS Pre-check</div><div class="hs-desc">Is this a real opening? Ghost Likelihood Score 0–100</div></div></div>
+    <div class="how-step"><span class="hs-icon">🎯</span><div><div class="hs-title">A–F Evaluation</div><div class="hs-desc">CV match · CTC/LPA · archetype · work mode · red flags</div></div></div>
+    <div class="card mt" style="text-align:center;padding:18px;">
+      <p style="font-size:13px;color:var(--text-1);margin-bottom:8px;">Powered by the open source career-ops-india engine</p>
+      <a href="https://github.com/itsmedhawal/career-ops-india" target="_blank" class="btn bs">⭐ View Engine Repo</a>
+    </div>
+  </div>
+
+  <!-- Usage -->
+  <div class="more-section">
+    <div class="more-label">Usage</div>
+    <div class="atog">
+      <button class="ab on" onclick="switchAud('pro')" id="ab-pro">💼 Professional</button>
+      <button class="ab" onclick="switchAud('stu')" id="ab-stu">🎓 Student</button>
+    </div>
+    <div class="ac-u on" id="ac-pro">
+      <div class="wfc">
+        <div class="ws"><span class="wn">1</span><span class="wt">Go to <strong>Profile</strong> → add API key → paste CV → Extract from CV</span></div>
+        <div class="ws"><span class="wn">2</span><span class="wt">Go to <strong>Evaluate</strong> → paste any JD → tap Evaluate Job</span></div>
+        <div class="ws"><span class="wn">3</span><span class="wt">Read your <strong>Score + GLS</strong> → decide whether to apply</span></div>
+        <div class="ws"><span class="wn">4</span><span class="wt">Save to <strong>Tracker</strong> → manage your full pipeline</span></div>
+      </div>
+      <div class="tb"><div class="tt">💡 Decision guide</div><p>Score ≥ 4.0 + GLS ≤ 50 → Apply now &nbsp;·&nbsp; Score ≥ 4.0 + GLS > 50 → Verify role is active first &nbsp;·&nbsp; Score &lt; 3.5 → Skip</p></div>
+    </div>
+    <div class="ac-u" id="ac-stu">
+      <div class="wfc">
+        <div class="ws"><span class="wn">1</span><span class="wt">Go to <strong>Profile</strong> → add API key → paste CV with projects and CGPA</span></div>
+        <div class="ws"><span class="wn">2</span><span class="wt">Go to <strong>Evaluate</strong> → toggle to Student/Intern → paste internship JD</span></div>
+        <div class="ws"><span class="wn">3</span><span class="wt">Check your <strong>PPO score</strong> — the internship IS the job interview for most students</span></div>
+      </div>
+      <div class="tb"><div class="tt">🚀 One tip</div><p>After your first evaluation, ask: "I keep getting low Project Match scores. What should I build next?" The system will suggest the specific project that closes the gap fastest.</p></div>
+    </div>
+  </div>
+
+  <!-- Feedback -->
+  <div class="more-section">
+    <div class="more-label">Feedback</div>
+    <div style="margin-bottom:12px;"><p style="font-size:13px;">Every piece of feedback shapes Career-Ops-India App. Goes directly to GitHub Discussions.</p></div>
+    <div class="catgrid">
+      <div class="catc on" onclick="selCat(this,'Bug Report')"><span class="cati">🐛</span>Bug Report</div>
+      <div class="catc" onclick="selCat(this,'Feature Request')"><span class="cati">✨</span>Feature</div>
+      <div class="catc" onclick="selCat(this,'General Feedback')"><span class="cati">💬</span>General</div>
+    </div>
+    <div class="fg"><label class="lr">Title</label><input type="text" id="fb-title" placeholder="Brief summary..."></div>
+    <div class="fg"><label class="lr">Details</label><textarea id="fb-body" rows="4" placeholder="What happened or what you are suggesting..."></textarea></div>
+    <button class="btn bp bw" onclick="submitFB()">Submit on GitHub →</button>
+    <p style="text-align:center;font-size:11px;color:var(--text-3);margin-top:8px;">You will be taken to GitHub to complete your submission.</p>
+  </div>
+
+  <!-- Credits -->
+  <div class="more-section">
+    <div class="more-label">Credits</div>
+    <div class="pcard card-hi">
+      <div class="pname">Dhawal Shrivastava</div>
+      <div class="prole">Senior Security Assurance Engineering Lead · Microsoft</div>
+      <div class="pdesc">Built Career-Ops-India App to make AI-powered job search accessible to every Indian jobseeker — no terminal, no setup, just a browser.</div>
+      <div style="font-size:13px;color:var(--text-2);line-height:1.8;">
+        <div>✦ <strong style="color:var(--text-1);">Ghost Likelihood Score (GLS)</strong> — original 0–100 ghost posting detector across 9 India-calibrated signals</div>
+        <div>✦ <strong style="color:var(--text-1);">Intern Mode</strong> — PPO probability, brand value, stipend benchmarks</div>
+        <div>✦ <strong style="color:var(--text-1);">This app</strong> — browser-native, privacy-first, zero setup</div>
+      </div>
+      <div class="plinks">
+        <a href="https://github.com/itsmedhawal/career-ops-india" target="_blank" class="btn bg">⭐ GitHub</a>
+        <a href="https://www.linkedin.com/in/dhawalshrivastava" target="_blank" class="btn bg">💼 LinkedIn</a>
+      </div>
+    </div>
+    <div class="pcard" style="margin-top:8px;">
+      <div class="pname">Santiago Fernández de Valderrama</div>
+      <div class="prole">Head of Applied AI · Creator of career-ops (29K+ Stars)</div>
+      <div class="pdesc">The engine that powers this app. Built career-ops, open-sourced it for the world. The architecture, pipeline, PDF generation and HITL philosophy are entirely his work.</div>
+      <div class="plinks">
+        <a href="https://santifer.io" target="_blank" class="btn bg">🌐 santifer.io</a>
+        <a href="https://github.com/santifer/career-ops" target="_blank" class="btn bg">⭐ Star career-ops</a>
+      </div>
+    </div>
+    <div class="bwg" style="margin-top:12px;">
+      <div class="bwi"><div style="font-size:20px;">🤖</div><div style="font-family:var(--fh);font-weight:600;font-size:11px;margin-top:3px;">Claude</div><div style="font-size:10px;color:var(--text-3);">Anthropic</div></div>
+      <div class="bwi"><div style="font-size:20px;">🗄️</div><div style="font-family:var(--fh);font-weight:600;font-size:11px;margin-top:3px;">sql.js</div><div style="font-size:10px;color:var(--text-3);">SQLite</div></div>
+      <div class="bwi"><div style="font-size:20px;">💾</div><div style="font-family:var(--fh);font-weight:600;font-size:11px;margin-top:3px;">IndexedDB</div><div style="font-size:10px;color:var(--text-3);">Local store</div></div>
+    </div>
+    <div class="made-with">
+      <p>Made with Love and Innovation, driven by Intention, dedicated to the community.</p>
+      <p style="margin-top:4px;">— <a href="https://www.linkedin.com/in/dhawalshrivastava" target="_blank">Dhawal Shrivastava</a></p>
+    </div>
+  </div>
+
+</div></div>
+
+<!-- BOTTOM NAV (mobile) -->
+<nav class="bot-nav">
+  <button class="bnb on" onclick="nav('evaluate')" id="bn-evaluate"><span class="bi">🔍</span>Evaluate</button>
+  <button class="bnb" onclick="nav('tracker')" id="bn-tracker"><span class="bi">📊</span>Tracker</button>
+  <button class="bnb" onclick="nav('profile')" id="bn-profile"><span class="bi">👤</span>Profile</button>
+  <button class="bnb" onclick="nav('more')" id="bn-more"><span class="bi">⋯</span>More</button>
+</nav>
+
+<!-- MODAL -->
+<div class="mo" id="rmo">
+  <div class="md">
+    <div class="mh"><div class="mtt" id="rtitle">Report</div><button class="mc" onclick="closeMo()">✕</button></div>
+    <div id="rcontent"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="tw" id="tw"></div>
+
+<script>
+const S={tab:'evaluate',mode:'professional',eval:null,filter:'all',fbCat:'Bug Report',evals:[],sh:null,of:null,onbStep:0};
+
+// ── THEME ──
+function toggleTheme(){
+  const h=document.documentElement,d=h.getAttribute('data-theme')==='dark';
+  h.setAttribute('data-theme',d?'light':'dark');
+  document.getElementById('ti').textContent=d?'🌙':'☀️';
+  document.getElementById('tl').textContent=d?'Dark':'Light';
+  localStorage.setItem('coi_t',d?'light':'dark');
+}
+(()=>{const t=localStorage.getItem('coi_t')||'dark';document.documentElement.setAttribute('data-theme',t);if(t==='light'){document.getElementById('ti').textContent='🌙';document.getElementById('tl').textContent='Dark';}})();
+
+// ── ONBOARDING ──
+function nextOnb(){
+  const steps=3;
+  if(S.onbStep<steps-1){
+    document.getElementById('os'+S.onbStep).className='onb-slide prev';
+    document.getElementById('od'+S.onbStep).className='onb-dot';
+    S.onbStep++;
+    document.getElementById('os'+S.onbStep).className='onb-slide active';
+    document.getElementById('od'+S.onbStep).className='onb-dot on';
+    if(S.onbStep===steps-1)document.getElementById('onb-next').textContent='Start Evaluating 🚀';
+  } else {
+    skipOnb();
+  }
+}
+function skipOnb(){
+  document.getElementById('onb').classList.add('gone');
+  localStorage.setItem('coi_onb','1');
+}
+(()=>{if(localStorage.getItem('coi_onb'))document.getElementById('onb').classList.add('gone');})();
+
+// ── NAV ──
+function nav(t){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tnb,.bnb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('panel-'+t).classList.add('on');
+  const tn=document.getElementById('tn-'+t),bn=document.getElementById('bn-'+t);
+  if(tn)tn.classList.add('on');if(bn)bn.classList.add('on');
+  S.tab=t;window.scrollTo(0,0);
+  if(t==='tracker')renderT();
+  const sw=document.getElementById('sw');
+  if(sw)sw.style.display=(t==='evaluate')?'block':'none';
+}
+
+// ── COLLAPSIBLE ──
+function toggleC(el){el.classList.toggle('on');el.nextElementSibling.classList.toggle('on');}
+function toggleB(el){el.classList.toggle('on');el.nextElementSibling.classList.toggle('on');}
+
+// ── TOAST ──
+function toast(m,t=''){
+  const c=document.getElementById('tw'),el=document.createElement('div');
+  el.className='toast'+(t?' '+t:'');el.textContent=m;c.appendChild(el);
+  setTimeout(()=>el.remove(),3000);
+}
+
+// ── MODAL ──
+function closeMo(){document.getElementById('rmo').classList.remove('on');}
+document.getElementById('rmo').addEventListener('click',function(e){if(e.target===this)closeMo();});
+
+// ── AUDIENCE ──
+function switchAud(a){
+  document.querySelectorAll('.ab').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.ac-u').forEach(c=>c.classList.remove('on'));
+  document.getElementById('ab-'+a).classList.add('on');
+  document.getElementById('ac-'+a).classList.add('on');
+}
+
+// ── MODE ──
+function setMode(m){
+  S.mode=m;
+  document.getElementById('mp').classList.toggle('on',m==='professional');
+  document.getElementById('mi').classList.toggle('on',m==='intern');
+}
+
+// ── API KEY ──
+function toggleKey(){
+  const i=document.getElementById('api-key'),b=document.getElementById('key-eye'),s=i.type==='password';
+  i.type=s?'text':'password';b.textContent=s?'🙈':'👁';
+}
+function onKey(){
+  const v=document.getElementById('api-key').value.trim(),ok=document.getElementById('ak-ok');
+  if(v){localStorage.setItem('coi_key',v);if(ok)ok.style.display='flex';}
+  else{localStorage.removeItem('coi_key');if(ok)ok.style.display='none';}
+}
+
+// ── PROFILE ──
+function saveManual(){saveP();toast('Profile saved ✓','ok');}
+function saveP(){
+  const g=id=>document.getElementById(id)?.value||'';
+  const p={name:g('profile-name'),ctc:g('profile-ctc'),city:g('profile-city'),workmode:g('profile-workmode'),notice:g('profile-notice'),sector:g('profile-sector'),college:g('profile-college'),cgpa:g('profile-cgpa'),stipend:g('profile-stipend')};
+  localStorage.setItem('coi_p',JSON.stringify(p));
+  const cv=g('cv-input');if(cv)localStorage.setItem('coi_cv',cv);
+  const k=g('api-key');if(k)localStorage.setItem('coi_key',k);
+}
+function loadP(){
+  try{
+    const p=JSON.parse(localStorage.getItem('coi_p')||'{}');
+    const s=(id,v)=>{const e=document.getElementById(id);if(e&&v)e.value=v;};
+    s('profile-name',p.name);s('profile-ctc',p.ctc);s('profile-city',p.city);
+    s('profile-workmode',p.workmode);s('profile-notice',p.notice);s('profile-sector',p.sector);
+    s('profile-college',p.college);s('profile-cgpa',p.cgpa);s('profile-stipend',p.stipend);
+    const cv=localStorage.getItem('coi_cv');if(cv){const e=document.getElementById('cv-input');if(e)e.value=cv;}
+    const k=localStorage.getItem('coi_key');
+    if(k){const e=document.getElementById('api-key');if(e)e.value=k;const ok=document.getElementById('ak-ok');if(ok)ok.style.display='flex';}
+    if(p.name||p.ctc){const t=document.getElementById('pf-trigger'),b=document.getElementById('pf-body');if(t&&b){t.classList.add('on');b.classList.add('on');}}
+  }catch(e){}
+}
+
+// ── EXTRACT FROM CV ──
+async function extractFromCV(){
+  const cv=document.getElementById('cv-input').value.trim();
+  const key=localStorage.getItem('coi_key')||document.getElementById('api-key').value.trim();
+  if(!cv){toast('Paste your CV first','err');return;}
+  if(!key){toast('Add your API key first','err');return;}
+  const btn=document.getElementById('extract-btn');
+  btn.disabled=true;btn.textContent='Extracting...';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:`Extract details from this CV. Return ONLY valid JSON, no markdown, no explanation:\n{\n"name":"",\n"ctc":"current or expected CTC in LPA if mentioned",\n"city":"current city if mentioned",\n"workmode":"remote-first|full-remote|hybrid|wfo based on hints",\n"notice":"immediate|30|60|90 based on hints, default 60",\n"sector":"all|startup|gcc|ai-native based on background",\n"college":"college name if student",\n"cgpa":"cgpa if mentioned",\n"stipend":"expected stipend if student"\n}\n\nCV:\n${cv.substring(0,3000)}`}]})
+    });
+    if(!res.ok)throw new Error('API error');
+    const data=await res.json();
+    const text=data.content.map(b=>b.text||'').join('');
+    const clean=text.replace(/```json|```/g,'').trim();
+    const p=JSON.parse(clean);
+    const s=(id,v)=>{const e=document.getElementById(id);if(e&&v&&v.trim())e.value=v.trim();};
+    s('profile-name',p.name);s('profile-ctc',p.ctc);s('profile-city',p.city);
+    if(p.workmode){const e=document.getElementById('profile-workmode');if(e)e.value=p.workmode;}
+    if(p.notice){const e=document.getElementById('profile-notice');if(e)e.value=p.notice;}
+    if(p.sector){const e=document.getElementById('profile-sector');if(e)e.value=p.sector;}
+    s('profile-college',p.college);s('profile-cgpa',p.cgpa);s('profile-stipend',p.stipend);
+    const t=document.getElementById('pf-trigger'),b=document.getElementById('pf-body');
+    if(t&&b){t.classList.add('on');b.classList.add('on');}
+    saveP();toast('Profile extracted from CV ✓','ok');
+  }catch(err){toast('Could not extract — fill in manually','err');}
+  btn.disabled=false;btn.textContent='✨ Extract from CV';
+}
+
+// ── IDB ──
+let idb=null;
+function initIDB(){
+  return new Promise((res,rej)=>{
+    const r=indexedDB.open('coi',1);
+    r.onupgradeneeded=e=>{const db=e.target.result;if(!db.objectStoreNames.contains('r'))db.createObjectStore('r',{keyPath:'id'});};
+    r.onsuccess=e=>{idb=e.target.result;res();};r.onerror=()=>rej(r.error);
+  });
+}
+async function sRpt(id,d){return new Promise((res,rej)=>{const tx=idb.transaction('r','readwrite');tx.objectStore('r').put({id,...d});tx.oncomplete=res;tx.onerror=()=>rej(tx.error);});}
+async function gRpt(id){return new Promise((res,rej)=>{const tx=idb.transaction('r','readonly');const r=tx.objectStore('r').get(id);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});}
+async function gaRpt(){return new Promise((res,rej)=>{const tx=idb.transaction('r','readonly');const r=tx.objectStore('r').getAll();r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});}
+
+// ── EVALS ──
+function loadE(){try{S.evals=JSON.parse(localStorage.getItem('coi_e')||'[]');}catch(e){S.evals=[];}}
+function saveE(){localStorage.setItem('coi_e',JSON.stringify(S.evals));}
+
+// ── SKILL FILES ──
+async function loadSk(){
+  S.sh=`You are career-ops-india, an AI job evaluation system for the Indian job market.
+INDIA ARCHETYPES: 1.AI/ML Engineer 2.LLMOps/GenAI Engineer 3.Data Scientist 4.AI Product Manager 5.AI Solutions Architect 6.AI Consultant 7.AI Transformation Lead
+SCORING: CV Match (gate <2.5=SKIP), North Star, Compensation(LPA), Cultural Signals, Red Flags.
+COMP: LPA. In-hand ~70-75%. Bond>6mo=-0.5. Variable>30%=-0.3. GCC=no equity penalty.
+GEO: Full Remote/Remote-First/Hybrid Flexible/Hybrid Structured/WFO/Fake Remote🚩
+STAGES: Early Startup/Growth Startup/Late Startup/GCC/Enterprise/Consulting
+GLS(0-100): Repost 20, Age>60d 15, Apply inactive 15, Source(Naukri=15,LinkedIn=5,ATS=0) 15, Boilerplate>70% 10, Impossible reqs 10, Layoff news 8, Unnamed client 4, Missing specs 3.
+RULES: Cite exact CV lines. Score in LPA. Be direct and actionable.`;
+  S.of=`Evaluate this job. Return clean markdown:
+## ARCHETYPE\n[One of 7 archetypes]
+## BLOCK A - ROLE SUMMARY\n| Field | Value |\n|-------|-------|\n| Archetype | |\n| Seniority | |\n| Work Mode | |\n| Company Stage | |\n| Location | |\n| TL;DR | |
+## BLOCK B - CV MATCH\n| JD Requirement | CV Evidence | Strength |\n|----------------|-------------|----------|\n[5-8 rows]\nGAPS: blocker or nice-to-have?
+## BLOCK C - LEVEL & STRATEGY\nDetected level vs candidate. Sell senior plan.
+## BLOCK D - COMP & MARKET\n| Component | Details | Flag |\n[CTC, variable, in-hand, bond]\nComp Score: X/5
+## BLOCK E - PERSONALIZATION\nTop 5 CV changes. Top 5 ATS keywords.
+## BLOCK F - INTERVIEW PLAN\n6-8 STAR+R stories. 3 red-flag questions. CTC response.
+## BLOCK G - GHOST LIKELIHOOD SCORE\nAssess all signals with points.\nTOTAL GLS: X/100 [🟢/🟡/🟠/🔴]\nAssessment: [High Confidence/Proceed with Caution/Suspicious]
+## GLOBAL SCORE\n| Dimension | Score |\n|-----------|-------|\n| CV Match | X/5 |\n| North Star | X/5 |\n| Compensation | X/5 |\n| Cultural Signals | X/5 |\n| Red Flags | -X |\n| **GLOBAL** | **X.X/5** |\nGrade: [A/B/C/D/F]
+## INDIA NOTES\nNotice period, CTC in-hand, GCC rotation, referral opportunity, recommendation.
+## EXTRACTED KEYWORDS\n[15-20 ATS keywords]`;
+  try{
+    const b='https://raw.githubusercontent.com/itsmedhawal/career-ops-india/main/.claude/skills/career-ops/modes/';
+    const[a,c]=await Promise.all([fetch(b+'_shared.md').then(r=>r.ok?r.text():null),fetch(b+'oferta.md').then(r=>r.ok?r.text():null)]);
+    if(a)S.sh=a;if(c)S.of=c;
+  }catch(e){}
+}
+
+// ── EVALUATION ──
+async function runEval(){
+  const key=localStorage.getItem('coi_key')||document.getElementById('api-key')?.value.trim();
+  const jd=document.getElementById('jd-input').value.trim();
+  const cv=localStorage.getItem('coi_cv')||'';
+  if(!key){nav('profile');toast('Add your API key in Profile first','err');return;}
+  if(!jd){toast('Paste a job description first','err');return;}
+  if(!cv){nav('profile');toast('Add your CV in Profile first','err');return;}
+  saveP();
+  const g=id=>document.getElementById(id)?.value||'';
+  const pr={name:g('profile-name')||'Candidate',ctc:g('profile-ctc')||'Not specified',city:g('profile-city')||'Not specified',workmode:g('profile-workmode'),notice:g('profile-notice')||'60',sector:g('profile-sector'),mode:S.mode,college:g('profile-college'),cgpa:g('profile-cgpa')};
+  document.getElementById('eval-btn').disabled=true;
+  const seb=document.getElementById('seb');if(seb)seb.disabled=true;
+  document.getElementById('eval-empty').style.display='none';
+  document.getElementById('eval-results').style.display='none';
+  const ld=document.getElementById('loading');ld.style.display='block';
+  const ss=['ls1','ls2','ls3','ls4','ls5','ls6'];let si=0;
+  const iv=setInterval(()=>{if(si>0)document.getElementById(ss[si-1]).className='ls done';if(si<ss.length){document.getElementById(ss[si]).className='ls act';si++;}},900);
+  try{
+    const prompt=`${S.sh}\n\n${S.of}\n\nCANDIDATE:\nName: ${pr.name}\nCTC: ${pr.ctc}\nCity: ${pr.city}\nWork Mode: ${pr.workmode}\nNotice: ${pr.notice} days\nSector: ${pr.sector}\nMode: ${pr.mode}${pr.college?'\nCollege: '+pr.college:''}\n\nCV:\n${cv}\n\nJOB DESCRIPTION:\n${jd}\n\nEvaluate fully. Cite exact CV lines. CTC in LPA. Clear recommendation.`;
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4000,messages:[{role:'user',content:prompt}]})});
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'API error '+res.status);}
+    const data=await res.json();const text=data.content.map(b=>b.text||'').join('\n');
+    clearInterval(iv);ss.forEach(s=>document.getElementById(s).className='ls done');
+    const ev=parseEv(text,jd,pr);S.eval=ev;
+    setTimeout(()=>{ld.style.display='none';document.getElementById('eval-results').style.display='block';renderRes(ev);document.getElementById('eval-btn').disabled=false;if(seb)seb.disabled=false;},400);
+  }catch(err){
+    clearInterval(iv);ld.style.display='none';document.getElementById('eval-empty').style.display='block';
+    document.getElementById('eval-btn').disabled=false;if(seb)seb.disabled=false;
+    toast('Error: '+err.message,'err');
+  }
+}
+
+function parseEv(text,jd,pr){
+  const sc=parseFloat((text.match(/\*\*GLOBAL\*\*[^|]*\|\s*\*\*([0-9.]+)\/5/i)||text.match(/GLOBAL[^\n|]*\|\s*([0-9.]+)\/5/i)||[])[1])||null;
+  const gr=(text.match(/Grade:\s*([A-F])/i)||[])[1]||(sc>=4.5?'A':sc>=4?'B':sc>=3.5?'C':sc>=3?'D':'F');
+  const gls=parseInt((text.match(/TOTAL GLS:\s*([0-9]+)\/100/i)||[])[1])||null;
+  const arch=((text.match(/ARCHETYPE[^\n]*\n([^\n#]+)/i)||text.match(/Archetype[^|]*\|\s*([^\n|[]+)/i)||[])[1]||'Not detected').trim().replace(/[\[\]]/g,'');
+  const wm=((text.match(/Work Mode[^|]*\|\s*([^\n|]+)/i)||[])[1]||'--').trim();
+  const st=((text.match(/Company Stage[^|]*\|\s*([^\n|]+)/i)||[])[1]||'--').trim();
+  const ga=((text.match(/Assessment:\s*([^\n]+)/i)||[])[1]||'Proceed with Caution').trim();
+  const co=(jd.match(/^([A-Z][A-Za-z\s&.,]{2,30}?)[\n|–\-]/m)||[])[1]?.trim()||'Company';
+  const ro=(jd.match(/(?:role|position|title)[:\s]+([^\n]{5,50})/i)||[])[1]?.trim()||'Role';
+  return{id:crypto.randomUUID(),date:new Date().toISOString().split('T')[0],company:co,role:ro,score:sc,grade:gr,gls,glsA:ga,archetype:arch,workMode:wm,stage:st,mode:pr.mode,status:'Evaluated',fullText:text,jd:jd.substring(0,400),profile:pr};
+}
+
+function renderRes(ev){
+  const gc={A:'var(--ga)',B:'var(--gb)',C:'var(--gc)',D:'var(--gd)',F:'var(--gf)'};
+  const glsc=ev.gls<=25?'var(--gls-l)':ev.gls<=50?'var(--gls-m)':ev.gls<=75?'var(--gls-h)':'var(--gls-v)';
+  const glse=ev.gls<=25?'🟢':ev.gls<=50?'🟡':ev.gls<=75?'🟠':'🔴';
+  const rec={A:'Apply now',B:'Worth applying',C:'Borderline',D:'Weak fit',F:'Skip'};
+  document.getElementById('sgrid').innerHTML=`
+    <div class="sc"><div class="scl">Job Fit</div><div class="scv" style="color:${gc[ev.grade]||'var(--saffron)'};">${ev.score?.toFixed(1)||'--'}</div><div class="scs">out of 5.0</div></div>
+    <div class="sc"><div class="scl">Grade</div><div class="scv" style="color:${gc[ev.grade]||'var(--text-1)'};">${ev.grade||'--'}</div><div class="scs">${rec[ev.grade]||''}</div></div>
+    <div class="sc"><div class="scl">Ghost Risk</div><div class="scv" style="color:${glsc};font-size:22px;">${glse} ${ev.gls??'--'}</div><div class="scs">out of 100</div></div>`;
+  document.getElementById('gcard').innerHTML=`
+    <div class="glsh"><div class="glst">👻 Ghost Likelihood Score</div><div class="glsn" style="color:${glsc};">${ev.gls??'--'}<span style="font-size:14px;color:var(--text-3);">/100</span></div></div>
+    <div class="glstr"><div class="glsfill" style="width:${ev.gls||0}%;background:${glsc};"></div></div>
+    <div class="glssc"><span>🟢 Low (0-25)</span><span>🟡 Moderate</span><span>🟠 High</span><span>🔴 Very High</span></div>
+    <div style="font-size:12px;color:var(--text-2);margin-top:8px;"><strong style="color:var(--text-1);">Assessment:</strong> ${ev.glsA}</div>
+    <div style="font-size:11px;color:var(--text-3);margin-top:6px;">GLS is independent of job fit. You decide how much weight to give it.</div>`;
+  const blocks=pBlocks(ev.fullText);
+  document.getElementById('rblocks').innerHTML=blocks.map((b,i)=>`<div class="bhead ${i===0?'on':''}" onclick="toggleB(this)">${b.t}<span class="barr">▼</span></div><div class="bbody ${i===0?'on':''}"><div class="rpt">${mdown(b.c)}</div></div>`).join('');
+}
+
+function pBlocks(text){
+  const defs=[{k:'BLOCK A',t:'📋 Role Summary'},{k:'BLOCK B',t:'🎯 CV Match'},{k:'BLOCK C',t:'📈 Level & Strategy'},{k:'BLOCK D',t:'💰 Comp & Market'},{k:'BLOCK E',t:'✏️ Personalization Plan'},{k:'BLOCK F',t:'🎤 Interview Plan'},{k:'BLOCK G',t:'👻 GLS Details'},{k:'INDIA NOTES',t:'🇮🇳 India Notes'},{k:'EXTRACTED KEYWORDS',t:'🔑 ATS Keywords'}];
+  const bs=[];
+  for(let i=0;i<defs.length;i++){const{k,t}=defs[i],nk=defs[i+1]?.k,rx=new RegExp(`##\\s*${k}[^\\n]*\\n([\\s\\S]*?)(?=##\\s*${nk||'ZEND'}|$)`,'i'),m=text.match(rx);if(m)bs.push({t,c:m[1].trim()});}
+  if(!bs.length)bs.push({t:'📄 Full Evaluation',c:text});
+  return bs;
+}
+
+function mdown(t){
+  return t.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/\*([^*]+)\*/g,'<em>$1</em>').replace(/`([^`]+)`/g,'<code>$1</code>').replace(/^### (.+)$/gm,'<h3>$1</h3>').replace(/^## (.+)$/gm,'<h2>$1</h2>').replace(/^\|(.+)\|$/gm,m=>{const c=m.split('|').filter(x=>x.trim()&&!x.match(/^[-\s]+$/));return c.length?'<tr>'+c.map(x=>`<td>${x.trim()}</td>`).join('')+'</tr>':'';}).replace(/(<tr>[\s\S]*?<\/tr>\n?)+/g,'<table>$&</table>').replace(/^- (.+)$/gm,'<li>$1</li>').replace(/(<li>[\s\S]*?<\/li>\n?)+/g,'<ul>$&</ul>').replace(/\n\n/g,'<br><br>').trim();
+}
+
+async function saveTracker(){
+  if(!S.eval)return;const ev=S.eval;
+  if(S.evals.find(e=>e.company===ev.company&&e.role===ev.role)){toast('Already in tracker','err');return;}
+  S.evals.unshift(ev);saveE();
+  try{await sRpt(ev.id,{markdown:ev.fullText,jd:ev.jd});}catch(e){}
+  updStats();toast('Saved to Tracker ✓','ok');
+}
+function dlReport(){
+  if(!S.eval)return;const ev=S.eval;
+  const c=`# ${ev.company} — ${ev.role}\nDate: ${ev.date} | Score: ${ev.score}/5 (${ev.grade}) | GLS: ${ev.gls}/100\n\n${ev.fullText}`;
+  const u=URL.createObjectURL(new Blob([c],{type:'text/markdown'}));
+  const a=document.createElement('a');a.href=u;a.download=`${ev.company.toLowerCase().replace(/\s+/g,'-')}-${ev.date}.md`;a.click();URL.revokeObjectURL(u);toast('Downloaded','ok');
+}
+function resetEval(){S.eval=null;document.getElementById('eval-results').style.display='none';document.getElementById('eval-empty').style.display='block';document.getElementById('jd-input').value='';window.scrollTo(0,0);}
+
+// ── TRACKER ──
+function renderT(){
+  const list=S.filter==='all'?S.evals:S.evals.filter(e=>e.status===S.filter);
+  updStats();const c=document.getElementById('tlist');
+  if(!list.length){c.innerHTML=`<div class="empty"><div class="ei">📋</div><div class="et">${S.filter==='all'?'No applications yet':'No '+S.filter+' applications'}</div><div class="ed">${S.filter==='all'?'Evaluate a job and save it here.':'Change the filter to see others.'}</div></div>`;return;}
+  const gc={A:'var(--ga)',B:'var(--gb)',C:'var(--gc)',D:'var(--gd)',F:'var(--gf)'},ge=g=>g<=25?'🟢':g<=50?'🟡':g<=75?'🟠':'🔴';
+  c.innerHTML=list.map(ev=>`<div class="app-card"><div class="ac-top"><div><div class="aco">${ev.company}</div><div class="aro">${ev.role}</div></div><div class="abs"><span class="bdg" style="background:${gc[ev.grade]||'var(--surface-2)'}22;color:${gc[ev.grade]||'var(--text-1)'};">${ev.score?.toFixed(1)||'--'}/5</span><span class="bdg" style="background:var(--surface-2);color:var(--text-2);">${ge(ev.gls||0)} ${ev.gls??'--'}</span></div></div><div class="am"><span class="mtag">📅 ${ev.date}</span><span class="mtag" style="margin-left:8px;">🎯 ${ev.archetype?.split(' ')[0]||'--'}</span><span class="mtag" style="margin-left:8px;">🏢 ${ev.stage||'--'}</span></div><div class="aa"><select class="ssel" onchange="updSt('${ev.id}',this.value)">${['Evaluated','Applied','Responded','Interview','Offer','Rejected','Discarded','SKIP'].map(s=>`<option${ev.status===s?' selected':''}>${s}</option>`).join('')}</select><button class="btn bg" style="font-size:11px;padding:4px 10px;" onclick="viewR('${ev.id}')">View</button><button class="btn bg" style="font-size:11px;padding:4px 10px;color:var(--red);border-color:var(--red);" onclick="delEv('${ev.id}')">Delete</button></div></div>`).join('');
+}
+function updStats(){document.getElementById('st0').textContent=S.evals.length;document.getElementById('st1').textContent=S.evals.filter(e=>e.status==='Applied').length;document.getElementById('st2').textContent=S.evals.filter(e=>e.status==='Interview').length;document.getElementById('st3').textContent=S.evals.filter(e=>e.status==='Offer').length;}
+function filt(f){S.filter=f;document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));const fb=document.getElementById('fb-'+f);if(fb)fb.classList.add('on');renderT();}
+function updSt(id,s){const ev=S.evals.find(e=>e.id===id);if(ev){ev.status=s;saveE();updStats();toast('Status: '+s,'ok');}}
+function delEv(id){if(!confirm('Delete this evaluation?'))return;S.evals=S.evals.filter(e=>e.id!==id);saveE();renderT();}
+async function viewR(id){
+  const ev=S.evals.find(e=>e.id===id);if(!ev)return;
+  let r=null;try{r=await gRpt(id);}catch(e){}
+  const c=r?.markdown||ev.fullText||'Not available.';
+  const gc={A:'var(--ga)',B:'var(--gb)',C:'var(--gc)',D:'var(--gd)',F:'var(--gf)'};
+  document.getElementById('rtitle').textContent=ev.company+' — '+ev.role;
+  document.getElementById('rcontent').innerHTML=`<div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;"><span class="pill ps">Score: ${ev.score?.toFixed(1)||'--'}/5 (${ev.grade})</span><span class="pill pc">GLS: ${ev.gls??'--'}/100</span><span class="pill pg">${ev.date}</span></div><div class="rpt">${mdown(c)}</div>`;
+  document.getElementById('rmo').classList.add('on');
+}
+async function exportT(){
+  if(!S.evals.length){toast('No evaluations to export','err');return;}
+  let rpts=[];try{rpts=await gaRpt();}catch(e){}
+  const u=URL.createObjectURL(new Blob([JSON.stringify({version:'1.0',exported_at:new Date().toISOString(),evaluations:S.evals,reports:rpts},null,2)],{type:'application/json'}));
+  const a=document.createElement('a');a.href=u;a.download=`career-ops-india-${new Date().toISOString().split('T')[0]}.json`;a.click();URL.revokeObjectURL(u);toast('Exported','ok');
+}
+function importT(inp){
+  const f=inp.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=async e=>{try{const d=JSON.parse(e.target.result);if(d.evaluations){S.evals=d.evaluations;saveE();}if(d.reports&&idb){for(const rpt of d.reports)await sRpt(rpt.id,rpt);}renderT();toast('Imported '+S.evals.length+' evaluations','ok');}catch(err){toast('Import failed','err');}};
+  r.readAsText(f);inp.value='';
+}
+
+// ── FEEDBACK ──
+function selCat(el,c){document.querySelectorAll('.catc').forEach(x=>x.classList.remove('on'));el.classList.add('on');S.fbCat=c;}
+function submitFB(){
+  const t=document.getElementById('fb-title').value.trim(),b=document.getElementById('fb-body').value.trim();
+  if(!t){toast('Add a title','err');return;}if(!b){toast('Add some details','err');return;}
+  window.open(`https://github.com/itsmedhawal/career-ops-india/discussions/new?category=feedback&title=${encodeURIComponent('['+S.fbCat+'] '+t)}&body=${encodeURIComponent('**Category:** '+S.fbCat+'\n\n'+b+'\n\n---\n*Submitted via Career-Ops-India App*')}`,'_blank');
+  toast('Opening GitHub — complete submission there','ok');
+}
+
+// ── INIT ──
+async function init(){
+  await initIDB();loadE();loadP();await loadSk();updStats();
+  // Show sticky button only on evaluate tab
+  const sw=document.getElementById('sw');if(sw)sw.style.display='block';
+}
+init();
+</script>
+</body>
+</html>
