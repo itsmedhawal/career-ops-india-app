@@ -1,0 +1,42 @@
+{
+  "name": "Career-Ops-India App",
+  "short_name": "COI App",
+  "description": "AI-powered job evaluation for the Indian job market. Score any job in 60 seconds.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#FF9933",
+  "orientation": "portrait-primary",
+  "lang": "en-IN",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgcng9IjM4IiBmaWxsPSIjMGQxMTE3Ii8+PGNpcmNsZSBjeD0iNzIiIGN5PSI4OCIgcj0iMjQiIGZpbGw9InVybCgjZzEpIi8+PHRleHQgeD0iMTA0IiB5PSI5OCIgZm9udC1mYW1pbHk9IidTcGFjZSBHcm90ZXNrJyxzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iNzAwIiBmb250LXNpemU9IjM2IiBmaWxsPSIjZjBmNmZjIj5DT0k8L3RleHQ+PHRleHQgeD0iOTYiIHk9IjEzMCIgZm9udC1mYW1pbHk9IidETSBTYW5zJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmaWxsPSIjRkY5OTMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5BcHA8L3RleHQ+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnMSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI0ZGOTkzMyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U2N2UwMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjwvc3ZnPg==",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjEwMiIgZmlsbD0iIzBkMTExNyIvPjxjaXJjbGUgY3g9IjE5MiIgY3k9IjIzMiIgcj0iNjQiIGZpbGw9InVybCgjZzIpIi8+PHRleHQgeD0iMjc2IiB5PSI2MCIgZm9udC1mYW1pbHk9IidTcGFjZSBHcm90ZXNrJyxzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iNzAwIiBmb250LXNpemU9Ijk2IiBmaWxsPSIjZjBmNmZjIj5DT0k8L3RleHQ+PHRleHQgeD0iMjU2IiB5PSIzNDgiIGZvbnQtZmFtaWx5PSInRE0gU2FucycsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDgiIGZpbGw9IiNGRjk5MzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkFwcDwvdGV4dD48dGV4dCB4PSIyNTYiIHk9IjQyMCIgZm9udC1mYW1pbHk9IidETSBTYW5zJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjI4IiBmaWxsPSIjOGI5NDllIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5jYXJlZXItb3BzLWluZGlhPC90ZXh0PjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZzIiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNGRjk5MzMiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlNjdlMDAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48L3N2Zz4=",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Evaluate a Job",
+      "short_name": "Evaluate",
+      "description": "Jump straight to job evaluation",
+      "url": "./index.html#evaluate",
+      "icons": [{"src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHRleHQgeT0iNzYiIGZvbnQtc2l6ZT0iODAiPvCfkrw8L3RleHQ+PC9zdmc+", "sizes": "96x96"}]
+    },
+    {
+      "name": "My Pipeline",
+      "short_name": "Tracker",
+      "description": "View your job application pipeline",
+      "url": "./index.html#tracker",
+      "icons": [{"src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHRleHQgeT0iNzYiIGZvbnQtc2l6ZT0iODAiPvCfk4c8L3RleHQ+PC9zdmc+", "sizes": "96x96"}]
+    }
+  ]
+}
