@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://raw.githubusercontent.com https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:; object-src 'none'; base-uri 'self';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://esm.run https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://raw.githubusercontent.com https://fonts.googleapis.com https://fonts.gstatic.com https://esm.run https://cdn.jsdelivr.net https://huggingface.co; img-src 'self' data:; object-src 'none'; base-uri 'self'; worker-src 'self' blob:;">
 <title>Career-Ops-India App</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FF9933">
@@ -37,8 +37,8 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{-webkit-tap-highlight-color:transparent;}
-body{font-family:var(--fb);background:var(--bg);color:var(--text-1);min-height:100vh;font-size:15px;line-height:1.6;transition:background .2s,color .2s;padding-bottom:calc(var(--bot-h) + env(safe-area-inset-bottom));overflow-x:hidden;}
-@media(min-width:768px){body{padding-bottom:0;}}
+body{font-family:var(--fb);background:var(--bg);color:var(--text-1);min-height:100vh;font-size:15px;line-height:1.6;transition:background .2s,color .2s;padding-bottom:calc(var(--bot-h) + 36px + env(safe-area-inset-bottom));overflow-x:hidden;}
+@media(min-width:768px){body{padding-bottom:36px;}}
 
 /* HEADER */
 .hdr{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 16px;backdrop-filter:blur(12px);}
@@ -407,6 +407,102 @@ select option{background:var(--surface);}
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+/* ── V7 LOCAL AI STYLES ── */
+
+/* AI Mode indicator in footer */
+.ai-footer{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:10px 16px;font-size:11px;font-family:var(--fm);
+  color:var(--text-3);border-top:1px solid var(--border);
+  background:var(--bg);
+  position:fixed;bottom:calc(var(--bot-h) + env(safe-area-inset-bottom));
+  left:0;right:0;z-index:85;
+  transition:all .3s;
+}
+@media(min-width:768px){.ai-footer{bottom:0;position:sticky;border-top:1px solid var(--border);}}
+.ai-brain{font-size:14px;transition:all .3s;}
+.ai-brain.local{filter:drop-shadow(0 0 4px var(--saffron));color:var(--saffron);}
+.ai-brain.cloud{color:var(--cyan);}
+.ai-brain.loading{animation:pulse 1s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.ai-mode-label{transition:color .3s;}
+.ai-mode-label.local{color:var(--saffron);}
+.ai-mode-label.cloud{color:var(--cyan);}
+.webgpu-badge{padding:2px 7px;border-radius:var(--r-pill);font-size:9px;font-weight:600;}
+.webgpu-badge.ok{background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.25);color:var(--green);}
+.webgpu-badge.no{background:rgba(248,81,73,.1);border:1px solid rgba(248,81,73,.25);color:var(--red);}
+
+/* Sync Command Center Modal */
+.sync-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:500;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(6px);}
+@media(min-width:640px){.sync-modal-bg{align-items:center;}}
+.sync-modal-bg.on{display:flex;}
+.sync-modal{
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:var(--r-lg) var(--r-lg) 0 0;
+  width:100%;max-width:480px;
+  padding:24px 20px max(24px,env(safe-area-inset-bottom));
+  max-height:90vh;overflow-y:auto;
+}
+@media(min-width:640px){.sync-modal{border-radius:var(--r-lg);}}
+.sync-hero{text-align:center;margin-bottom:24px;}
+.sync-brain-icon{font-size:56px;margin-bottom:12px;display:block;}
+.sync-title{font-family:var(--fh);font-size:20px;font-weight:700;margin-bottom:6px;}
+.sync-sub{font-size:13px;color:var(--text-2);line-height:1.6;}
+.sync-features{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;}
+.sync-feature{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:12px 14px;font-size:13px;}
+.sync-feature .sf-icon{font-size:20px;flex-shrink:0;}
+.sync-feature .sf-text{color:var(--text-2);}
+.sync-feature .sf-text strong{color:var(--text-1);}
+.sync-wifi-note{background:rgba(227,179,65,.06);border:1px solid rgba(227,179,65,.2);border-radius:var(--r-md);padding:10px 14px;font-size:12px;color:var(--amber);margin-bottom:16px;line-height:1.5;}
+.sync-model-sel{margin-bottom:16px;}
+
+/* Download progress */
+.dl-progress{display:none;margin-bottom:16px;}
+.dl-progress.on{display:block;}
+.dl-bar-wrap{background:var(--surface-2);border-radius:var(--r-pill);height:8px;overflow:hidden;margin-bottom:6px;}
+.dl-bar{height:100%;background:linear-gradient(90deg,var(--saffron),#ffad47);border-radius:var(--r-pill);transition:width .3s ease;width:0%;}
+.dl-text{font-size:11px;color:var(--text-2);font-family:var(--fm);}
+.dl-phase{font-size:12px;color:var(--saffron);font-family:var(--fm);margin-bottom:4px;font-weight:600;}
+
+/* Fast Scan button states */
+.fast-scan-wrap{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.btn-fast-scan{background:linear-gradient(135deg,#1c2128,#161b22);color:var(--saffron);border:1px solid var(--saffron);font-weight:600;}
+.btn-fast-scan:hover{background:var(--saffron-dim);}
+.btn-fast-scan.cloud{color:var(--cyan);border-color:var(--cyan);}
+.btn-fast-scan.cloud:hover{background:rgba(88,166,255,.1);}
+.btn-fast-scan:disabled{opacity:.4;cursor:not-allowed;}
+.fast-scan-hint{font-size:11px;color:var(--text-3);margin-bottom:12px;line-height:1.5;}
+
+/* Local GLS result card */
+.local-gls-card{background:var(--surface);border:1px solid var(--saffron);border-radius:var(--r-md);padding:16px;margin-bottom:14px;box-shadow:var(--saffron-glow);}
+.lgls-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.lgls-badge{font-size:10px;font-family:var(--fm);background:var(--saffron-dim);border:1px solid rgba(255,153,51,.3);color:var(--saffron);padding:3px 8px;border-radius:var(--r-pill);}
+.lgls-score{font-family:var(--fh);font-size:32px;font-weight:700;}
+.lgls-flags{margin-top:10px;}
+.lgls-flag{font-size:12px;color:var(--text-2);padding:4px 0;border-bottom:1px solid var(--border-light);display:flex;align-items:flex-start;gap:7px;}
+.lgls-flag:last-child{border:none;}
+.lgls-flag::before{content:'⚠️';flex-shrink:0;}
+.lgls-rec{font-size:12px;color:var(--text-2);margin-top:10px;padding:8px;background:var(--surface-2);border-radius:var(--r-sm);line-height:1.5;}
+.lgls-proceed{margin-top:12px;}
+
+/* Model selector in settings */
+.model-sel-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:14px;margin-bottom:12px;}
+.model-sel-title{font-family:var(--fh);font-weight:600;font-size:13px;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.model-option{display:flex;align-items:center;gap:10px;padding:10px;border-radius:var(--r-sm);cursor:pointer;transition:background .15s;border:1px solid transparent;margin-bottom:6px;}
+.model-option:last-child{margin-bottom:0;}
+.model-option:hover{background:var(--surface-2);}
+.model-option.selected{background:var(--saffron-dim);border-color:rgba(255,153,51,.3);}
+.model-option.disabled{opacity:.4;cursor:not-allowed;}
+.mo-radio{width:16px;height:16px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.model-option.selected .mo-radio{border-color:var(--saffron);background:var(--saffron);}
+.model-option.selected .mo-radio::after{content:'';width:6px;height:6px;border-radius:50%;background:#000;}
+.mo-info{flex:1;}
+.mo-name{font-family:var(--fh);font-weight:600;font-size:13px;}
+.mo-meta{font-size:11px;color:var(--text-3);margin-top:2px;font-family:var(--fm);}
+.mo-badge{font-size:10px;padding:2px 6px;border-radius:var(--r-pill);font-family:var(--fm);}
+.mo-badge.rec{background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.25);color:var(--green);}
+.mo-badge.soon{background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.25);color:var(--cyan);}
 </style>
 </head>
 <body>
@@ -528,6 +624,17 @@ The more complete the JD, the better the evaluation."></textarea>
   </div>
   <button class="btn bp bw bl mt desk-eval" onclick="runEval()" id="eval-btn">🚀 Evaluate Job</button>
 
+  <!-- V7: Fast Scan + Deep Eval button row -->
+  <div class="fast-scan-wrap mt" id="fast-scan-wrap">
+    <button class="btn btn-fast-scan" id="fast-scan-btn" onclick="runFastScan()" disabled title="Download Offline Intelligence to enable">
+      ⚡ Fast Scan
+    </button>
+    <button class="btn bp" style="flex:1;" onclick="runEval()" id="deep-eval-btn">🔍 Deep Eval</button>
+  </div>
+  <div class="fast-scan-hint" id="fast-scan-hint">
+    ⚡ <strong>Fast Scan</strong> — instant local GLS pre-check (free, offline) &nbsp;·&nbsp; 🔍 <strong>Deep Eval</strong> — full A–G evaluation via Claude API
+  </div>
+
   <div class="loading" id="loading">
     <div class="spin"></div>
     <div style="font-size:13px;color:var(--text-2);">Evaluating your job match...</div>
@@ -548,6 +655,7 @@ The more complete the JD, the better the evaluation."></textarea>
   </div>
 
   <div id="eval-results" style="display:none;margin-top:20px;">
+    <div id="local-gls-result"></div>
     <div id="repost-warn-wrap"></div>
     <div id="eval-history-wrap"></div>
     <div class="score-grid" id="sgrid"></div>
@@ -688,8 +796,18 @@ Skills and certifications"></textarea>
     <div class="fg" style="margin-bottom:0;"><label>Expected Stipend ₹/month <span style="font-size:10px;color:var(--text-3);">(students)</span></label><input type="text" id="profile-stipend" placeholder="e.g. 25,000"></div>
   </div>
 
-  <div class="slabel" style="margin-top:16px;">GLS Settings</div>
-  <div class="card" style="background:var(--saffron-dim);border-color:rgba(255,153,51,.25);">
+  <!-- Local AI Settings -->
+  <div class="slabel" style="margin-top:16px;">Local AI — Offline Intelligence</div>
+  <div class="model-sel-card">
+    <div class="model-sel-title">🧠 Intelligence Core <span id="local-ai-status-badge" style="font-size:10px;font-family:var(--fm);color:var(--text-3);font-weight:400;"></span></div>
+    <div id="profile-model-options"></div>
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn bs" style="font-size:12px;padding:6px 12px;" onclick="openSyncModal()">🧠 Sync Command Center</button>
+      <button class="btn bg" style="font-size:12px;padding:6px 12px;" id="unload-model-btn" onclick="unloadLocalModel()" style="display:none;">🗑️ Unload Model</button>
+    </div>
+  </div>
+
+  <div class="slabel" style="margin-top:16px;">GLS Settings</div>  <div class="card" style="background:var(--saffron-dim);border-color:rgba(255,153,51,.25);">
     <div class="fg" style="margin-bottom:0;"><label>Warn me if GLS exceeds</label>
       <select id="gls-threshold"><option value="40">40 — Conservative</option><option value="50" selected>50 — Recommended</option><option value="65">65 — Tolerant</option><option value="100">100 — Never warn</option></select>
       <p class="hint">A warning appears before you apply to roles above this score.</p>
@@ -833,6 +951,65 @@ Skills and certifications"></textarea>
 
 <!-- PDF PRINT AREA -->
 <div id="pdf-area" style="display:none;"></div>
+
+<!-- SYNC COMMAND CENTER MODAL -->
+<div class="sync-modal-bg" id="sync-modal-bg">
+  <div class="sync-modal">
+    <div class="sync-hero">
+      <span class="sync-brain-icon">🧠</span>
+      <div class="sync-title">Sync Your Command Center</div>
+      <div class="sync-sub">Download Offline Intelligence to unlock instant, zero-cost GLS scans. Your phone becomes a sovereign job assessment tool — no API key, no internet required after download.</div>
+    </div>
+
+    <div class="sync-features">
+      <div class="sync-feature"><span class="sf-icon">⚡</span><div class="sf-text"><strong>Instant GLS scans</strong> — results in seconds, not 30s cloud round-trips</div></div>
+      <div class="sync-feature"><span class="sf-icon">🔌</span><div class="sf-text"><strong>Works fully offline</strong> — scan jobs on the metro with no signal</div></div>
+      <div class="sync-feature"><span class="sf-icon">🆓</span><div class="sf-text"><strong>Zero API cost</strong> — GLS scans are free once downloaded</div></div>
+      <div class="sync-feature"><span class="sf-icon">🔒</span><div class="sf-text"><strong>Total privacy</strong> — JD text never leaves your device</div></div>
+    </div>
+
+    <div class="sync-wifi-note">
+      📶 Recommended over WiFi. Download is ~1.6 GB and cached permanently on your device. You only download once.
+    </div>
+
+    <!-- Model selector -->
+    <div class="sync-model-sel">
+      <div style="font-family:var(--fh);font-weight:600;font-size:13px;margin-bottom:10px;">Choose your Intelligence Core</div>
+      <div id="sync-model-options"></div>
+    </div>
+
+    <!-- WebGPU status -->
+    <div id="sync-webgpu-status" style="margin-bottom:14px;font-size:12px;"></div>
+
+    <!-- Download progress -->
+    <div class="dl-progress" id="dl-progress">
+      <div class="dl-phase" id="dl-phase">Initialising...</div>
+      <div class="dl-bar-wrap"><div class="dl-bar" id="dl-bar"></div></div>
+      <div class="dl-text" id="dl-text">Preparing download...</div>
+    </div>
+
+    <!-- Actions -->
+    <div id="sync-actions">
+      <button class="btn bp bw bl" id="sync-download-btn" onclick="startLocalDownload()">🧠 Download Offline Intelligence</button>
+      <button class="btn bg bw" style="margin-top:8px;" onclick="closeSyncModal()">Maybe Later</button>
+    </div>
+
+    <div style="font-size:11px;color:var(--text-3);text-align:center;margin-top:12px;line-height:1.6;">
+      Phase 1: Gemma 2 2B (available now)<br>
+      Phase 2: Gemma 4 E2B — one-tap upgrade when available (May 2026)
+    </div>
+  </div>
+</div>
+
+<!-- AI FOOTER STATUS BAR -->
+<div class="ai-footer" id="ai-footer">
+  <span class="ai-brain cloud" id="ai-brain-icon">🧠</span>
+  <span class="ai-mode-label cloud" id="ai-mode-label">Cloud Mode</span>
+  <span style="color:var(--border);">·</span>
+  <span id="webgpu-badge-footer"></span>
+  <span style="flex:1;"></span>
+  <button onclick="openSyncModal()" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--text-3);font-family:var(--fm);padding:2px 6px;border-radius:var(--r-pill);border:1px solid var(--border);" id="sync-trigger-btn">⬇️ Sync</button>
+</div>
 
 <div class="tw" id="tw"></div>
 
@@ -1679,13 +1856,441 @@ function submitFB(){
 
 // ── IMPORT SCAN RESULTS (CLI handoff) ──
 function importScanResults(data){
-  // Accepts career-ops-india CLI scan output format
-  // Each item: {company, role, jd, url, source, date}
   if(!data.scan_results){toast('Invalid scan file format','err');return;}
   const items=data.scan_results;
   toast(`Imported ${items.length} jobs from CLI scan. Tap each to evaluate.`,'ok');
-  // For now, populate JD textarea with first item
   if(items[0]){document.getElementById('jd-input').value=items[0].jd||items[0].url||'';nav('evaluate');}
+}
+
+// ══════════════════════════════════════════════════
+// V7 — LOCAL AI (WebLLM + Gemma)
+// ══════════════════════════════════════════════════
+
+const LOCAL_AI = {
+  worker: null,
+  state: 'uninitialized', // uninitialized|downloading|ready|processing|error
+  selectedModelKey: localStorage.getItem('coi_local_model')||'gemma-2-2b-lite',
+  webGPUSupported: false,
+  modelRegistry: null
+};
+
+const MODEL_REGISTRY = {
+  'gemma-2-2b-standard': {
+    id: 'gemma-2-2b-it-q4f16_1-MLC',
+    label: 'Gemma 2 2B — Standard',
+    vram_mb: 1895,
+    size_gb: '~1.9 GB',
+    available: true
+  },
+  'gemma-2-2b-lite': {
+    id: 'gemma-2-2b-it-q4f16_1-MLC-1k',
+    label: 'Gemma 2 2B — Lite',
+    vram_mb: 1584,
+    size_gb: '~1.6 GB',
+    available: true,
+    recommended: true
+  },
+  'gemma-4-e2b': {
+    id: 'gemma-4-e2b-it-q4f16_1-MLC',
+    label: 'Gemma 4 E2B — Upgrade',
+    vram_mb: 1400,
+    size_gb: '~1.4 GB',
+    available: false,
+    comingSoon: true
+  }
+};
+
+// ── WEBGPU CHECK ──
+async function checkWebGPU(){
+  try{
+    if(!navigator.gpu){LOCAL_AI.webGPUSupported=false;return false;}
+    const adapter=await navigator.gpu.requestAdapter();
+    LOCAL_AI.webGPUSupported=!!adapter;
+    return LOCAL_AI.webGPUSupported;
+  }catch(e){LOCAL_AI.webGPUSupported=false;return false;}
+}
+
+// ── INIT LOCAL AI WORKER ──
+function initLocalWorker(){
+  if(LOCAL_AI.worker)return;
+  try{
+    LOCAL_AI.worker=new Worker('./worker.js',{type:'module'});
+    LOCAL_AI.worker.onmessage=handleWorkerMessage;
+    LOCAL_AI.worker.onerror=e=>{
+      console.error('Worker error:',e);
+      LOCAL_AI.state='error';
+      updateAIFooter();
+      toast('Local AI worker error — falling back to Cloud','err');
+    };
+  }catch(e){
+    console.warn('Could not init worker:',e);
+    LOCAL_AI.worker=null;
+  }
+}
+
+// ── WORKER MESSAGE HANDLER ──
+function handleWorkerMessage(event){
+  const{type,state,result,progress,text,modelKey,message,fatal}=event.data;
+
+  switch(type){
+    case 'STATUS':
+      LOCAL_AI.state=state||'uninitialized';
+      updateAIFooter();
+      updateFastScanBtn();
+      break;
+
+    case 'MODELS':
+      LOCAL_AI.modelRegistry=event.data.registry;
+      renderModelOptions('sync-model-options');
+      renderModelOptions('profile-model-options');
+      break;
+
+    case 'DOWNLOADING':
+      LOCAL_AI.state='downloading';
+      updateAIFooter();
+      showDownloadProgress(true);
+      break;
+
+    case 'PROGRESS':
+      const pct=Math.round((progress||0)*100);
+      const dlBar=document.getElementById('dl-bar');
+      const dlText=document.getElementById('dl-text');
+      const dlPhase=document.getElementById('dl-phase');
+      if(dlBar)dlBar.style.width=pct+'%';
+      if(dlText)dlText.textContent=text||`${pct}% downloaded`;
+      if(dlPhase){
+        if(pct<30)dlPhase.textContent='Downloading model weights...';
+        else if(pct<70)dlPhase.textContent='Caching to your device...';
+        else if(pct<95)dlPhase.textContent='Compiling for WebGPU...';
+        else dlPhase.textContent='Almost ready...';
+      }
+      break;
+
+    case 'READY':
+      LOCAL_AI.state='ready';
+      updateAIFooter();
+      updateFastScanBtn();
+      showDownloadProgress(false);
+      closeSyncModal();
+      toast('⚡ Offline Intelligence ready — Fast Scan enabled','ok');
+      localStorage.setItem('coi_local_ready','1');
+      localStorage.setItem('coi_local_model',modelKey||LOCAL_AI.selectedModelKey);
+      // Update profile badge
+      const badge=document.getElementById('local-ai-status-badge');
+      if(badge)badge.textContent='● Ready';
+      break;
+
+    case 'PROCESSING':
+      LOCAL_AI.state='processing';
+      updateAIFooter();
+      break;
+
+    case 'GLS_RESULT':
+      LOCAL_AI.state='ready';
+      updateAIFooter();
+      handleLocalGLSResult(result);
+      // Unload to free VRAM after scan
+      setTimeout(()=>{
+        if(LOCAL_AI.worker)LOCAL_AI.worker.postMessage({type:'UNLOAD'});
+      },2000);
+      break;
+
+    case 'GLS_ERROR':
+      LOCAL_AI.state='ready';
+      updateAIFooter();
+      toast('Local scan failed: '+message+' — try Deep Eval','err');
+      hideLocalGLSLoading();
+      break;
+
+    case 'UNLOADED':
+      // Keep state as ready so user can scan again (will reload on demand)
+      LOCAL_AI.state='uninitialized';
+      updateAIFooter();
+      break;
+
+    case 'ERROR':
+      if(fatal){LOCAL_AI.state='error';}
+      updateAIFooter();
+      showDownloadProgress(false);
+      if(event.data.fallbackKey){
+        LOCAL_AI.selectedModelKey=event.data.fallbackKey;
+        localStorage.setItem('coi_local_model',event.data.fallbackKey);
+      }
+      toast(message,'err');
+      // Re-enable sync button
+      const dlBtn=document.getElementById('sync-download-btn');
+      if(dlBtn){dlBtn.disabled=false;dlBtn.textContent='🧠 Download Offline Intelligence';}
+      break;
+
+    case 'MODEL_SET':
+      LOCAL_AI.selectedModelKey=modelKey;
+      renderModelOptions('sync-model-options');
+      renderModelOptions('profile-model-options');
+      break;
+  }
+}
+
+// ── UPDATE AI FOOTER ──
+function updateAIFooter(){
+  const brain=document.getElementById('ai-brain-icon');
+  const label=document.getElementById('ai-mode-label');
+  const syncBtn=document.getElementById('sync-trigger-btn');
+  if(!brain||!label)return;
+
+  if(LOCAL_AI.state==='ready'||LOCAL_AI.state==='processing'){
+    brain.className='ai-brain local';
+    brain.textContent='🧠';
+    label.className='ai-mode-label local';
+    label.textContent=LOCAL_AI.state==='processing'?'Scanning locally...':'Local Mode Active';
+    if(syncBtn)syncBtn.style.display='none';
+  }else if(LOCAL_AI.state==='downloading'){
+    brain.className='ai-brain loading';
+    brain.textContent='🧠';
+    label.className='ai-mode-label';
+    label.style.color='var(--amber)';
+    label.textContent='Downloading intelligence...';
+  }else{
+    brain.className='ai-brain cloud';
+    brain.textContent='🧠';
+    label.className='ai-mode-label cloud';
+    label.textContent='Cloud Mode';
+    if(syncBtn)syncBtn.style.display='block';
+  }
+}
+
+// ── UPDATE FAST SCAN BUTTON ──
+function updateFastScanBtn(){
+  const btn=document.getElementById('fast-scan-btn');
+  const hint=document.getElementById('fast-scan-hint');
+  if(!btn)return;
+
+  if(!LOCAL_AI.webGPUSupported){
+    // WebGPU not available — show cloud fallback
+    btn.className='btn btn-fast-scan cloud';
+    btn.textContent='⚡ Fast Scan (Cloud)';
+    btn.disabled=false;
+    btn.title='WebGPU not supported — using Cloud API for fast scan';
+    if(hint)hint.innerHTML='⚡ <strong>Fast Scan</strong> — quick GLS via Cloud API &nbsp;·&nbsp; 🔍 <strong>Deep Eval</strong> — full A–G evaluation via Claude API';
+  }else if(LOCAL_AI.state==='ready'){
+    btn.className='btn btn-fast-scan';
+    btn.textContent='⚡ Fast Scan (Local)';
+    btn.disabled=false;
+    btn.title='Instant local GLS scan — free, offline, zero API cost';
+    if(hint)hint.innerHTML='⚡ <strong>Fast Scan</strong> — instant local GLS (free, offline) &nbsp;·&nbsp; 🔍 <strong>Deep Eval</strong> — full A–G evaluation via Claude API';
+  }else if(LOCAL_AI.state==='downloading'){
+    btn.className='btn btn-fast-scan';
+    btn.textContent='⚡ Downloading...';
+    btn.disabled=true;
+  }else{
+    btn.className='btn btn-fast-scan';
+    btn.textContent='⚡ Fast Scan';
+    btn.disabled=true;
+    btn.title='Download Offline Intelligence to enable local scanning';
+    if(hint)hint.innerHTML='⚡ <strong>Fast Scan</strong> — <a href="#" onclick="openSyncModal();return false;" style="color:var(--saffron);">Download Offline Intelligence</a> to enable &nbsp;·&nbsp; 🔍 <strong>Deep Eval</strong> — full A–G via Claude API';
+  }
+}
+
+// ── FAST SCAN ──
+async function runFastScan(){
+  const jd=document.getElementById('jd-input').value.trim();
+  if(!jd){toast('Paste a job description first','err');return;}
+
+  // If WebGPU not supported, fall back to cloud fast scan
+  if(!LOCAL_AI.webGPUSupported){
+    runCloudFastScan(jd);
+    return;
+  }
+
+  // If model not loaded, load it first
+  if(LOCAL_AI.state!=='ready'){
+    if(!LOCAL_AI.worker){initLocalWorker();}
+    if(LOCAL_AI.worker){
+      showLocalGLSLoading();
+      LOCAL_AI.worker.postMessage({type:'LOAD_MODEL',payload:{modelKey:LOCAL_AI.selectedModelKey}});
+      // After load, inference will be triggered by READY message
+      window._pendingLocalJD=jd;
+    }
+    return;
+  }
+
+  window._pendingLocalJD=null;
+  showLocalGLSLoading();
+  LOCAL_AI.worker.postMessage({type:'RUN_GLS',payload:{jd}});
+}
+
+// Cloud fallback for fast scan (when WebGPU unavailable)
+async function runCloudFastScan(jd){
+  const key=await getDecryptedKey();
+  if(!key){nav('profile');toast('Add your API key in Profile first','err');return;}
+
+  showLocalGLSLoading();
+  try{
+    const prompt=`You are a ghost job posting detector for the Indian job market. Analyse this JD for ghost signals.
+
+Score it 0-100 across: Repost(20), Age(15), Apply CTA(15), Source quality(15), Boilerplate(10), Impossible reqs(10), Layoffs(8), Unnamed client(4), Missing specs(3).
+
+Return ONLY valid JSON:
+{"gls":<0-100>,"risk_level":"<Low|Moderate|High|Very High>","confidence":"<text>","signals_fired":[{"signal":"<name>","pts":<n>,"reason":"<text>"}],"top_3_red_flags":["<flag1>","<flag2>","<flag3>"],"recommendation":"<text>"}
+
+JD: ${jd.substring(0,1500)}`;
+
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:500,messages:[{role:'user',content:prompt}]})});
+    if(!res.ok)throw new Error('API error '+res.status);
+    const data=await res.json();
+    const text=data.content.map(b=>b.text||'').join('');
+    const cleaned=text.replace(/```json|```/g,'').trim();
+    const jsonMatch=cleaned.match(/\{[\s\S]*\}/);
+    if(!jsonMatch)throw new Error('No JSON in response');
+    const result=JSON.parse(jsonMatch[0]);
+    result.gls=Math.max(0,Math.min(100,parseInt(result.gls)||0));
+    handleLocalGLSResult(result,true);
+  }catch(err){
+    hideLocalGLSLoading();
+    toast('Fast Scan failed: '+err.message,'err');
+  }
+}
+
+// Handle pending JD after model loads
+const _origHandleWorkerMessage=handleWorkerMessage;
+
+// ── RENDER LOCAL GLS RESULT ──
+function handleLocalGLSResult(result, isCloud=false){
+  const glsc=result.gls<=25?'var(--gls-l)':result.gls<=50?'var(--gls-m)':result.gls<=75?'var(--gls-h)':'var(--gls-v)';
+  const glse=result.gls<=25?'🟢':result.gls<=50?'🟡':result.gls<=75?'🟠':'🔴';
+  const signalRows=(result.signals_fired||[]).map(s=>`<div class="lgls-flag"><span style="flex:1;">${sanitize(s.signal||'')}</span><span style="font-family:var(--fm);color:var(--amber);font-size:11px;flex-shrink:0;margin-left:8px;">+${s.pts}pts</span></div>`).join('');
+  const flags=(result.top_3_red_flags||[]).map(f=>`<div class="lgls-flag">${sanitize(f)}</div>`).join('');
+
+  const wrap=document.getElementById('local-gls-result');
+  wrap.innerHTML=`
+    <div class="local-gls-card">
+      <div class="lgls-header">
+        <div>
+          <div style="font-family:var(--fh);font-weight:700;font-size:14px;margin-bottom:3px;">⚡ Fast Scan Result ${isCloud?'<span style="font-size:10px;font-family:var(--fm);color:var(--cyan);">(Cloud)</span>':'<span style="font-size:10px;font-family:var(--fm);color:var(--saffron);">(Local)</span>'}</div>
+          <div class="lgls-badge">${sanitize(result.confidence||result.risk_level||'--')}</div>
+        </div>
+        <div class="lgls-score" style="color:${glsc};">${glse} ${result.gls}<span style="font-size:14px;color:var(--text-3);">/100</span></div>
+      </div>
+      ${flags?`<div class="lgls-flags">${flags}</div>`:''}
+      ${signalRows?`<div class="ctrig" onclick="toggleC(this)" style="font-size:12px;padding:9px 12px;margin-top:8px;">🔍 Signal Breakdown <span class="carr">▼</span></div><div class="cbody"><div>${signalRows}</div></div>`:''}
+      <div class="lgls-rec">${sanitize(result.recommendation||'')}</div>
+      <div class="lgls-proceed">
+        ${result.gls<=50?`<button class="btn bp bw" onclick="runEval()" style="font-size:13px;padding:10px;">✅ GLS looks good — Run Deep Eval →</button>`:`<div style="font-size:12px;color:var(--red);background:rgba(248,81,73,.06);border:1px solid rgba(248,81,73,.2);border-radius:var(--r-sm);padding:10px;">⚠️ High ghost risk detected. You can still Deep Eval, but proceed with caution.</div><button class="btn bg bw" onclick="runEval()" style="font-size:12px;padding:8px;margin-top:8px;color:var(--text-2);">Run Deep Eval anyway →</button>`}
+      </div>
+    </div>`;
+
+  // Show results container
+  document.getElementById('eval-results').style.display='block';
+  document.getElementById('eval-empty').style.display='none';
+  // Scroll to result
+  wrap.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function showLocalGLSLoading(){
+  const wrap=document.getElementById('local-gls-result');
+  wrap.innerHTML=`<div style="text-align:center;padding:28px;background:var(--surface);border:1px solid var(--saffron);border-radius:var(--r-md);margin-bottom:14px;"><div class="spin" style="margin:0 auto 12px;border-top-color:var(--saffron);"></div><div style="font-size:13px;color:var(--text-2);">Scanning for ghost signals...</div><div style="font-size:11px;color:var(--text-3);margin-top:6px;font-family:var(--fm);">Local AI processing on your device</div></div>`;
+  document.getElementById('eval-results').style.display='block';
+  document.getElementById('eval-empty').style.display='none';
+}
+function hideLocalGLSLoading(){
+  document.getElementById('local-gls-result').innerHTML='';
+}
+
+// ── SYNC COMMAND CENTER MODAL ──
+function openSyncModal(){
+  renderSyncModalContent();
+  document.getElementById('sync-modal-bg').classList.add('on');
+}
+function closeSyncModal(){document.getElementById('sync-modal-bg').classList.remove('on');}
+
+function renderSyncModalContent(){
+  renderModelOptions('sync-model-options');
+  // WebGPU status
+  const el=document.getElementById('sync-webgpu-status');
+  if(el){
+    el.innerHTML=LOCAL_AI.webGPUSupported
+      ?'<span style="display:flex;align-items:center;gap:7px;color:var(--green);font-size:12px;">✅ WebGPU is supported on this device — full local AI available.</span>'
+      :'<span style="display:flex;align-items:center;gap:7px;color:var(--amber);font-size:12px;">⚠️ WebGPU not detected. Fast Scan will use Cloud API as fallback. Chrome 121+ recommended.</span>';
+  }
+  // If already downloaded
+  const dlBtn=document.getElementById('sync-download-btn');
+  if(dlBtn){
+    if(LOCAL_AI.state==='ready'){
+      dlBtn.textContent='✅ Intelligence Ready';dlBtn.disabled=true;
+    }else if(LOCAL_AI.state==='downloading'){
+      dlBtn.textContent='⏳ Downloading...';dlBtn.disabled=true;
+    }else{
+      dlBtn.textContent='🧠 Download Offline Intelligence';dlBtn.disabled=!LOCAL_AI.webGPUSupported;
+      if(!LOCAL_AI.webGPUSupported)dlBtn.title='WebGPU required for local AI download';
+    }
+  }
+}
+
+function renderModelOptions(containerId){
+  const el=document.getElementById(containerId);if(!el)return;
+  el.innerHTML=Object.entries(MODEL_REGISTRY).map(([key,m])=>`
+    <div class="model-option ${key===LOCAL_AI.selectedModelKey?'selected':''} ${!m.available?'disabled':''}"
+      onclick="${m.available?`selectModel('${key}')`:''}">
+      <div class="mo-radio"></div>
+      <div class="mo-info">
+        <div class="mo-name">${m.label} ${m.recommended?'<span class="mo-badge rec">Recommended</span>':''} ${m.comingSoon?'<span class="mo-badge soon">Coming Soon</span>':''}</div>
+        <div class="mo-meta">${m.size_gb} · ~${m.vram_mb}MB VRAM · ${m.available?'Available now':'Not yet in WebLLM registry'}</div>
+      </div>
+    </div>`).join('');
+}
+
+function selectModel(key){
+  if(!MODEL_REGISTRY[key]?.available)return;
+  LOCAL_AI.selectedModelKey=key;
+  localStorage.setItem('coi_local_model',key);
+  if(LOCAL_AI.worker)LOCAL_AI.worker.postMessage({type:'SET_MODEL',payload:{modelKey:key}});
+  renderModelOptions('sync-model-options');
+  renderModelOptions('profile-model-options');
+}
+
+function showDownloadProgress(show){
+  const el=document.getElementById('dl-progress');
+  if(el)el.classList.toggle('on',show);
+  const btn=document.getElementById('sync-download-btn');
+  if(btn&&show){btn.disabled=true;btn.textContent='⏳ Downloading...';}
+}
+
+async function startLocalDownload(){
+  if(!LOCAL_AI.webGPUSupported){toast('WebGPU required for local AI. Use Chrome 121+ on Android.','err');return;}
+  if(!LOCAL_AI.worker)initLocalWorker();
+  if(!LOCAL_AI.worker){toast('Could not start worker. Check browser support.','err');return;}
+  const btn=document.getElementById('sync-download-btn');
+  if(btn){btn.disabled=true;btn.textContent='⏳ Starting download...';}
+  LOCAL_AI.worker.postMessage({type:'LOAD_MODEL',payload:{modelKey:LOCAL_AI.selectedModelKey}});
+}
+
+function unloadLocalModel(){
+  if(LOCAL_AI.worker)LOCAL_AI.worker.postMessage({type:'UNLOAD'});
+  localStorage.removeItem('coi_local_ready');
+  toast('Local model unloaded — VRAM freed','ok');
+}
+
+// Update WebGPU badge in footer
+function updateWebGPUBadge(){
+  const el=document.getElementById('webgpu-badge-footer');
+  if(!el)return;
+  el.innerHTML=LOCAL_AI.webGPUSupported
+    ?'<span class="webgpu-badge ok">WebGPU ✓</span>'
+    :'<span class="webgpu-badge no">WebGPU ✗</span>';
+}
+
+// Handle pending JD scan after model becomes ready
+const _workerMsgOrig=handleWorkerMessage;
+// Patch: if READY and pending JD, auto-run GLS
+function handleWorkerMessagePatched(event){
+  handleWorkerMessage(event);
+  if(event.data.type==='READY'&&window._pendingLocalJD){
+    const jd=window._pendingLocalJD;
+    window._pendingLocalJD=null;
+    setTimeout(()=>{
+      showLocalGLSLoading();
+      LOCAL_AI.worker.postMessage({type:'RUN_GLS',payload:{jd}});
+    },300);
+  }
 }
 
 // ── INIT ──
@@ -1693,6 +2298,27 @@ async function init(){
   await initIDB();loadE();loadP();await loadSk();updStats();await loadIDBCache();loadFingerprints();
   document.getElementById('sw').style.display='block';
   checkApiState();
+
+  // V7: WebGPU check + local AI setup
+  await checkWebGPU();
+  updateWebGPUBadge();
+  updateAIFooter();
+  updateFastScanBtn();
+  renderModelOptions('sync-model-options');
+  renderModelOptions('profile-model-options');
+
+  // Init worker (non-blocking)
+  initLocalWorker();
+
+  // Patch worker message handler for pending JD
+  if(LOCAL_AI.worker)LOCAL_AI.worker.onmessage=handleWorkerMessagePatched;
+
+  // If model was previously downloaded, check if ready
+  if(localStorage.getItem('coi_local_ready')&&LOCAL_AI.webGPUSupported&&LOCAL_AI.worker){
+    // Attempt silent reconnect
+    LOCAL_AI.worker.postMessage({type:'GET_STATUS'});
+  }
+
   if(localStorage.getItem('coi_key_enc')&&!S.sessionKey)showPIN('unlock');
 }
 init();
