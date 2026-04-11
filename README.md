@@ -11,59 +11,69 @@ Built on [career-ops-india](https://github.com/itsmedhawal/career-ops-india), wh
 
 ## What it does
 
-Paste any job description. Get a structured evaluation in under 60 seconds:
+Paste any job description. Get a structured evaluation in under 60 seconds -- or an instant local GLS scan with zero API cost.
 
-- **Job Fit Score** — 1–5 with grade (A–F)
-- **Ghost Likelihood Score (GLS)** — 0–100 across 9 India-calibrated signals
-- **Full A–G Report** — CV match, comp analysis, level strategy, interview plan, ATS keywords
-- **Take-Home Calculator** — CTC → in-hand estimate (new tax regime FY25–26)
-- **Custom CV Generator** — tailored CV for each specific role, downloadable as .doc
-- **Interview Prep Kit** — STAR+R stories, CTC negotiation, India-specific scenarios
-- **Pipeline Tracker** — manage all applications with status, filters, analytics
-- **Intern Mode** — PPO probability, stipend benchmarks by city for students
+- **Ghost Likelihood Score (GLS)** -- 0–100 across 9 India-calibrated signals
+- **Fast Scan** -- instant local GLS via Gemma 2 2B running entirely on your device (WebGPU)
+- **Deep Eval** -- full A–G report via Claude API: CV match, comp analysis, level strategy, interview plan
+- **Take-Home Calculator** -- CTC → in-hand estimate (new tax regime FY25–26)
+- **Custom CV Generator** -- tailored CV for each specific role, downloadable as .doc
+- **Interview Prep Kit** -- STAR+R stories, CTC negotiation, India-specific HR scenarios
+- **Pipeline Tracker** -- manage all applications with status, filters, and follow-up reminders
+- **Analytics** -- application funnel, ghost rate by source, archetype breakdown
+- **Intern Mode** -- PPO probability, stipend benchmarks by city for students and freshers
+- **Repost Detection** -- fingerprints every JD locally, flags if you have seen this role before
+- **PIN-Encrypted API Key** -- WebCrypto AES-GCM. Your key is encrypted before touching storage
+- **Offline-First PWA** -- installable on Android and iOS, works offline for Tracker and Analytics
 
 ---
 
-## Key Features
+## Hybrid Intelligence Architecture (v7.0)
 
-### 👻 Ghost Likelihood Score
-0–100 score across 9 signals. Know if a posting is real before spending hours applying. India-calibrated — Naukri and Foundit aware. Repost detection across your evaluation history.
+The first app in India to offer a hybrid Ghost Buster -- local + cloud, mobile-first, privacy-first.
 
-### 🇮🇳 7 India Archetypes
-AI/ML Engineer · LLMOps/GenAI · Data Scientist · AI PM · Solutions Architect · AI Consultant · AI Transformation Lead
+| Mode | Engine | Cost | Connectivity |
+|------|--------|------|-------------|
+| **Fast Scan** | Gemma 2 2B (on-device, WebGPU) | Free | Offline after first download |
+| **Deep Eval** | Claude Sonnet API | API credits | Online |
+| **Fast Scan fallback** | Claude API (when WebGPU unavailable) | API credits | Online |
 
-### 💰 India Comp Framework
-CTC vs in-hand, variable %, bond penalties, ESOP risk. Scored in LPA. Take-home calculator with PF and new tax regime FY25–26.
+**Phase 1 (Now):** Gemma 2 2B Lite -- instant local GLS, ~1.6 GB one-time download
 
-### 🏢 GCC-Aware Scoring
-Global Capability Center as a distinct company stage with its own scoring logic.
+**Phase 2 (May 2026):** One-tap upgrade to Gemma 4 E2B when MLC community compiles it
 
-### 🚩 Fake Remote Detection
-"Remote within Bangalore" is not remote. Flags city-restricted remote and mandatory relocation patterns.
+### Sync Command Center
+Download Offline Intelligence once over WiFi. After that, GLS scans are instant, free, and fully offline. Your phone becomes a sovereign job assessment tool.
+career-ops-india-app/
 
-### 🎓 Intern Mode
-For students and freshers. PPO probability, brand value scoring, stipend benchmarks across 10 Indian cities, on-campus vs off-campus strategy.
+├── index.html     ← full app, single file
 
-### ✍️ Custom CV Generator
-Select any saved evaluation → generate a tailored CV. Rewrites bullets with metrics, reorders sections to match JD priority, injects ATS keywords. Downloadable as .doc.
+├── worker.js      ← Web Worker for local AI inference
 
-### 🎤 Interview Prep Mode
-8 STAR+R stories mapped to the specific JD, CTC negotiation script, red flag questions, India-specific HR scenarios. Downloadable as markdown.
+├── manifest.json  ← PWA manifest
 
-### 📈 Pipeline Analytics
-Application funnel, average score, ghost rate by source, archetype breakdown, follow-up reminders. Computed locally — zero API cost.
+├── README.md
 
-### 🔐 PIN-Encrypted API Key
-WebCrypto AES-GCM with PBKDF2 (310,000 iterations). Your API key is encrypted before touching storage. Decrypted key lives only in session memory — cleared when tab closes.
+└── LICENSE
 
-### 📱 Mobile-First PWA
-Installable on Android and iOS. Works offline for tracker and analytics. Optimised for one-thumb use on the go.
+---
+
+## Version History
+
+| Version | Highlights |
+|---------|-----------|
+| v7.0 | Hybrid local + cloud AI, Gemma 2 2B via WebLLM, Fast Scan, Sync Command Center |
+| v6.0 | Custom CV generator, Interview Prep, Analytics, Repost Detection, PDF export |
+| v5.1 | Model string fix, improved error visibility |
+| v5.0 | Circular GLS gauge, Take-Home calculator, Intern stipend chart, Dense tracker cards |
+| v4.0 | PIN encryption (AES-GCM + PBKDF2), XSS sanitization, CSP, PWA banner |
+| v3.0 | Journey-first UX, 4-tab mobile nav, onboarding, Profile tab, Extract from CV |
 
 ---
 
 ## How to Use
 
-1. Open the app — no installation needed
+1. Open the app -- no installation needed
 2. **Profile tab** → add Anthropic API key → paste CV → tap Extract from CV
 3. **Evaluate tab** → paste any job description → tap Evaluate Job
 4. Review Score, Grade and GLS → decide whether to apply
@@ -77,7 +87,7 @@ Installable on Android and iOS. Works offline for tracker and analytics. Optimis
 - Your CV, API key, and job data never leave your browser
 - The only external call is your direct API request to Anthropic
 - API key encrypted with a 4-digit PIN using AES-GCM before storage
-- Decrypted key lives only in session memory — cleared when tab closes
+- Decrypted key lives only in session memory -- cleared when tab closes
 - No analytics, no cookies, no third-party scripts
 
 ---
@@ -86,13 +96,13 @@ Installable on Android and iOS. Works offline for tracker and analytics. Optimis
 
 | Layer | Stack |
 |-------|-------|
-| Runtime | Single HTML file — no build step, no dependencies |
+| Runtime | Single HTML file -- no build step, no dependencies |
 | AI | Anthropic Claude API (direct browser call) |
 | Storage | localStorage + IndexedDB |
 | Security | WebCrypto AES-GCM + PBKDF2 (310,000 iterations) |
 | CV Export | HTML → .doc (opens in Word and Google Docs) |
 | PDF Export | window.print() with print stylesheet |
-| PWA | manifest.json — installable, works offline |
+| PWA | manifest.json -- installable, works offline |
 | Fonts | Space Grotesk · DM Sans · JetBrains Mono |
 
 ---
@@ -109,11 +119,11 @@ career-ops (Santiago Fernández de Valderrama)
 
 ## Credits
 
-**Dhawal Shrivastava** — Creator of Career-Ops-India App and the career-ops-india fork.
+**Dhawal Shrivastava** -- Creator of Career-Ops-India App and the career-ops-india fork.
 Original contributions: Ghost Likelihood Score (GLS), Intern Mode, India archetypes, CTC/LPA framework, GCC stage, Fake Remote detection, Custom CV Generator, Interview Prep Mode.
 [GitHub](https://github.com/itsmedhawal/career-ops-india) · [LinkedIn](https://www.linkedin.com/in/dhawalshrivastava)
 
-**Santiago Fernández de Valderrama** — Creator of [career-ops](https://github.com/santifer/career-ops), the engine career-ops-india is forked from. Architecture, pipeline, PDF generation, batch processing, and HITL philosophy are his work.
+**Santiago Fernández de Valderrama** -- Creator of [career-ops](https://github.com/santifer/career-ops), the engine career-ops-india is forked from. Architecture, pipeline, PDF generation, batch processing, and HITL philosophy are his work.
 [santifer.io](https://santifer.io)
 
 ---
@@ -131,4 +141,4 @@ Open source under MIT:
 ---
 
 *Made with Love and Innovation, driven by Intention, dedicated to the community.*
-*— [Dhawal Shrivastava](https://www.linkedin.com/in/dhawalshrivastava)*
+*-- [Dhawal Shrivastava](https://www.linkedin.com/in/dhawalshrivastava)*
