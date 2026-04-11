@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://raw.githubusercontent.com https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:; object-src 'none'; base-uri 'self';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://raw.githubusercontent.com https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:; object-src 'none'; base-uri 'self';">
 <title>Career-Ops-India App</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FF9933">
@@ -98,6 +98,12 @@ code{font-family:var(--fm);font-size:12px;background:var(--surface-2);padding:2p
 .bw{width:100%;justify-content:center;}
 .bl{padding:13px 24px;font-size:15px;}
 
+/* API LOCKED STATE */
+.api-locked{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:20px;text-align:center;margin-top:16px;}
+.api-locked-icon{font-size:32px;margin-bottom:10px;}
+.api-locked-title{font-family:var(--fh);font-weight:600;font-size:15px;margin-bottom:6px;}
+.api-locked-sub{font-size:13px;color:var(--text-2);margin-bottom:14px;}
+
 /* FORM */
 .fg{margin-bottom:14px;}
 label{display:block;font-size:13px;font-weight:500;color:var(--text-2);margin-bottom:5px;font-family:var(--fh);}
@@ -188,6 +194,14 @@ select option{background:var(--surface);}
 @media(min-width:768px){.sticky-wrap{display:none!important;}}
 .cors-note{display:flex;align-items:flex-start;gap:8px;background:rgba(88,166,255,.06);border:1px solid rgba(88,166,255,.2);border-radius:var(--r-sm);padding:9px 12px;margin-top:8px;font-size:12px;color:var(--cyan);line-height:1.5;}
 
+/* REPOST WARNING */
+.repost-warn{display:flex;align-items:center;gap:10px;background:rgba(248,81,73,.06);border:1px solid rgba(248,81,73,.2);border-radius:var(--r-md);padding:12px 14px;margin-bottom:14px;font-size:13px;color:var(--red);}
+
+/* EVAL HISTORY */
+.eval-history-card{background:var(--surface-2);border:1px solid var(--amber);border-radius:var(--r-md);padding:12px 14px;margin-bottom:14px;font-size:13px;}
+.eh-title{font-family:var(--fh);font-weight:600;font-size:13px;color:var(--amber);margin-bottom:6px;}
+.eh-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text-2);padding:3px 0;}
+
 /* LOADING */
 .loading{display:none;text-align:center;padding:48px 20px;}
 .spin{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--saffron);border-radius:50%;animation:sp .8s linear infinite;margin:0 auto 14px;}
@@ -200,7 +214,7 @@ select option{background:var(--surface);}
 .ls.act .lsd{border-color:var(--saffron);background:var(--saffron-dim);color:var(--saffron);}
 .ls.done .lsd{border-color:var(--green);background:rgba(63,185,80,.1);color:var(--green);}
 
-/* RESULTS - SCORE GRID */
+/* RESULTS */
 .empty{text-align:center;padding:40px 20px;color:var(--text-3);}
 .ei{font-size:40px;margin-bottom:10px;}
 .et{font-family:var(--fh);font-size:16px;color:var(--text-2);margin-bottom:5px;}
@@ -215,19 +229,14 @@ select option{background:var(--surface);}
 /* CIRCULAR GLS GAUGE */
 .gls-hero{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:20px 16px;margin-bottom:14px;}
 .gls-hero-inner{display:flex;align-items:center;gap:20px;}
-.gls-gauge-wrap{flex-shrink:0;cursor:pointer;position:relative;}
-.gls-gauge-wrap:hover .gls-tooltip{display:block;}
-.gls-tooltip{display:none;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:12px 14px;width:240px;z-index:10;font-size:12px;color:var(--text-2);line-height:1.6;box-shadow:var(--shadow);}
-.gls-tooltip::before{content:'';position:absolute;top:-5px;left:50%;transform:translateX(-50%);width:8px;height:8px;background:var(--surface-2);border-left:1px solid var(--border);border-top:1px solid var(--border);transform:translateX(-50%) rotate(45deg);}
+.gls-gauge-wrap{flex-shrink:0;}
 .gls-right{flex:1;}
 .gls-title{font-family:var(--fh);font-weight:700;font-size:15px;margin-bottom:4px;}
 .gls-assess{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:var(--r-pill);font-size:12px;font-weight:500;font-family:var(--fm);margin-bottom:10px;}
 .gls-note{font-size:11px;color:var(--text-3);line-height:1.5;}
-.gls-signals{margin-top:12px;}
 .gls-signal-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border-light);font-size:12px;}
 .gls-signal-row:last-child{border:none;}
 .gls-signal-pts{font-family:var(--fm);font-weight:600;color:var(--amber);white-space:nowrap;margin-left:8px;}
-.gls-expand{font-size:11px;color:var(--cyan);cursor:pointer;margin-top:8px;display:inline-block;}
 
 /* TAKE-HOME CALCULATOR */
 .takehome-card{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:14px;margin-top:10px;}
@@ -238,25 +247,21 @@ select option{background:var(--surface);}
 .th-sw-btn.on{background:var(--saffron);color:#000;font-weight:600;}
 .th-rows{display:flex;flex-direction:column;gap:6px;}
 .th-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border-light);}
-.th-row:last-child{border:none;padding-top:8px;}
+.th-row:last-child{border:none;}
 .th-row-label{font-size:12px;color:var(--text-2);}
 .th-row-val{font-family:var(--fh);font-weight:600;font-size:13px;}
 .th-row.highlight .th-row-label{color:var(--green);font-weight:600;}
 .th-row.highlight .th-row-val{color:var(--green);font-size:15px;}
 .th-disclaimer{font-size:10px;color:var(--text-3);margin-top:8px;line-height:1.5;}
 
-/* INTERN STIPEND CHART */
+/* STIPEND CHART */
 .stipend-chart{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:16px;margin-top:12px;}
 .sc-title{font-family:var(--fh);font-weight:600;font-size:14px;margin-bottom:14px;}
 .sc-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
 .sc-label{font-size:11px;color:var(--text-2);width:90px;flex-shrink:0;font-family:var(--fm);}
-.sc-bar-wrap{flex:1;background:var(--surface-2);border-radius:var(--r-pill);height:18px;overflow:hidden;position:relative;}
+.sc-bar-wrap{flex:1;background:var(--surface-2);border-radius:var(--r-pill);height:18px;overflow:hidden;}
 .sc-bar{height:100%;border-radius:var(--r-pill);transition:width .8s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;}
 .sc-bar-val{font-size:9px;font-family:var(--fm);font-weight:600;color:#000;white-space:nowrap;}
-.sc-offered-row .sc-label{color:var(--saffron);font-weight:600;}
-.sc-offered-row .sc-bar{background:var(--saffron);}
-.sc-median-row .sc-bar{background:var(--surface-2);border:1px solid var(--border);}
-.sc-median-row .sc-bar-val{color:var(--text-2);}
 .sc-disclaimer{font-size:10px;color:var(--text-3);margin-top:10px;}
 
 /* REPORT BLOCKS */
@@ -278,7 +283,7 @@ select option{background:var(--surface);}
 .rpt ul{padding-left:16px;margin-bottom:8px;}
 .rpt li{margin-bottom:3px;}
 
-/* TRACKER - HIGH DENSITY */
+/* TRACKER */
 .tr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
 .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;}
 .stc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:12px 8px;text-align:center;}
@@ -289,20 +294,46 @@ select option{background:var(--surface);}
 .fb{font-family:var(--fb);font-size:12px;padding:5px 12px;border-radius:var(--r-pill);border:1px solid var(--border);background:none;color:var(--text-2);cursor:pointer;white-space:nowrap;transition:all .2s;}
 .fb.on{background:var(--saffron);border-color:var(--saffron);color:#000;font-weight:500;}
 .fb:hover:not(.on){border-color:var(--saffron);color:var(--saffron);}
-/* Dense app card */
-.app-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:11px 13px;margin-bottom:6px;transition:border-color .2s;}
-.app-card:hover{border-color:var(--border);}
+
+/* DENSE APP CARD */
+.app-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:11px 13px;margin-bottom:6px;}
+.app-card.needs-attention{border-color:var(--amber);}
 .ac-row1{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px;}
 .ac-company{font-family:var(--fh);font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .ac-badges{display:flex;gap:5px;align-items:center;flex-shrink:0;}
 .bdg{font-family:var(--fm);font-size:11px;font-weight:600;padding:2px 7px;border-radius:var(--r-sm);}
 .ac-row2{font-size:12px;color:var(--text-2);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.ac-row3{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
-.ac-meta{font-size:10px;color:var(--text-3);font-family:var(--fm);display:flex;align-items:center;gap:3px;}
+.ac-row3{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px;}
+.ac-meta{font-size:10px;color:var(--text-3);font-family:var(--fm);}
 .ac-spacer{flex:1;}
-.cached-chip{font-size:10px;color:var(--cyan);font-family:var(--fm);display:flex;align-items:center;gap:3px;}
-.ac-row4{display:flex;gap:5px;align-items:center;margin-top:8px;flex-wrap:wrap;}
+.cached-chip{font-size:10px;color:var(--cyan);font-family:var(--fm);}
+.attention-chip{font-size:10px;color:var(--amber);font-family:var(--fm);}
+.ac-row4{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
 .ssel{font-size:11px;padding:4px 7px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--surface-2);color:var(--text-1);font-family:var(--fm);cursor:pointer;}
+
+/* ANALYTICS */
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+@media(min-width:480px){.analytics-grid{grid-template-columns:repeat(3,1fr);}}
+.an-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:14px 12px;text-align:center;}
+.an-val{font-family:var(--fh);font-size:24px;font-weight:700;color:var(--saffron);}
+.an-label{font-size:11px;color:var(--text-3);font-family:var(--fm);text-transform:uppercase;letter-spacing:.3px;margin-top:3px;}
+.funnel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:16px;margin-bottom:14px;}
+.funnel-title{font-family:var(--fh);font-weight:600;font-size:14px;margin-bottom:14px;}
+.funnel-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.funnel-label{font-size:12px;color:var(--text-2);width:80px;flex-shrink:0;}
+.funnel-bar-wrap{flex:1;background:var(--surface-2);border-radius:var(--r-pill);height:20px;overflow:hidden;}
+.funnel-bar{height:100%;border-radius:var(--r-pill);display:flex;align-items:center;padding-left:8px;transition:width .6s ease;}
+.funnel-bar-label{font-size:10px;font-family:var(--fm);font-weight:600;color:#000;}
+.funnel-count{font-family:var(--fm);font-size:12px;color:var(--text-3);width:24px;text-align:right;flex-shrink:0;}
+.archetype-chart{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:16px;margin-bottom:14px;}
+.at-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.at-label{font-size:11px;color:var(--text-2);font-family:var(--fm);width:110px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.at-bar-wrap{flex:1;background:var(--surface-2);border-radius:var(--r-pill);height:14px;overflow:hidden;}
+.at-bar{height:100%;border-radius:var(--r-pill);background:var(--cyan);transition:width .6s ease;}
+.at-val{font-family:var(--fm);font-size:11px;color:var(--text-3);width:30px;text-align:right;flex-shrink:0;}
+.ghost-stat{background:rgba(248,81,73,.05);border:1px solid rgba(248,81,73,.15);border-radius:var(--r-md);padding:14px;margin-bottom:14px;display:flex;align-items:center;gap:14px;}
+.ghost-stat-num{font-family:var(--fh);font-size:32px;font-weight:700;color:var(--red);flex-shrink:0;}
+.ghost-stat-text{font-size:12px;color:var(--text-2);line-height:1.6;}
 
 /* PROFILE */
 .extract-wrap{background:var(--saffron-dim);border:1px solid rgba(255,153,51,.25);border-radius:var(--r-md);padding:14px;margin-top:10px;text-align:center;}
@@ -385,8 +416,8 @@ select option{background:var(--surface);}
   <div class="pin-box">
     <div class="pin-icon" id="pin-icon">🔐</div>
     <div class="pin-title" id="pin-title">Secure Your App</div>
-    <div class="pin-sub" id="pin-sub">Set a <em>4-digit PIN</em> to protect your API key.<br>Your PIN never leaves your device.</div>
-    <div class="pin-setup-note" id="pin-setup-note"><strong>Why a PIN?</strong> Your Anthropic API key is encrypted using your PIN before being saved. Even if something reads your browser storage, the key remains unreadable without your PIN.</div>
+    <div class="pin-sub" id="pin-sub">Set a <em>4-digit PIN</em> to protect your API key.</div>
+    <div class="pin-setup-note" id="pin-setup-note"><strong>Why a PIN?</strong> Your Anthropic API key is encrypted using your PIN. Even if something reads your browser storage, the key remains unreadable without your PIN.</div>
     <div class="pin-dots" id="pin-dots">
       <div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div>
       <div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div>
@@ -449,20 +480,19 @@ select option{background:var(--surface);}
 <nav class="top-nav">
   <button class="tnb on" onclick="nav('evaluate')" id="tn-evaluate">🔍 Evaluate</button>
   <button class="tnb" onclick="nav('tracker')" id="tn-tracker">📊 Tracker</button>
+  <button class="tnb" onclick="nav('analytics')" id="tn-analytics">📈 Analytics</button>
   <button class="tnb" onclick="nav('profile')" id="tn-profile">👤 Profile</button>
   <button class="tnb" onclick="nav('more')" id="tn-more">⋯ More</button>
 </nav>
 
-<!-- EVALUATE -->
+<!-- ══════════════════════════════
+     EVALUATE
+══════════════════════════════ -->
 <div class="panel on" id="panel-evaluate"><div class="pi">
-  <!-- PWA Banner -->
   <div class="pwa-banner" id="pwa-banner">
     <span style="font-size:24px;flex-shrink:0;">📲</span>
-    <div class="pwa-banner-text">
-      <strong>Add to Home Screen</strong>
-      Install Career-Ops-India App for a faster, full-screen experience — no browser bar.
-    </div>
-    <button class="btn bp" style="font-size:12px;padding:7px 12px;flex-shrink:0;" id="pwa-install-btn" onclick="triggerInstall()">Install</button>
+    <div class="pwa-banner-text"><strong>Add to Home Screen</strong>Install for a faster, full-screen experience.</div>
+    <button class="btn bp" style="font-size:12px;padding:7px 12px;flex-shrink:0;" onclick="triggerInstall()">Install</button>
     <button class="pwa-x" onclick="dismissPWA()">✕</button>
   </div>
 
@@ -470,6 +500,19 @@ select option{background:var(--surface);}
     <h1>Found a job?<br><em>Let's see if it's worth your time.</em></h1>
     <p style="margin-top:8px;font-size:14px;">Paste the JD below and hit Evaluate. Takes about 30 seconds.</p>
   </div>
+
+  <!-- API not configured state -->
+  <div id="no-api-banner" style="display:none;" class="card" style="border-color:var(--amber);">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-size:24px;">🔑</span>
+      <div style="flex:1;">
+        <div style="font-family:var(--fh);font-weight:600;font-size:14px;margin-bottom:2px;">API key needed to evaluate</div>
+        <div style="font-size:12px;color:var(--text-2);">Add your Anthropic API key in Profile. The Tracker and Analytics tabs work without it.</div>
+      </div>
+      <button class="btn bs" style="font-size:12px;padding:6px 12px;flex-shrink:0;" onclick="nav('profile')">Go →</button>
+    </div>
+  </div>
+
   <div class="mtog">
     <button class="mb on" onclick="setMode('professional')" id="mp">💼 Professional</button>
     <button class="mb" onclick="setMode('intern')" id="mi">🎓 Student / Intern</button>
@@ -484,6 +527,7 @@ The more complete the JD, the better the evaluation."></textarea>
     <div class="cors-note"><span>ℹ️</span><span>Paste JD text directly for best results. URL extraction may fail on some job boards due to browser security restrictions.</span></div>
   </div>
   <button class="btn bp bw bl mt desk-eval" onclick="runEval()" id="eval-btn">🚀 Evaluate Job</button>
+
   <div class="loading" id="loading">
     <div class="spin"></div>
     <div style="font-size:13px;color:var(--text-2);">Evaluating your job match...</div>
@@ -496,12 +540,16 @@ The more complete the JD, the better the evaluation."></textarea>
       <div class="ls" id="ls6"><div class="lsd">6</div>Generating report</div>
     </div>
   </div>
+
   <div class="empty" id="eval-empty" style="padding-top:24px;">
     <div class="ei">👆</div>
     <div class="et">Paste a JD above</div>
     <div class="ed">Score, grade, ghost risk and full report appear here.</div>
   </div>
+
   <div id="eval-results" style="display:none;margin-top:20px;">
+    <div id="repost-warn-wrap"></div>
+    <div id="eval-history-wrap"></div>
     <div class="score-grid" id="sgrid"></div>
     <div id="gls-hero-wrap"></div>
     <div id="takehome-wrap"></div>
@@ -516,17 +564,20 @@ The more complete the JD, the better the evaluation."></textarea>
   </div>
 </div></div>
 
-<!-- Sticky eval button (mobile) -->
+<!-- Sticky eval button -->
 <div class="sticky-wrap" id="sw">
   <button class="btn bp bw bl" onclick="runEval()" id="seb">🚀 Evaluate Job</button>
 </div>
 
-<!-- TRACKER -->
+<!-- ══════════════════════════════
+     TRACKER
+══════════════════════════════ -->
 <div class="panel" id="panel-tracker"><div class="pi">
   <div class="tr-top">
     <h2 style="margin-bottom:0;">My Pipeline</h2>
     <div style="display:flex;gap:7px;">
       <button class="btn bs" style="font-size:12px;padding:6px 12px;" onclick="exportT()">⬇️ Export</button>
+      <button class="btn bs" style="font-size:12px;padding:6px 12px;" onclick="exportPDF()">📄 PDF</button>
       <button class="btn bs" style="font-size:12px;padding:6px 12px;" onclick="document.getElementById('imp').click()">⬆️ Import</button>
       <input type="file" id="imp" accept=".json" style="display:none;" onchange="importT(this)">
     </div>
@@ -537,7 +588,6 @@ The more complete the JD, the better the evaluation."></textarea>
     <div class="stc"><div class="stv" id="st2">0</div><div class="stl">Interview</div></div>
     <div class="stc"><div class="stv" id="st3">0</div><div class="stl">Offer</div></div>
   </div>
-  <!-- Status filter -->
   <div class="slabel">Status</div>
   <div class="frow" style="margin-bottom:10px;">
     <button class="fb on" onclick="filt('status','all')" id="fb-all">All</button>
@@ -547,7 +597,6 @@ The more complete the JD, the better the evaluation."></textarea>
     <button class="fb" onclick="filt('status','Offer')" id="fb-Offer">Offer</button>
     <button class="fb" onclick="filt('status','Rejected')" id="fb-Rejected">Rejected</button>
   </div>
-  <!-- Notice filter -->
   <div class="slabel">Notice Period</div>
   <div class="frow" style="margin-bottom:10px;">
     <button class="fb on" onclick="filt('notice','any')" id="fn-any">Any</button>
@@ -555,7 +604,6 @@ The more complete the JD, the better the evaluation."></textarea>
     <button class="fb" onclick="filt('notice','30')" id="fn-30">≤ 30 Days</button>
     <button class="fb" onclick="filt('notice','60')" id="fn-60">≤ 60 Days</button>
   </div>
-  <!-- Source filter -->
   <div class="slabel">Source Quality</div>
   <div class="frow" style="margin-bottom:14px;">
     <button class="fb on" onclick="filt('source','all')" id="fs-all">All Sources</button>
@@ -564,7 +612,18 @@ The more complete the JD, the better the evaluation."></textarea>
   <div id="tlist"></div>
 </div></div>
 
-<!-- PROFILE -->
+<!-- ══════════════════════════════
+     ANALYTICS
+══════════════════════════════ -->
+<div class="panel" id="panel-analytics"><div class="pi">
+  <h2 style="margin-bottom:4px;">Pipeline Analytics</h2>
+  <p style="margin-bottom:20px;font-size:13px;">Computed from your local tracker data. No API needed.</p>
+  <div id="analytics-content"></div>
+</div></div>
+
+<!-- ══════════════════════════════
+     PROFILE
+══════════════════════════════ -->
 <div class="panel" id="panel-profile"><div class="pi">
   <h2 style="margin-bottom:4px;">Your Profile</h2>
   <p style="margin-bottom:16px;font-size:13px;">Set up once. Powers every evaluation. Foundation for your custom CV later.</p>
@@ -581,7 +640,7 @@ The more complete the JD, the better the evaluation."></textarea>
       <p class="hint">Get yours at <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com/settings/keys</a> →</p>
     </div>
     <div class="ak-ok" id="ak-ok" style="display:none;">🔐 API key encrypted and saved</div>
-    <div class="warn-box">⚠️ <strong>Your API key is encrypted with your PIN.</strong> Never share your PIN or export file with anyone. Remove your API key before sharing this device.<br><br>Monitor usage at <a href="https://console.anthropic.com" target="_blank" style="color:var(--red);">console.anthropic.com</a>.</div>
+    <div class="warn-box">⚠️ <strong>Your API key is encrypted with your PIN.</strong> Never share your PIN with anyone. Monitor usage at <a href="https://console.anthropic.com" target="_blank" style="color:var(--red);">console.anthropic.com</a>.</div>
     <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn bs" style="font-size:12px;padding:6px 12px;" onclick="saveApiKey()">🔐 Encrypt &amp; Save Key</button>
       <button class="btn bg" style="font-size:12px;padding:6px 12px;" onclick="showChangePIN()">🔑 Change PIN</button>
@@ -620,12 +679,11 @@ Skills and certifications"></textarea>
     </div>
     <div class="fg"><label>Notice Period Buyout</label>
       <select id="profile-buyout"><option value="no">Not Available</option><option value="yes">Available — Company Willing to Buy Out</option><option value="self">Available — I Can Self-Fund Buyout</option></select>
-      <p class="hint">Some startups pay to buy out your notice period — lowers the red flag score for an otherwise strong fit.</p>
     </div>
     <div class="fg"><label>Sector Preference</label>
       <select id="profile-sector"><option value="all">All Sectors</option><option value="startup">Product Startups Only</option><option value="gcc">GCCs Only</option><option value="ai-native">AI-Native Only</option></select>
     </div>
-    <div class="fg"><label>College / University <span style="font-size:10px;color:var(--text-3);">(students)</span></label><input type="text" id="profile-college" placeholder="e.g. IIT Bombay, VIT Vellore"></div>
+    <div class="fg"><label>College <span style="font-size:10px;color:var(--text-3);">(students)</span></label><input type="text" id="profile-college" placeholder="e.g. IIT Bombay"></div>
     <div class="fg"><label>CGPA <span style="font-size:10px;color:var(--text-3);">(students)</span></label><input type="text" id="profile-cgpa" placeholder="e.g. 8.4"></div>
     <div class="fg" style="margin-bottom:0;"><label>Expected Stipend ₹/month <span style="font-size:10px;color:var(--text-3);">(students)</span></label><input type="text" id="profile-stipend" placeholder="e.g. 25,000"></div>
   </div>
@@ -640,7 +698,9 @@ Skills and certifications"></textarea>
   <button class="btn bp bw mt" onclick="saveManual()">✓ Save Profile</button>
 </div></div>
 
-<!-- MORE -->
+<!-- ══════════════════════════════
+     MORE
+══════════════════════════════ -->
 <div class="panel" id="panel-more"><div class="pi">
 
   <div class="more-section">
@@ -695,54 +755,42 @@ Skills and certifications"></textarea>
     <p style="text-align:center;font-size:11px;color:var(--text-3);margin-top:8px;">You will be taken to GitHub to complete your submission.</p>
   </div>
 
-  <!-- CREDITS - CORRECTED HIERARCHY -->
   <div class="more-section">
     <div class="more-label">Credits</div>
-
-    <!-- Lineage -->
     <div class="lineage-box">
       career-ops <span style="color:var(--text-3);">(Santiago)</span><br>
       &nbsp;&nbsp;&nbsp;└── career-ops-india <span style="color:var(--text-3);">(Dhawal)</span><br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="l-you">Career-Ops-India App ← you are here</span> <span style="color:var(--text-3);">(Dhawal)</span>
     </div>
-
-    <!-- Dhawal - Creator -->
     <div class="pcard card-hi">
       <div class="pname">Dhawal Shrivastava</div>
-      <div class="prole">Creator · Senior Security Assurance Engineering Lead · Microsoft</div>
-      <div class="pdesc">Created Career-Ops-India App and the career-ops-india CLI fork. Built everything you are interacting with — the app, the fork, the India-specific intelligence.</div>
+      <div class="prole">Creator · Sr. Security Assurance Engineering Lead · Microsoft</div>
+      <div class="pdesc">Created Career-Ops-India App and the career-ops-india CLI fork. Built everything you are interacting with.</div>
       <div style="font-size:13px;color:var(--text-2);line-height:1.8;">
-        <div>✦ <strong style="color:var(--text-1);">Career-Ops-India App</strong> — this app. Browser-native, PIN-encrypted, mobile-first, zero setup.</div>
-        <div>✦ <strong style="color:var(--text-1);">career-ops-india</strong> — CLI fork of career-ops, adapted for India.</div>
-        <div>✦ <strong style="color:var(--text-1);">Ghost Likelihood Score (GLS)</strong> — original 0–100 ghost posting detector. Does not exist in the original repo.</div>
-        <div>✦ <strong style="color:var(--text-1);">Intern Mode</strong> — PPO probability, brand value, stipend benchmarks. Original contribution.</div>
-        <div>✦ 7 India archetypes · CTC/LPA framework · GCC stage · Fake Remote detection</div>
+        <div>✦ <strong style="color:var(--text-1);">Career-Ops-India App</strong> — this app. Browser-native, PIN-encrypted, mobile-first.</div>
+        <div>✦ <strong style="color:var(--text-1);">Ghost Likelihood Score (GLS)</strong> — original 0–100 ghost posting detector.</div>
+        <div>✦ <strong style="color:var(--text-1);">Intern Mode</strong> — PPO probability, brand value, stipend benchmarks.</div>
+        <div>✦ 7 India archetypes · CTC/LPA · GCC stage · Fake Remote detection</div>
       </div>
       <div class="plinks">
         <a href="https://github.com/itsmedhawal/career-ops-india" target="_blank" class="btn bg">⭐ career-ops-india</a>
-        <a href="https://github.com/itsmedhawal/career-ops-india-app" target="_blank" class="btn bg">📱 This App</a>
         <a href="https://www.linkedin.com/in/dhawalshrivastava" target="_blank" class="btn bg">💼 LinkedIn</a>
       </div>
     </div>
-
-    <!-- Santiago - Original Engine -->
     <div class="pcard">
       <div class="pname">Santiago Fernández de Valderrama</div>
       <div class="prole">Head of Applied AI · Creator of career-ops — the engine career-ops-india is forked from</div>
-      <div class="pdesc">Built career-ops — the original engine that career-ops-india is forked from. Evaluated 740+ offers using it, landed a Head of Applied AI role, then open-sourced it for the world. The pipeline architecture, PDF generation, batch processing, and HITL philosophy that power career-ops-india are his work.</div>
+      <div class="pdesc">Built career-ops, the original engine. Architecture, pipeline, PDF generation and HITL philosophy are his work.</div>
       <div class="plinks">
         <a href="https://santifer.io" target="_blank" class="btn bg">🌐 santifer.io</a>
         <a href="https://github.com/santifer/career-ops" target="_blank" class="btn bg">⭐ Star career-ops</a>
       </div>
     </div>
-
-    <!-- Built with -->
     <div class="bwg" style="margin-top:12px;">
       <div class="bwi"><div style="font-size:20px;">🤖</div><div style="font-family:var(--fh);font-weight:600;font-size:11px;margin-top:3px;">Claude</div><div style="font-size:10px;color:var(--text-3);">Anthropic</div></div>
       <div class="bwi"><div style="font-size:20px;">🔐</div><div style="font-family:var(--fh);font-weight:600;font-size:11px;margin-top:3px;">WebCrypto</div><div style="font-size:10px;color:var(--text-3);">AES-GCM</div></div>
       <div class="bwi"><div style="font-size:20px;">💾</div><div style="font-family:var(--fh);font-weight:600;font-size:11px;margin-top:3px;">IndexedDB</div><div style="font-size:10px;color:var(--text-3);">Local store</div></div>
     </div>
-
     <div class="made-with">
       <p>Made with Love and Innovation, driven by Intention, dedicated to the community.</p>
       <p style="margin-top:4px;">— <a href="https://www.linkedin.com/in/dhawalshrivastava" target="_blank">Dhawal Shrivastava</a></p>
@@ -755,7 +803,7 @@ Skills and certifications"></textarea>
 <nav class="bot-nav">
   <button class="bnb on" onclick="nav('evaluate')" id="bn-evaluate"><span class="bi">🔍</span>Evaluate</button>
   <button class="bnb" onclick="nav('tracker')" id="bn-tracker"><span class="bi">📊</span>Tracker</button>
-  <button class="bnb" onclick="nav('profile')" id="bn-profile"><span class="bi">👤</span>Profile</button>
+  <button class="bnb" onclick="nav('analytics')" id="bn-analytics"><span class="bi">📈</span>Analytics</button>
   <button class="bnb" onclick="nav('more')" id="bn-more"><span class="bi">⋯</span>More</button>
 </nav>
 
@@ -766,19 +814,46 @@ Skills and certifications"></textarea>
     <div id="rcontent"></div>
   </div>
 </div>
+
+<!-- CV GENERATOR MODAL -->
+<div class="mo" id="cvmo">
+  <div class="md">
+    <div class="mh"><div class="mtt">✍️ Custom CV Generator</div><button class="mc" onclick="closeCVMo()">✕</button></div>
+    <div id="cv-gen-content"></div>
+  </div>
+</div>
+
+<!-- INTERVIEW PREP MODAL -->
+<div class="mo" id="prepmo">
+  <div class="md">
+    <div class="mh"><div class="mtt">🎤 Interview Prep</div><button class="mc" onclick="closePrepMo()">✕</button></div>
+    <div id="prep-content"></div>
+  </div>
+</div>
+
+<!-- PDF PRINT AREA -->
+<div id="pdf-area" style="display:none;"></div>
+
 <div class="tw" id="tw"></div>
 
 <script>
 'use strict';
-const S={tab:'evaluate',mode:'professional',eval:null,filter:{status:'all',notice:'any',source:'all'},fbCat:'Bug Report',evals:[],sh:null,of:null,onbStep:0,pinStep:'',pinMode:'',sessionKey:null,idbCache:new Set(),deferredInstall:null};
-
-// STIPEND BENCHMARKS (2025)
-const STIPEND_BENCHMARKS={
-  'Bangalore':35000,'Mumbai':32000,'Delhi':28000,'Gurgaon':30000,'Noida':27000,
-  'Hyderabad':25000,'Pune':24000,'Chennai':22000,'Kolkata':18000,'Ahmedabad':18000
+const S={
+  tab:'evaluate',mode:'professional',eval:null,
+  filter:{status:'all',notice:'any',source:'all'},
+  fbCat:'Bug Report',evals:[],sh:null,of:null,
+  onbStep:0,pinStep:'',pinMode:'',sessionKey:null,
+  idbCache:new Set(),deferredInstall:null,
+  jdFingerprints:{} // {hash: {date, company, role, score, gls}}
 };
 
-// THEME
+const STIPEND_BENCHMARKS={
+  'Bangalore':35000,'Mumbai':32000,'Delhi':28000,'Gurgaon':30000,
+  'Noida':27000,'Hyderabad':25000,'Pune':24000,'Chennai':22000,
+  'Kolkata':18000,'Ahmedabad':18000
+};
+
+// ── THEME ──
 function toggleTheme(){
   const h=document.documentElement,d=h.getAttribute('data-theme')==='dark';
   h.setAttribute('data-theme',d?'light':'dark');
@@ -788,7 +863,7 @@ function toggleTheme(){
 }
 (()=>{const t=localStorage.getItem('coi_t')||'dark';document.documentElement.setAttribute('data-theme',t);if(t==='light'){document.getElementById('ti').textContent='🌙';document.getElementById('tl').textContent='Dark';}})();
 
-// CRYPTO
+// ── CRYPTO ──
 async function deriveKey(pin,saltHex){
   const enc=new TextEncoder(),salt=hexToBytes(saltHex);
   const bk=await crypto.subtle.importKey('raw',enc.encode(pin),{name:'PBKDF2'},false,['deriveKey']);
@@ -809,19 +884,39 @@ async function hashPIN(pin){const salt=localStorage.getItem('coi_pin_salt')||'';
 async function setPINHash(pin){const salt=bytesToHex(crypto.getRandomValues(new Uint8Array(16)));localStorage.setItem('coi_pin_salt',salt);const h=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(pin+salt));localStorage.setItem('coi_pin_hash',bytesToHex(new Uint8Array(h)));}
 async function verifyPIN(pin){const stored=localStorage.getItem('coi_pin_hash');if(!stored)return true;return(await hashPIN(pin))===stored;}
 
-// PIN UI
+// JD FINGERPRINT (for repost detection)
+function fingerprintJD(jd){
+  // Simple hash: first 200 chars normalized
+  const norm=jd.toLowerCase().replace(/\s+/g,' ').trim().substring(0,200);
+  let h=0;for(let i=0;i<norm.length;i++){h=((h<<5)-h)+norm.charCodeAt(i);h|=0;}
+  return String(Math.abs(h));
+}
+function checkRepost(jd){
+  const fp=fingerprintJD(jd);
+  return S.jdFingerprints[fp]||null;
+}
+function storeFingerprint(jd,ev){
+  const fp=fingerprintJD(jd);
+  S.jdFingerprints[fp]={date:ev.date,company:ev.company,role:ev.role,score:ev.score,gls:ev.gls,id:ev.id};
+  localStorage.setItem('coi_fps',JSON.stringify(S.jdFingerprints));
+}
+function loadFingerprints(){
+  try{S.jdFingerprints=JSON.parse(localStorage.getItem('coi_fps')||'{}');}catch(e){S.jdFingerprints={};}
+}
+
+// ── PIN UI ──
 function showPIN(mode){
   S.pinMode=mode;S.pinStep='';
   document.getElementById('pin-overlay').classList.remove('gone');
   resetPinDots();document.getElementById('pin-error').textContent='';
   const note=document.getElementById('pin-setup-note');
-  const configs={
-    'setup':{icon:'🔐',title:'Secure Your App',sub:'Set a <em>4-digit PIN</em> to protect your API key.<br>Your PIN never leaves your device.',note:true,hint:'Choose a PIN you will remember'},
+  const cfg={
+    'setup':{icon:'🔐',title:'Secure Your App',sub:'Set a <em>4-digit PIN</em> to protect your API key.',note:true,hint:'Choose a PIN you will remember'},
     'setup-confirm':{icon:'🔁',title:'Confirm Your PIN',sub:'Enter your <em>PIN again</em> to confirm.',note:false,hint:''},
-    'unlock':{icon:'🔒',title:'Enter Your PIN',sub:'Enter your <em>4-digit PIN</em> to unlock Career-Ops-India App.',note:false,hint:''},
+    'unlock':{icon:'🔒',title:'Enter Your PIN',sub:'Enter your <em>4-digit PIN</em> to unlock.',note:false,hint:''},
     'change-old':{icon:'🔑',title:'Change PIN',sub:'Enter your <em>current PIN</em> first.',note:false,hint:''}
   };
-  const c=configs[mode]||configs['unlock'];
+  const c=cfg[mode]||cfg['unlock'];
   document.getElementById('pin-icon').textContent=c.icon;
   document.getElementById('pin-title').textContent=c.title;
   document.getElementById('pin-sub').innerHTML=c.sub;
@@ -866,7 +961,7 @@ async function saveApiKey(){
   const blob=await encryptVal(S.sessionKey,key);localStorage.setItem('coi_key_enc',blob);document.getElementById('ak-ok').style.display='flex';toast('API key encrypted ✓','ok');
 }
 
-// XSS SANITIZER
+// ── XSS SANITIZER ──
 function sanitize(html){
   const doc=new DOMParser().parseFromString(html,'text/html');
   ['script','style','iframe','object','embed','form','link','meta'].forEach(t=>doc.querySelectorAll(t).forEach(e=>e.remove()));
@@ -883,17 +978,17 @@ function mdown(t){
   return sanitize(raw);
 }
 
-// ONBOARDING
+// ── ONBOARDING ──
 function nextOnb(){const steps=3;if(S.onbStep<steps-1){document.getElementById('os'+S.onbStep).className='onb-slide prev';document.getElementById('od'+S.onbStep).className='onb-dot';S.onbStep++;document.getElementById('os'+S.onbStep).className='onb-slide active';document.getElementById('od'+S.onbStep).className='onb-dot on';if(S.onbStep===steps-1)document.getElementById('onb-next').textContent='Start Evaluating 🚀';}else{skipOnb();}}
 function skipOnb(){document.getElementById('onb').classList.add('gone');localStorage.setItem('coi_onb','1');}
 (()=>{if(localStorage.getItem('coi_onb'))document.getElementById('onb').classList.add('gone');})();
 
-// PWA
+// ── PWA ──
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();S.deferredInstall=e;if(!localStorage.getItem('coi_pwa_dismissed')&&!window.matchMedia('(display-mode: standalone)').matches){document.getElementById('pwa-banner').classList.add('show');}});
 function triggerInstall(){if(S.deferredInstall){S.deferredInstall.prompt();S.deferredInstall.userChoice.then(()=>{S.deferredInstall=null;dismissPWA();});}else{toast('On iOS: tap Share → Add to Home Screen','ok');dismissPWA();}}
 function dismissPWA(){document.getElementById('pwa-banner').classList.remove('show');localStorage.setItem('coi_pwa_dismissed','1');}
 
-// NAV
+// ── NAV ──
 function nav(t){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.tnb,.bnb').forEach(b=>b.classList.remove('on'));
@@ -902,19 +997,31 @@ function nav(t){
   if(tn)tn.classList.add('on');if(bn)bn.classList.add('on');
   S.tab=t;window.scrollTo(0,0);
   if(t==='tracker')renderT();
+  if(t==='analytics')renderAnalytics();
   document.getElementById('sw').style.display=(t==='evaluate')?'block':'none';
+  // Show API banner on evaluate if no key
+  checkApiState();
+}
+function checkApiState(){
+  const hasKey=!!(localStorage.getItem('coi_key_enc')||document.getElementById('api-key')?.value.trim());
+  const banner=document.getElementById('no-api-banner');
+  if(banner)banner.style.display=hasKey?'none':'flex';
 }
 function toggleC(el){el.classList.toggle('on');el.nextElementSibling.classList.toggle('on');}
 function toggleB(el){el.classList.toggle('on');el.nextElementSibling.classList.toggle('on');}
 function toast(m,t=''){const c=document.getElementById('tw'),el=document.createElement('div');el.className='toast'+(t?' '+t:'');el.textContent=m;c.appendChild(el);setTimeout(()=>el.remove(),3000);}
 function closeMo(){document.getElementById('rmo').classList.remove('on');}
+function closeCVMo(){document.getElementById('cvmo').classList.remove('on');}
+function closePrepMo(){document.getElementById('prepmo').classList.remove('on');}
 document.getElementById('rmo').addEventListener('click',function(e){if(e.target===this)closeMo();});
+document.getElementById('cvmo').addEventListener('click',function(e){if(e.target===this)closeCVMo();});
+document.getElementById('prepmo').addEventListener('click',function(e){if(e.target===this)closePrepMo();});
 function switchAud(a){document.querySelectorAll('.ab').forEach(b=>b.classList.remove('on'));document.querySelectorAll('.ac-u').forEach(c=>c.classList.remove('on'));document.getElementById('ab-'+a).classList.add('on');document.getElementById('ac-'+a).classList.add('on');}
 function setMode(m){S.mode=m;document.getElementById('mp').classList.toggle('on',m==='professional');document.getElementById('mi').classList.toggle('on',m==='intern');}
 function toggleKey(){const i=document.getElementById('api-key'),b=document.getElementById('key-eye'),s=i.type==='password';i.type=s?'text':'password';b.textContent=s?'🙈':'👁';}
 
-// PROFILE
-function saveManual(){saveP();toast('Profile saved ✓','ok');}
+// ── PROFILE ──
+function saveManual(){saveP();toast('Profile saved ✓','ok');checkApiState();}
 function saveP(){
   const g=id=>document.getElementById(id)?.value||'';
   localStorage.setItem('coi_p',JSON.stringify({name:g('profile-name'),ctc:g('profile-ctc'),city:g('profile-city'),workmode:g('profile-workmode'),notice:g('profile-notice'),buyout:g('profile-buyout'),sector:g('profile-sector'),college:g('profile-college'),cgpa:g('profile-cgpa'),stipend:g('profile-stipend')}));
@@ -931,20 +1038,24 @@ function loadP(){
   }catch(e){}
 }
 
-// EXTRACT FROM CV
+// ── API KEY ──
+async function getDecryptedKey(){
+  if(S.sessionKey){const blob=localStorage.getItem('coi_key_enc');if(blob){const dec=await decryptVal(S.sessionKey,blob);if(dec)return dec;}return document.getElementById('api-key').value.trim()||null;}
+  return document.getElementById('api-key').value.trim()||null;
+}
+
+// ── EXTRACT FROM CV ──
 async function extractFromCV(){
   const cv=document.getElementById('cv-input').value.trim();
   const key=await getDecryptedKey();
   if(!cv){toast('Paste your CV first','err');return;}
-  if(!key){toast('Unlock your app with PIN first','err');if(localStorage.getItem('coi_pin_hash'))showPIN('unlock');return;}
+  if(!key){toast('Add your API key first','err');if(localStorage.getItem('coi_pin_hash'))showPIN('unlock');return;}
   const btn=document.getElementById('extract-btn');btn.disabled=true;btn.textContent='Extracting...';
   try{
     const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:600,messages:[{role:'user',content:`Extract from this CV. Return ONLY valid JSON, no markdown:\n{"name":"","ctc":"","city":"","workmode":"remote-first|full-remote|hybrid|wfo","notice":"immediate|30|60|90","buyout":"no|yes|self","sector":"all|startup|gcc|ai-native","college":"","cgpa":"","stipend":""}\n\nCV:\n${cv.substring(0,3000)}`}]})});
-    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error((e.error?.message)||`HTTP ${res.status}`);}
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`HTTP ${res.status}`);}
     const data=await res.json();
-    const rawText=data.content.map(b=>b.text||'').join('');
-    const cleaned=rawText.replace(/```json|```/g,'').trim();
-    const p=JSON.parse(cleaned);
+    const p=JSON.parse(data.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim());
     const s=(id,v)=>{const e=document.getElementById(id);if(e&&v&&v.trim())e.value=v.trim();};
     s('profile-name',p.name);s('profile-ctc',p.ctc);s('profile-city',p.city);
     ['workmode','notice','buyout','sector'].forEach(k=>{const e=document.getElementById('profile-'+k);if(e&&p[k])e.value=p[k];});
@@ -954,12 +1065,8 @@ async function extractFromCV(){
   }catch(err){toast('Extract failed: '+err.message,'err');}
   btn.disabled=false;btn.textContent='✨ Extract from CV';
 }
-async function getDecryptedKey(){
-  if(S.sessionKey){const blob=localStorage.getItem('coi_key_enc');if(blob){const dec=await decryptVal(S.sessionKey,blob);if(dec)return dec;}return document.getElementById('api-key').value.trim()||null;}
-  return document.getElementById('api-key').value.trim()||null;
-}
 
-// IDB
+// ── IDB ──
 let idb=null;
 function initIDB(){return new Promise((res,rej)=>{const r=indexedDB.open('coi',1);r.onupgradeneeded=e=>{const db=e.target.result;if(!db.objectStoreNames.contains('r'))db.createObjectStore('r',{keyPath:'id'});};r.onsuccess=e=>{idb=e.target.result;res();};r.onerror=()=>rej(r.error);});}
 async function sRpt(id,d){return new Promise((res,rej)=>{const tx=idb.transaction('r','readwrite');tx.objectStore('r').put({id,...d});tx.oncomplete=res;tx.onerror=()=>rej(tx.error);});}
@@ -967,11 +1074,11 @@ async function gRpt(id){return new Promise((res,rej)=>{const tx=idb.transaction(
 async function gaRpt(){return new Promise((res,rej)=>{const tx=idb.transaction('r','readonly');const r=tx.objectStore('r').getAll();r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});}
 async function loadIDBCache(){try{const all=await gaRpt();all.forEach(r=>S.idbCache.add(r.id));}catch(e){}}
 
-// EVALS
+// ── EVALS ──
 function loadE(){try{S.evals=JSON.parse(localStorage.getItem('coi_e')||'[]');}catch(e){S.evals=[];}}
 function saveE(){localStorage.setItem('coi_e',JSON.stringify(S.evals));}
 
-// SKILL FILES
+// ── SKILL FILES ──
 async function loadSk(){
   S.sh=`You are career-ops-india, an AI job evaluation system for the Indian job market.
 ARCHETYPES: 1.AI/ML Engineer 2.LLMOps/GenAI Engineer 3.Data Scientist 4.AI Product Manager 5.AI Solutions Architect 6.AI Consultant 7.AI Transformation Lead
@@ -979,7 +1086,7 @@ SCORING: CV Match (gate <2.5=SKIP), North Star, Compensation(LPA), Cultural Sign
 COMP: LPA. In-hand ~70-75%. Bond>6mo=-0.5. Variable>30%=-0.3. GCC=no equity penalty. Buyout available=reduces notice red flag.
 GEO: Full Remote/Remote-First/Hybrid Flexible/Hybrid Structured/WFO/Fake Remote🚩
 STAGES: Early Startup/Growth Startup/Late Startup/GCC/Enterprise/Consulting
-SOURCE: Classify job source as: ATS/LinkedIn/Naukri/Foundit/iimjobs/Cutshort/Unknown
+SOURCE: ATS/LinkedIn/Naukri/Foundit/iimjobs/Cutshort/Unknown
 GLS(0-100): Repost 20, Age>60d 15, Apply inactive 15, Source(Naukri=15,Foundit=15,LinkedIn=5,ATS=0) 15, Boilerplate>70% 10, Impossible reqs 10, Layoff news 8, Unnamed client 4, Missing specs 3.
 RULES: Cite exact CV lines. Score in LPA. Be direct and actionable.`;
   S.of=`Evaluate this job. Return clean markdown:
@@ -989,21 +1096,29 @@ RULES: Cite exact CV lines. Score in LPA. Be direct and actionable.`;
 ## BLOCK C - LEVEL & STRATEGY\n## BLOCK D - COMP & MARKET\n| Component | Details | Flag |\n| CTC Range | [LPA] | |\n| Variable | | |\n| In-Hand Est | | |\n| Bond | | |\nComp Score: X/5
 ## BLOCK E - PERSONALIZATION\nTop 5 CV changes. Top 5 ATS keywords.
 ## BLOCK F - INTERVIEW PLAN\n6-8 STAR+R stories. 3 red-flag questions.
-## BLOCK G - GHOST LIKELIHOOD SCORE\nList each signal that fired with exact points:\n- Signal name: +X pts (reason)\nTOTAL GLS: X/100 [🟢/🟡/🟠/🔴]\nAssessment: [High Confidence/Proceed with Caution/Suspicious/Very High Risk]
+## BLOCK G - GHOST LIKELIHOOD SCORE\nList each signal that fired:\n- Signal name: +X pts (reason)\nTOTAL GLS: X/100 [🟢/🟡/🟠/🔴]\nAssessment: [High Confidence/Proceed with Caution/Suspicious/Very High Risk]
 ## GLOBAL SCORE\n| Dimension | Score |\n|-----------|-------|\n| CV Match | X/5 |\n| North Star | X/5 |\n| Compensation | X/5 |\n| Cultural Signals | X/5 |\n| Red Flags | -X |\n| **GLOBAL** | **X.X/5** |\nGrade: [A/B/C/D/F]
 ## INDIA NOTES\nNotice period, buyout option, CTC in-hand, GCC rotation, recommendation.
 ## EXTRACTED KEYWORDS\n[15-20 ATS keywords]`;
   try{const b='https://raw.githubusercontent.com/itsmedhawal/career-ops-india/main/.claude/skills/career-ops/modes/';const[a,c]=await Promise.all([fetch(b+'_shared.md').then(r=>r.ok?r.text():null),fetch(b+'oferta.md').then(r=>r.ok?r.text():null)]);if(a)S.sh=a;if(c)S.of=c;}catch(e){}
 }
 
-// EVALUATION
+// ── EVALUATION ──
 async function runEval(){
   const key=await getDecryptedKey();
   const jd=document.getElementById('jd-input').value.trim();
   const cv=localStorage.getItem('coi_cv')||'';
-  if(!key){if(localStorage.getItem('coi_key_enc')){showPIN('unlock');toast('Enter PIN to unlock your API key','err');}else{nav('profile');toast('Add your API key in Profile first','err');}return;}
+  if(!key){
+    if(localStorage.getItem('coi_key_enc')){showPIN('unlock');toast('Enter PIN to unlock your API key','err');}
+    else{nav('profile');toast('Add your API key in Profile first','err');}
+    return;
+  }
   if(!jd){toast('Paste a job description first','err');return;}
   if(!cv){nav('profile');toast('Add your CV in Profile first','err');return;}
+
+  // Check repost BEFORE evaluation
+  const repost=checkRepost(jd);
+
   saveP();
   const g=id=>document.getElementById(id)?.value||'';
   const pr={name:g('profile-name')||'Candidate',ctc:g('profile-ctc')||'Not specified',city:g('profile-city')||'Not specified',workmode:g('profile-workmode'),notice:g('profile-notice')||'60',buyout:g('profile-buyout')||'no',sector:g('profile-sector'),mode:S.mode,college:g('profile-college'),cgpa:g('profile-cgpa'),stipend:g('profile-stipend')};
@@ -1011,20 +1126,44 @@ async function runEval(){
   const seb=document.getElementById('seb');if(seb)seb.disabled=true;
   document.getElementById('eval-empty').style.display='none';
   document.getElementById('eval-results').style.display='none';
+  document.getElementById('repost-warn-wrap').innerHTML='';
+  document.getElementById('eval-history-wrap').innerHTML='';
   const ld=document.getElementById('loading');ld.style.display='block';
   const ss=['ls1','ls2','ls3','ls4','ls5','ls6'];let si=0;
   const iv=setInterval(()=>{if(si>0)document.getElementById(ss[si-1]).className='ls done';if(si<ss.length){document.getElementById(ss[si]).className='ls act';si++;}},900);
   try{
-    const prompt=`${S.sh}\n\n${S.of}\n\nCANDIDATE:\nName: ${pr.name}\nCTC: ${pr.ctc}\nCity: ${pr.city}\nWork Mode: ${pr.workmode}\nNotice: ${pr.notice} days\nBuyout: ${pr.buyout}\nSector: ${pr.sector}\nMode: ${pr.mode}${pr.college?'\nCollege: '+pr.college:''}\n\nCV:\n${cv}\n\nJOB DESCRIPTION:\n${jd}\n\nEvaluate fully. Cite exact CV lines. CTC in LPA. Clear recommendation. In Block G, list every signal that fired with exact points.`;
+    const prompt=`${S.sh}\n\n${S.of}\n\nCANDIDATE:\nName: ${pr.name}\nCTC: ${pr.ctc}\nCity: ${pr.city}\nWork Mode: ${pr.workmode}\nNotice: ${pr.notice} days\nBuyout: ${pr.buyout}\nSector: ${pr.sector}\nMode: ${pr.mode}${pr.college?'\nCollege: '+pr.college:''}\n\nCV:\n${cv}\n\nJOB DESCRIPTION:\n${jd}\n\nEvaluate fully. Cite exact CV lines. CTC in LPA. In Block G, list every signal that fired with exact points.`;
     const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4000,messages:[{role:'user',content:prompt}]})});
     if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'API error '+res.status);}
     const data=await res.json();const text=data.content.map(b=>b.text||'').join('\n');
     clearInterval(iv);ss.forEach(s=>document.getElementById(s).className='ls done');
     const ev=parseEv(text,jd,pr);S.eval=ev;
-    setTimeout(()=>{ld.style.display='none';document.getElementById('eval-results').style.display='block';renderRes(ev);document.getElementById('eval-btn').disabled=false;if(seb)seb.disabled=false;},400);
+
+    // Store fingerprint
+    storeFingerprint(jd,ev);
+
+    // Check eval history for similar roles
+    const similar=S.evals.filter(e=>e.company===ev.company||e.role===ev.role);
+
+    setTimeout(()=>{
+      ld.style.display='none';
+      document.getElementById('eval-results').style.display='block';
+      // Repost warning
+      if(repost){
+        document.getElementById('repost-warn-wrap').innerHTML=`<div class="repost-warn"><span style="font-size:20px;flex-shrink:0;">⚠️</span><div><strong>Repost detected</strong> — This JD matches a role you evaluated on ${repost.date} (${repost.company}, Score: ${repost.score?.toFixed(1)||'--'}/5). This adds ~20 pts to GLS automatically.</div></div>`;
+      }
+      // Eval history
+      if(similar.length){
+        const rows=similar.slice(0,2).map(e=>`<div class="eh-row"><span>${sanitize(e.company)} — ${sanitize(e.role)}</span><span style="font-family:var(--fm);color:var(--saffron);">${e.score?.toFixed(1)||'--'}/5 · ${e.date}</span></div>`).join('');
+        document.getElementById('eval-history-wrap').innerHTML=`<div class="eval-history-card"><div class="eh-title">📋 You have evaluated similar roles before</div>${rows}</div>`;
+      }
+      renderRes(ev);
+      document.getElementById('eval-btn').disabled=false;if(seb)seb.disabled=false;
+    },400);
   }catch(err){
     clearInterval(iv);ld.style.display='none';document.getElementById('eval-empty').style.display='block';
-    document.getElementById('eval-btn').disabled=false;if(seb)seb.disabled=false;toast('Error: '+err.message,'err');
+    document.getElementById('eval-btn').disabled=false;if(seb)seb.disabled=false;
+    toast('Error: '+err.message,'err');
   }
 }
 
@@ -1037,29 +1176,24 @@ function parseEv(text,jd,pr){
   const st=((text.match(/Company Stage[^|]*\|\s*([^\n|]+)/i)||[])[1]||'--').trim();
   const ga=((text.match(/Assessment:\s*([^\n]+)/i)||[])[1]||'Proceed with Caution').trim();
   const src=((text.match(/Source[^|]*\|\s*([^\n|]+)/i)||[])[1]||'Unknown').trim();
-  // Parse GLS signals from Block G
   const glsBlock=(text.match(/## BLOCK G[^\n]*\n([\s\S]*?)(?=## |$)/i)||[])[1]||'';
-  const signals=[];
-  const sigRx=/[-•]\s*([^:+]+):\s*\+?(\d+)\s*pts?([^\n]*)/gi;let m;
+  const signals=[];const sigRx=/[-•]\s*([^:+]+):\s*\+?(\d+)\s*pts?([^\n]*)/gi;let m;
   while((m=sigRx.exec(glsBlock))!==null)signals.push({label:m[1].trim(),pts:parseInt(m[2]),reason:m[3].trim()});
-  // Parse CTC
   const ctcRaw=parseFloat((text.match(/CTC Range[^|]*\|\s*([0-9.]+)/i)||[])[1])||null;
   const co=(jd.match(/^([A-Z][A-Za-z\s&.,]{2,30}?)[\n|–\-]/m)||[])[1]?.trim()||'Company';
   const ro=(jd.match(/(?:role|position|title)[:\s]+([^\n]{5,50})/i)||[])[1]?.trim()||'Role';
   return{id:crypto.randomUUID(),date:new Date().toISOString().split('T')[0],company:co,role:ro,score:sc,grade:gr,gls,glsA:ga,archetype:arch,workMode:wm,stage:st,source:src,signals,ctcRaw,notice:pr.notice,mode:pr.mode,status:'Evaluated',fullText:text,jd:jd.substring(0,400),profile:pr};
 }
 
-// CIRCULAR GLS GAUGE SVG
+// ── CIRCULAR GLS GAUGE ──
 function glsGaugeSVG(gls,color){
   const r=52,cx=64,cy=64,circ=2*Math.PI*r;
   const pct=Math.min(gls||0,100)/100;
   const dash=pct*circ,gap=circ-dash;
-  // Background arc color zones
   return`<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
     <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--surface-2)" stroke-width="10"/>
     <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="10"
-      stroke-dasharray="${dash} ${gap}" stroke-dashoffset="${circ*0.25}" stroke-linecap="round"
-      style="transition:stroke-dasharray .8s ease;"/>
+      stroke-dasharray="${dash} ${gap}" stroke-dashoffset="${circ*0.25}" stroke-linecap="round"/>
     <text x="${cx}" y="${cy}" text-anchor="middle" dominant-baseline="middle"
       font-family="Space Grotesk,sans-serif" font-weight="700" font-size="26" fill="${color}">${gls??'--'}</text>
     <text x="${cx}" y="${cy+22}" text-anchor="middle"
@@ -1074,94 +1208,67 @@ function renderRes(ev){
   const assessColor={'High Confidence':'var(--green)','Proceed with Caution':'var(--amber)','Suspicious':'var(--gls-h)','Very High Risk':'var(--red)'};
   const aColor=assessColor[ev.glsA]||'var(--text-2)';
 
-  // Score grid
   document.getElementById('sgrid').innerHTML=`
     <div class="sc"><div class="scl">Job Fit</div><div class="scv" style="color:${gc[ev.grade]||'var(--saffron)'};">${ev.score?.toFixed(1)||'--'}</div><div class="scs">out of 5.0</div></div>
     <div class="sc"><div class="scl">Grade</div><div class="scv" style="color:${gc[ev.grade]||'var(--text-1)'};">${ev.grade||'--'}</div><div class="scs">${rec[ev.grade]||''}</div></div>
-    <div class="sc"><div class="scl">Source</div><div class="scv" style="font-size:14px;color:${['Naukri','Foundit'].includes(ev.source)?'var(--amber)':'var(--green)'};">${sanitize(ev.source||'--')}</div><div class="scs">${['Naukri','Foundit'].includes(ev.source)?'Higher ghost risk':'Lower ghost risk'}</div></div>
+    <div class="sc"><div class="scl">Source</div><div class="scv" style="font-size:14px;color:${['Naukri','Foundit'].includes(ev.source)?'var(--amber)':'var(--green)'};">${sanitize(ev.source||'--')}</div><div class="scs">${['Naukri','Foundit'].includes(ev.source)?'Higher risk':'Lower risk'}</div></div>
     <div class="sc"><div class="scl">Archetype</div><div class="scv" style="font-size:13px;color:var(--cyan);">${sanitize(ev.archetype.split('/')[0].trim().split(' ').slice(0,2).join(' '))}</div><div class="scs">${sanitize(ev.workMode)}</div></div>`;
 
-  // GLS Hero with circular gauge
   const signalRows=ev.signals.slice(0,5).map(s=>`<div class="gls-signal-row"><span>${sanitize(s.label)}</span><span class="gls-signal-pts">+${s.pts}pts</span></div>`).join('');
-  const moreSignals=ev.signals.length>5?`<span class="gls-expand" onclick="this.parentElement.querySelector('.gls-signals-extra').style.display='block';this.style.display='none';">+ ${ev.signals.length-5} more signals ▼</span><div class="gls-signals-extra" style="display:none;">${ev.signals.slice(5).map(s=>`<div class="gls-signal-row"><span>${sanitize(s.label)}</span><span class="gls-signal-pts">+${s.pts}pts</span></div>`).join('')}</div>`:'';
+  const moreSignals=ev.signals.length>5?`<span style="font-size:11px;color:var(--cyan);cursor:pointer;margin-top:8px;display:inline-block;" onclick="this.parentElement.querySelector('.gls-extra').style.display='block';this.style.display='none';">+ ${ev.signals.length-5} more signals ▼</span><div class="gls-extra" style="display:none;">${ev.signals.slice(5).map(s=>`<div class="gls-signal-row"><span>${sanitize(s.label)}</span><span class="gls-signal-pts">+${s.pts}pts</span></div>`).join('')}</div>`:'';
 
   document.getElementById('gls-hero-wrap').innerHTML=`
     <div class="gls-hero">
       <div class="gls-hero-inner">
-        <div class="gls-gauge-wrap">
-          ${glsGaugeSVG(ev.gls,glsc)}
-          <div class="gls-tooltip">Tap to see signal breakdown below</div>
-        </div>
+        <div class="gls-gauge-wrap">${glsGaugeSVG(ev.gls,glsc)}</div>
         <div class="gls-right">
           <div class="gls-title">👻 Ghost Likelihood Score</div>
           <div class="gls-assess" style="background:${aColor}22;border:1px solid ${aColor}44;color:${aColor};">${sanitize(ev.glsA)}</div>
-          <div class="gls-note">Independent of job fit. You decide how much weight to give it. Higher = more suspicious.</div>
+          <div class="gls-note">Independent of job fit. Higher = more suspicious.</div>
         </div>
       </div>
-      ${ev.signals.length?`<div class="ctrig mt" onclick="toggleC(this)" style="font-size:13px;padding:10px 14px;">🔍 Why this score? <span class="carr">▼</span></div><div class="cbody"><div class="gls-signals">${signalRows}${moreSignals}</div></div>`:''}
+      ${ev.signals.length?`<div class="ctrig mt" onclick="toggleC(this)" style="font-size:13px;padding:10px 14px;">🔍 Why this score? <span class="carr">▼</span></div><div class="cbody"><div>${signalRows}${moreSignals}</div></div>`:''}
     </div>`;
 
-  // Take-home calculator (professional mode)
-  if(ev.mode!=='intern'&&ev.ctcRaw){
-    document.getElementById('takehome-wrap').innerHTML=renderTakeHome(ev.ctcRaw);
-  } else {
-    document.getElementById('takehome-wrap').innerHTML='';
-  }
+  if(ev.mode!=='intern'&&ev.ctcRaw){document.getElementById('takehome-wrap').innerHTML=renderTakeHome(ev.ctcRaw);}
+  else{document.getElementById('takehome-wrap').innerHTML='';}
 
-  // Stipend chart (intern mode)
   if(ev.mode==='intern'){
-    const offeredStipend=parseInt((ev.profile?.stipend||'').replace(/[^0-9]/g,''))||null;
-    const city=ev.profile?.city||'';
-    document.getElementById('stipend-wrap').innerHTML=renderStipendChart(offeredStipend,city);
-  } else {
-    document.getElementById('stipend-wrap').innerHTML='';
-  }
+    const offered=parseInt((ev.profile?.stipend||'').replace(/[^0-9]/g,''))||null;
+    document.getElementById('stipend-wrap').innerHTML=renderStipendChart(offered,ev.profile?.city||'');
+  }else{document.getElementById('stipend-wrap').innerHTML='';}
 
   const blocks=pBlocks(ev.fullText);
   document.getElementById('rblocks').innerHTML=blocks.map((b,i)=>`<div class="bhead ${i===0?'on':''}" onclick="toggleB(this)">${b.t}<span class="barr">▼</span></div><div class="bbody ${i===0?'on':''}"><div class="rpt">${mdown(b.c)}</div></div>`).join('');
 }
 
-// TAKE-HOME CALCULATOR
+// ── TAKE-HOME CALCULATOR ──
 function calcInHand(ctcLPA){
-  const ctc=ctcLPA*100000;
-  const basic=ctc*0.45;
-  const pfEmployee=Math.min(basic*0.12,21600);
-  const grossAnnual=ctc-pfEmployee;
-  const stdDeduction=75000;
-  const taxable=Math.max(grossAnnual-stdDeduction,0);
-  let tax=0;
-  const slabs=[[300000,0],[400000,0.05],[300000,0.10],[200000,0.15],[300000,0.20],[Infinity,0.30]];
-  let rem=taxable;
-  for(const[sl,rate]of slabs){const chunk=Math.min(rem,sl);tax+=chunk*rate;rem-=chunk;if(rem<=0)break;}
-  const cess=tax*0.04;
-  const annualInHand=grossAnnual-tax-cess;
-  return{ctcAnnual:ctc,annualInHand,monthlyInHand:annualInHand/12,pfEmployee,tax:tax+cess};
+  const ctc=ctcLPA*100000,basic=ctc*0.45,pfEmp=Math.min(basic*0.12,21600),gross=ctc-pfEmp,taxable=Math.max(gross-75000,0);
+  let tax=0,rem=taxable;
+  for(const[sl,rate] of[[300000,0],[400000,.05],[300000,.10],[200000,.15],[300000,.20],[Infinity,.30]]){const chunk=Math.min(rem,sl);tax+=chunk*rate;rem-=chunk;if(rem<=0)break;}
+  const cess=tax*.04,inHand=gross-tax-cess;
+  return{ctcAnnual:ctc,annualInHand:inHand,monthlyInHand:inHand/12,pfEmp,tax:tax+cess};
 }
 function renderTakeHome(ctcLPA){
   const r=calcInHand(ctcLPA);
-  const fmt=n=>'₹'+Math.round(n/1000)+'K';
-  const fmtM=n=>'₹'+Math.round(n).toLocaleString('en-IN');
+  const fmt=n=>'₹'+Math.round(n/1000)+'K',fmtM=n=>'₹'+Math.round(n).toLocaleString('en-IN');
   return`<div class="takehome-card">
-    <div class="th-toggle">
-      <div class="th-title">💰 Take-Home Estimate</div>
-      <div class="th-switch">
-        <button class="th-sw-btn on" id="th-annual" onclick="switchTH('annual')">Annual</button>
-        <button class="th-sw-btn" id="th-monthly" onclick="switchTH('monthly')">Monthly</button>
-      </div>
-    </div>
+    <div class="th-toggle"><div class="th-title">💰 Take-Home Estimate</div>
+    <div class="th-switch"><button class="th-sw-btn on" id="th-annual" onclick="switchTH('annual')">Annual</button><button class="th-sw-btn" id="th-monthly" onclick="switchTH('monthly')">Monthly</button></div></div>
     <div class="th-rows" id="th-annual-rows">
       <div class="th-row"><span class="th-row-label">CTC (Gross)</span><span class="th-row-val">${fmt(r.ctcAnnual)} LPA</span></div>
-      <div class="th-row"><span class="th-row-label">PF Deduction</span><span class="th-row-val" style="color:var(--red);">− ${fmt(r.pfEmployee)}</span></div>
+      <div class="th-row"><span class="th-row-label">PF Deduction</span><span class="th-row-val" style="color:var(--red);">− ${fmt(r.pfEmp)}</span></div>
       <div class="th-row"><span class="th-row-label">Tax + Cess (New Regime)</span><span class="th-row-val" style="color:var(--red);">− ${fmt(r.tax)}</span></div>
       <div class="th-row highlight"><span class="th-row-label">Annual In-Hand</span><span class="th-row-val">${fmt(r.annualInHand)}</span></div>
     </div>
     <div class="th-rows" id="th-monthly-rows" style="display:none;">
       <div class="th-row"><span class="th-row-label">Monthly CTC</span><span class="th-row-val">${fmtM(r.ctcAnnual/12)}</span></div>
-      <div class="th-row"><span class="th-row-label">Monthly PF</span><span class="th-row-val" style="color:var(--red);">− ${fmtM(r.pfEmployee/12)}</span></div>
+      <div class="th-row"><span class="th-row-label">Monthly PF</span><span class="th-row-val" style="color:var(--red);">− ${fmtM(r.pfEmp/12)}</span></div>
       <div class="th-row"><span class="th-row-label">Monthly Tax</span><span class="th-row-val" style="color:var(--red);">− ${fmtM(r.tax/12)}</span></div>
       <div class="th-row highlight"><span class="th-row-label">Monthly In-Hand</span><span class="th-row-val">${fmtM(r.monthlyInHand)}</span></div>
     </div>
-    <div class="th-disclaimer">Estimate based on new tax regime FY25–26. Assumes Basic = 45% of CTC. Actual varies by salary structure, HRA, and allowances.</div>
+    <div class="th-disclaimer">Estimate based on new tax regime FY25–26. Assumes Basic = 45% of CTC. Actual varies by salary structure.</div>
   </div>`;
 }
 function switchTH(mode){
@@ -1171,36 +1278,19 @@ function switchTH(mode){
   document.getElementById('th-monthly-rows').style.display=mode==='monthly'?'flex':'none';
 }
 
-// INTERN STIPEND CHART
+// ── STIPEND CHART ──
 function renderStipendChart(offered,city){
   const cities=Object.entries(STIPEND_BENCHMARKS).sort((a,b)=>b[1]-a[1]);
   const max=Math.max(...cities.map(c=>c[1]),offered||0)*1.1;
   const fmt=n=>'₹'+Math.round(n/1000)+'K';
   const matchedCity=cities.find(c=>city.toLowerCase().includes(c[0].toLowerCase()));
   let rows=cities.slice(0,6).map(([c,v])=>{
-    const pct=(v/max*100).toFixed(1);
-    const isMatch=matchedCity&&c===matchedCity[0];
-    return`<div class="sc-row ${isMatch?'sc-offered-row':'sc-median-row'}">
-      <div class="sc-label">${c}${isMatch?' 📍':''}</div>
-      <div class="sc-bar-wrap"><div class="sc-bar" style="width:${pct}%;background:${isMatch?'var(--saffron)':'var(--surface-2)'};border:1px solid ${isMatch?'var(--saffron)':'var(--border)'};">
-        <span class="sc-bar-val" style="color:${isMatch?'#000':'var(--text-2);'};">${fmt(v)}</span>
-      </div></div>
-    </div>`;
+    const pct=(v/max*100).toFixed(1),isMatch=matchedCity&&c===matchedCity[0];
+    return`<div class="sc-row"><div class="sc-label">${c}${isMatch?' 📍':''}</div><div class="sc-bar-wrap"><div class="sc-bar" style="width:${pct}%;background:${isMatch?'var(--saffron)':'var(--surface-2)'};border:1px solid ${isMatch?'var(--saffron)':'var(--border)'};">
+      <span class="sc-bar-val" style="color:${isMatch?'#000':'var(--text-2);'};">${fmt(v)}</span></div></div></div>`;
   }).join('');
-  if(offered){
-    const pct=(offered/max*100).toFixed(1);
-    rows+=`<div class="sc-row sc-offered-row" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">
-      <div class="sc-label">Offered</div>
-      <div class="sc-bar-wrap"><div class="sc-bar" style="width:${pct}%;background:var(--saffron);">
-        <span class="sc-bar-val">${fmt(offered)}</span>
-      </div></div>
-    </div>`;
-  }
-  return`<div class="stipend-chart">
-    <div class="sc-title">📊 Stipend vs City Medians</div>
-    ${rows}
-    <div class="sc-disclaimer">Based on 2025 community data. City medians are approximate. Actual stipends vary by company, role, and tier.</div>
-  </div>`;
+  if(offered){const pct=(offered/max*100).toFixed(1);rows+=`<div class="sc-row" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);"><div class="sc-label" style="color:var(--saffron);font-weight:600;">Offered</div><div class="sc-bar-wrap"><div class="sc-bar" style="width:${pct}%;background:var(--saffron);"><span class="sc-bar-val">${fmt(offered)}</span></div></div></div>`;}
+  return`<div class="stipend-chart"><div class="sc-title">📊 Stipend vs City Medians</div>${rows}<div class="sc-disclaimer">2025 community data. Approximate medians. Actual varies by company and role.</div></div>`;
 }
 
 function pBlocks(text){
@@ -1211,6 +1301,7 @@ function pBlocks(text){
   return bs;
 }
 
+// ── SAVE / DOWNLOAD / RESET ──
 async function saveTracker(){
   if(!S.eval)return;const ev=S.eval;
   if(S.evals.find(e=>e.company===ev.company&&e.role===ev.role)){toast('Already in tracker','err');return;}
@@ -1224,16 +1315,173 @@ function dlReport(){
   const u=URL.createObjectURL(new Blob([c],{type:'text/markdown'}));
   const a=document.createElement('a');a.href=u;a.download=`${ev.company.toLowerCase().replace(/\s+/g,'-')}-${ev.date}.md`;a.click();URL.revokeObjectURL(u);toast('Downloaded','ok');
 }
-function resetEval(){S.eval=null;document.getElementById('eval-results').style.display='none';document.getElementById('eval-empty').style.display='block';document.getElementById('jd-input').value='';window.scrollTo(0,0);}
+function resetEval(){S.eval=null;document.getElementById('eval-results').style.display='none';document.getElementById('eval-empty').style.display='block';document.getElementById('jd-input').value='';document.getElementById('repost-warn-wrap').innerHTML='';document.getElementById('eval-history-wrap').innerHTML='';window.scrollTo(0,0);}
 
-// TRACKER
+// ── CUSTOM CV GENERATOR ──
+async function generateCV(evId){
+  const ev=S.evals.find(e=>e.id===evId);if(!ev)return;
+  const cv=localStorage.getItem('coi_cv')||'';
+  const key=await getDecryptedKey();
+  if(!key){showPIN('unlock');toast('Enter PIN to unlock','err');return;}
+  if(!cv){toast('Add your CV in Profile first','err');return;}
+
+  const mo=document.getElementById('cvmo');
+  document.getElementById('cv-gen-content').innerHTML=`<div style="text-align:center;padding:40px 20px;"><div class="spin" style="margin:0 auto 14px;"></div><div style="font-size:13px;color:var(--text-2);">Generating your tailored CV...</div></div>`;
+  mo.classList.add('on');
+
+  try{
+    const prompt=`You are a professional CV writer specialising in the Indian job market.
+
+TASK: Rewrite and tailor the candidate's CV for this specific job.
+
+CANDIDATE CV:
+${cv}
+
+JOB DESCRIPTION:
+${ev.jd}
+
+EVALUATION GAPS FROM BLOCK B:
+${(ev.fullText.match(/## BLOCK B[^\n]*\n([\s\S]*?)(?=## BLOCK C|$)/i)||[])[1]?.trim()||'Not available'}
+
+TOP ATS KEYWORDS FROM BLOCK E:
+${(ev.fullText.match(/## BLOCK E[^\n]*\n([\s\S]*?)(?=## BLOCK F|$)/i)||[])[1]?.trim()||'Not available'}
+
+INSTRUCTIONS:
+1. Rewrite each bullet point to be achievement-focused with metrics where possible
+2. Reorder sections to match JD priority
+3. Inject the top ATS keywords naturally
+4. Address gaps where possible by reframing existing experience
+5. Keep Indian context — CTC, LPA, Indian company names intact
+6. Output a clean, well-structured CV in markdown format
+7. Add a tailored professional summary at the top (3-4 lines)
+8. Keep it to 2 pages worth of content
+
+Return ONLY the tailored CV in markdown. No explanation, no preamble.`;
+
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:3000,messages:[{role:'user',content:prompt}]})});
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'API error');}
+    const data=await res.json();const cvText=data.content.map(b=>b.text||'').join('');
+
+    document.getElementById('cv-gen-content').innerHTML=`
+      <div style="margin-bottom:14px;">
+        <div style="font-family:var(--fh);font-weight:600;font-size:15px;margin-bottom:4px;">Tailored CV for ${sanitize(ev.company)}</div>
+        <div style="font-size:12px;color:var(--text-2);">Rewritten to match the JD, gaps addressed, ATS keywords injected.</div>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+        <button class="btn bp" onclick="downloadCVDocx(${JSON.stringify(cvText).replace(/"/g,'&quot;')}, '${sanitize(ev.company)}')">⬇️ Download .docx</button>
+        <button class="btn bs" onclick="copyCV(this)">📋 Copy Markdown</button>
+      </div>
+      <div class="rpt" style="background:var(--surface-2);border-radius:var(--r-md);padding:14px;max-height:400px;overflow-y:auto;">${mdown(cvText)}</div>
+      <p style="font-size:11px;color:var(--text-3);margin-top:10px;">Review carefully before sending. The AI may have made assumptions — verify all facts and metrics.</p>`;
+
+    // Store CV text for download
+    window._cvText=cvText;window._cvCompany=ev.company;
+  }catch(err){
+    document.getElementById('cv-gen-content').innerHTML=`<div class="api-locked"><div class="api-locked-icon">⚠️</div><div class="api-locked-title">Could not generate CV</div><div class="api-locked-sub">${sanitize(err.message)}</div></div>`;
+  }
+}
+
+function copyCV(btn){
+  if(window._cvText){navigator.clipboard.writeText(window._cvText).then(()=>{btn.textContent='✓ Copied';setTimeout(()=>btn.textContent='📋 Copy Markdown',2000);}).catch(()=>toast('Could not copy','err'));}
+}
+
+async function downloadCVDocx(cvText,company){
+  // Build a simple RTF-based doc (works as .doc that Word opens)
+  // Using HTML → Blob approach for broad compatibility
+  const html=`<!DOCTYPE html><html><head><meta charset="utf-8">
+  <style>body{font-family:Arial,sans-serif;font-size:11pt;line-height:1.5;max-width:700px;margin:0 auto;padding:20px;}
+  h1{font-size:16pt;margin-bottom:4px;}h2{font-size:13pt;border-bottom:1px solid #ccc;padding-bottom:4px;margin-top:20px;}
+  h3{font-size:11pt;}ul{padding-left:20px;}li{margin-bottom:3px;}strong{font-weight:bold;}
+  </style></head><body>${mdown(cvText)}</body></html>`;
+  const blob=new Blob(['\ufeff',html],{type:'application/msword'});
+  const u=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=u;
+  a.download=`CV-${(company||'tailored').toLowerCase().replace(/\s+/g,'-')}.doc`;
+  a.click();URL.revokeObjectURL(u);
+  toast('CV downloaded as .doc (opens in Word)','ok');
+}
+
+// ── INTERVIEW PREP ──
+async function prepInterview(evId){
+  const ev=S.evals.find(e=>e.id===evId);if(!ev)return;
+  const cv=localStorage.getItem('coi_cv')||'';
+  const key=await getDecryptedKey();
+  if(!key){showPIN('unlock');toast('Enter PIN to unlock','err');return;}
+
+  const mo=document.getElementById('prepmo');
+  document.getElementById('prep-content').innerHTML=`<div style="text-align:center;padding:40px 20px;"><div class="spin" style="margin:0 auto 14px;"></div><div style="font-size:13px;color:var(--text-2);">Preparing your interview kit...</div></div>`;
+  mo.classList.add('on');
+
+  try{
+    const prompt=`You are an expert interview coach for the Indian tech job market.
+
+CANDIDATE CV:
+${cv.substring(0,2000)}
+
+JOB: ${ev.company} — ${ev.role}
+ARCHETYPE: ${ev.archetype}
+COMPANY STAGE: ${ev.stage}
+JD SUMMARY: ${ev.jd}
+
+Create a comprehensive interview prep kit. Use markdown with clear sections:
+
+## 🎯 8 STAR+R Stories
+For each story: Situation, Task, Action, Result, Relevance to this role.
+Map each story to a specific JD requirement.
+
+## 💰 CTC Negotiation Script
+India-specific. Based on target CTC and company stage.
+Include: how to deflect the first CTC question, how to anchor high, how to handle counter-offers.
+
+## 🚩 3 Red Flag Questions to Ask
+Questions that reveal company culture, notice period flexibility, role stability.
+
+## 🇮🇳 India-Specific Scenarios
+- "Why are you leaving your current role?"
+- "What is your current CTC and expected CTC?"
+- "Can you join in X days?"
+- "We have other candidates at a lower CTC"
+
+## ✅ Day-Before Checklist
+Practical items: documents, portal links, STAR story review, video background check.`;
+
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:3000,messages:[{role:'user',content:prompt}]})});
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'API error');}
+    const data=await res.json();const prepText=data.content.map(b=>b.text||'').join('');
+
+    document.getElementById('prep-content').innerHTML=`
+      <div style="margin-bottom:14px;">
+        <div style="font-family:var(--fh);font-weight:600;font-size:15px;margin-bottom:4px;">Interview Prep — ${sanitize(ev.company)}</div>
+        <div style="font-size:12px;color:var(--text-2);">STAR stories, CTC negotiation, red flag questions, India-specific scenarios.</div>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:14px;">
+        <button class="btn bp" onclick="dlPrep()">⬇️ Download</button>
+      </div>
+      <div class="rpt" style="background:var(--surface-2);border-radius:var(--r-md);padding:14px;max-height:500px;overflow-y:auto;">${mdown(prepText)}</div>`;
+    window._prepText=prepText;window._prepCompany=ev.company;
+  }catch(err){
+    document.getElementById('prep-content').innerHTML=`<div class="api-locked"><div class="api-locked-icon">⚠️</div><div class="api-locked-title">Could not generate prep</div><div class="api-locked-sub">${sanitize(err.message)}</div></div>`;
+  }
+}
+
+function dlPrep(){
+  if(!window._prepText)return;
+  const c=`# Interview Prep: ${window._prepCompany||'Role'}\n\n${window._prepText}`;
+  const u=URL.createObjectURL(new Blob([c],{type:'text/markdown'}));
+  const a=document.createElement('a');a.href=u;a.download=`interview-prep-${(window._prepCompany||'role').toLowerCase().replace(/\s+/g,'-')}.md`;a.click();URL.revokeObjectURL(u);toast('Downloaded','ok');
+}
+
+// ── TRACKER ──
+function needsAttention(ev){
+  if(ev.status!=='Applied')return false;
+  const days=(Date.now()-new Date(ev.date).getTime())/(1000*60*60*24);
+  return days>14;
+}
 function renderT(){
   let list=S.evals;
-  // Apply filters
   if(S.filter.status!=='all')list=list.filter(e=>e.status===S.filter.status);
   if(S.filter.notice!=='any'){
-    const nm={'immediate':0,'30':30,'60':60};
-    const max=nm[S.filter.notice]??999;
+    const nm={'immediate':0,'30':30,'60':60};const max=nm[S.filter.notice]??999;
     list=list.filter(e=>{const n=e.profile?.notice||e.notice||'60';if(n==='immediate')return true;return parseInt(n)<=max;});
   }
   if(S.filter.source==='verified')list=list.filter(e=>!['Naukri','Foundit'].includes(e.source));
@@ -1241,9 +1489,10 @@ function renderT(){
   if(!list.length){c.innerHTML=`<div class="empty"><div class="ei">📋</div><div class="et">No applications found</div><div class="ed">Try adjusting your filters or evaluate a new job.</div></div>`;return;}
   const gc={A:'var(--ga)',B:'var(--gb)',C:'var(--gc)',D:'var(--gd)',F:'var(--gf)'},ge=g=>g<=25?'🟢':g<=50?'🟡':g<=75?'🟠':'🔴';
   c.innerHTML=list.map(ev=>{
-    const cached=S.idbCache.has(ev.id);
+    const cached=S.idbCache.has(ev.id),attn=needsAttention(ev);
     const stagePill=ev.stage?.toLowerCase().includes('gcc')?'<span style="font-size:9px;background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.2);color:var(--cyan);padding:1px 5px;border-radius:3px;font-family:var(--fm);">GCC</span>':ev.stage?.toLowerCase().includes('startup')?'<span style="font-size:9px;background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.2);color:var(--green);padding:1px 5px;border-radius:3px;font-family:var(--fm);">Startup</span>':'';
-    return`<div class="app-card">
+    const hasKey=!!(localStorage.getItem('coi_key_enc')||document.getElementById('api-key')?.value.trim());
+    return`<div class="app-card${attn?' needs-attention':''}">
       <div class="ac-row1">
         <div class="ac-company">${sanitize(ev.company)}</div>
         <div class="ac-badges">
@@ -1255,14 +1504,17 @@ function renderT(){
       <div class="ac-row2">${sanitize(ev.role)}</div>
       <div class="ac-row3">
         <span class="ac-meta">📅 ${sanitize(ev.date)}</span>
-        <span class="ac-meta">🎯 ${sanitize(ev.archetype?.split(' ')[0]||'--')}</span>
+        <span class="ac-meta" style="margin-left:6px;">🎯 ${sanitize(ev.archetype?.split(' ')[0]||'--')}</span>
         ${stagePill}
         <span class="ac-spacer"></span>
+        ${attn?'<span class="attention-chip">⏰ Follow up?</span>':''}
         ${cached?'<span class="cached-chip">💾 Cached</span>':''}
       </div>
       <div class="ac-row4">
         <select class="ssel" onchange="updSt('${ev.id}',this.value)">${['Evaluated','Applied','Responded','Interview','Offer','Rejected','Discarded','SKIP'].map(s=>`<option${ev.status===s?' selected':''}>${s}</option>`).join('')}</select>
         <button class="btn bg" style="font-size:11px;padding:4px 9px;" onclick="viewR('${ev.id}')">View</button>
+        ${hasKey?`<button class="btn bg" style="font-size:11px;padding:4px 9px;color:var(--cyan);border-color:var(--cyan);" onclick="generateCV('${ev.id}')">✍️ CV</button>`:''}
+        ${hasKey?`<button class="btn bg" style="font-size:11px;padding:4px 9px;color:var(--green);border-color:var(--green);" onclick="prepInterview('${ev.id}')">🎤 Prep</button>`:''}
         <button class="btn bg" style="font-size:11px;padding:4px 9px;color:var(--red);border-color:var(--red);" onclick="delEv('${ev.id}')">Delete</button>
       </div>
     </div>`;
@@ -1271,37 +1523,152 @@ function renderT(){
 function updStats(){document.getElementById('st0').textContent=S.evals.length;document.getElementById('st1').textContent=S.evals.filter(e=>e.status==='Applied').length;document.getElementById('st2').textContent=S.evals.filter(e=>e.status==='Interview').length;document.getElementById('st3').textContent=S.evals.filter(e=>e.status==='Offer').length;}
 function filt(type,val){
   S.filter[type]=val;
-  // Update button states
   if(type==='status'){document.querySelectorAll('[id^="fb-"]').forEach(b=>b.classList.remove('on'));const fb=document.getElementById('fb-'+val);if(fb)fb.classList.add('on');}
   if(type==='notice'){document.querySelectorAll('[id^="fn-"]').forEach(b=>b.classList.remove('on'));const fn=document.getElementById('fn-'+val);if(fn)fn.classList.add('on');}
   if(type==='source'){document.querySelectorAll('[id^="fs-"]').forEach(b=>b.classList.remove('on'));const fs=document.getElementById('fs-'+val);if(fs)fs.classList.add('on');}
   renderT();
 }
 function updSt(id,s){const ev=S.evals.find(e=>e.id===id);if(ev){ev.status=s;saveE();updStats();toast('Status: '+s,'ok');}}
-function delEv(id){if(!confirm('Delete this evaluation?'))return;S.evals=S.evals.filter(e=>e.id!==id);S.idbCache.delete(id);saveE();renderT();}
+function delEv(id){if(!confirm('Delete?'))return;S.evals=S.evals.filter(e=>e.id!==id);S.idbCache.delete(id);saveE();renderT();}
 async function viewR(id){
   const ev=S.evals.find(e=>e.id===id);if(!ev)return;
   let r=null;try{r=await gRpt(id);}catch(e){}
   const c=r?.markdown||ev.fullText||'Not available.';
   document.getElementById('rtitle').textContent=ev.company+' — '+ev.role;
-  const gc={A:'var(--ga)',B:'var(--gb)',C:'var(--gc)',D:'var(--gd)',F:'var(--gf)'};
   document.getElementById('rcontent').innerHTML=`<div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;"><span class="pill ps">Score: ${ev.score?.toFixed(1)||'--'}/5 (${ev.grade})</span><span class="pill pc">GLS: ${ev.gls??'--'}/100</span><span class="pill pg">${sanitize(ev.date)}</span></div><div class="rpt">${mdown(c)}</div>`;
   document.getElementById('rmo').classList.add('on');
 }
 async function exportT(){
   if(!S.evals.length){toast('No evaluations to export','err');return;}
   let rpts=[];try{rpts=await gaRpt();}catch(e){}
-  const u=URL.createObjectURL(new Blob([JSON.stringify({version:'1.0',exported_at:new Date().toISOString(),evaluations:S.evals,reports:rpts},null,2)],{type:'application/json'}));
+  const u=URL.createObjectURL(new Blob([JSON.stringify({version:'1.0',exported_at:new Date().toISOString(),evaluations:S.evals,reports:rpts,fingerprints:S.jdFingerprints},null,2)],{type:'application/json'}));
   const a=document.createElement('a');a.href=u;a.download=`career-ops-india-${new Date().toISOString().split('T')[0]}.json`;a.click();URL.revokeObjectURL(u);toast('Exported','ok');
 }
 function importT(inp){
   const f=inp.files[0];if(!f)return;
   const r=new FileReader();
-  r.onload=async e=>{try{const d=JSON.parse(e.target.result);if(d.evaluations){S.evals=d.evaluations;saveE();}if(d.reports&&idb){for(const rpt of d.reports){await sRpt(rpt.id,rpt);S.idbCache.add(rpt.id);}}renderT();toast('Imported '+S.evals.length+' evaluations','ok');}catch(err){toast('Import failed','err');}};
+  r.onload=async e=>{try{const d=JSON.parse(e.target.result);if(d.evaluations){S.evals=d.evaluations;saveE();}if(d.fingerprints){S.jdFingerprints={...S.jdFingerprints,...d.fingerprints};localStorage.setItem('coi_fps',JSON.stringify(S.jdFingerprints));}if(d.reports&&idb){for(const rpt of d.reports){await sRpt(rpt.id,rpt);S.idbCache.add(rpt.id);}}renderT();toast('Imported '+S.evals.length+' evaluations','ok');}catch(err){toast('Import failed','err');}};
   r.readAsText(f);inp.value='';
 }
 
-// FEEDBACK
+// ── EXPORT TO PDF ──
+function exportPDF(){
+  if(!S.evals.length){toast('No evaluations to export','err');return;}
+  const gc={A:'#238636',B:'#1f6feb',C:'#9e6a03',D:'#da6820',F:'#b62324'};
+  const ge=g=>g<=25?'🟢':g<=50?'🟡':g<=75?'🟠':'🔴';
+  const rows=S.evals.map(ev=>`
+    <tr>
+      <td><strong>${ev.company}</strong><br><span style="color:#666;font-size:11px;">${ev.role}</span></td>
+      <td style="text-align:center;color:${gc[ev.grade]||'#333'};font-weight:bold;">${ev.score?.toFixed(1)||'--'}/5<br><small>(${ev.grade||'--'})</small></td>
+      <td style="text-align:center;">${ge(ev.gls||0)} ${ev.gls??'--'}</td>
+      <td style="text-align:center;">${ev.status||'--'}</td>
+      <td style="text-align:center;font-size:11px;">${ev.date}</td>
+      <td style="font-size:11px;color:#666;">${ev.archetype?.split(' ').slice(0,2).join(' ')||'--'}</td>
+    </tr>`).join('');
+  const stats={total:S.evals.length,applied:S.evals.filter(e=>e.status==='Applied').length,interview:S.evals.filter(e=>e.status==='Interview').length,offer:S.evals.filter(e=>e.status==='Offer').length};
+  const html=`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Career-Ops-India Pipeline</title>
+  <style>
+    body{font-family:Arial,sans-serif;font-size:12px;color:#333;padding:20px;}
+    h1{font-size:18px;color:#FF9933;margin-bottom:4px;}
+    .subtitle{color:#666;font-size:12px;margin-bottom:20px;}
+    .stats{display:flex;gap:20px;margin-bottom:20px;background:#f5f5f5;padding:12px;border-radius:8px;}
+    .stat{text-align:center;}.stat-val{font-size:22px;font-weight:bold;color:#FF9933;}.stat-lbl{font-size:10px;color:#666;text-transform:uppercase;}
+    table{width:100%;border-collapse:collapse;font-size:11px;}
+    th{background:#0d1117;color:#f0f6fc;padding:8px;text-align:left;font-size:10px;text-transform:uppercase;}
+    td{padding:8px;border-bottom:1px solid #eee;vertical-align:top;}
+    tr:nth-child(even){background:#fafafa;}
+    .footer{margin-top:20px;font-size:10px;color:#999;text-align:center;}
+    @media print{body{padding:10px;}}
+  </style></head><body>
+  <h1>Career-Ops-India App — Pipeline Report</h1>
+  <div class="subtitle">Generated: ${new Date().toLocaleDateString('en-IN')} · ${stats.total} evaluations</div>
+  <div class="stats">
+    <div class="stat"><div class="stat-val">${stats.total}</div><div class="stat-lbl">Total</div></div>
+    <div class="stat"><div class="stat-val">${stats.applied}</div><div class="stat-lbl">Applied</div></div>
+    <div class="stat"><div class="stat-val">${stats.interview}</div><div class="stat-lbl">Interview</div></div>
+    <div class="stat"><div class="stat-val">${stats.offer}</div><div class="stat-lbl">Offer</div></div>
+  </div>
+  <table><thead><tr><th>Company / Role</th><th>Score</th><th>GLS</th><th>Status</th><th>Date</th><th>Archetype</th></tr></thead><tbody>${rows}</tbody></table>
+  <div class="footer">Career-Ops-India App · Made with Love and Innovation, driven by Intention, dedicated to the community. — Dhawal Shrivastava</div>
+  </body></html>`;
+  const w=window.open('','_blank');
+  w.document.write(html);
+  w.document.close();
+  setTimeout(()=>w.print(),500);
+}
+
+// ── ANALYTICS ──
+function renderAnalytics(){
+  const c=document.getElementById('analytics-content');
+  if(!S.evals.length){c.innerHTML=`<div class="empty"><div class="ei">📈</div><div class="et">No data yet</div><div class="ed">Evaluate and save jobs to see your pipeline analytics here.</div></div>`;return;}
+  const total=S.evals.length;
+  const applied=S.evals.filter(e=>e.status==='Applied').length;
+  const interview=S.evals.filter(e=>e.status==='Interview').length;
+  const offer=S.evals.filter(e=>e.status==='Offer').length;
+  const rejected=S.evals.filter(e=>e.status==='Rejected').length;
+  const avgScore=total?S.evals.reduce((a,e)=>a+(e.score||0),0)/total:0;
+  const avgGLS=total?S.evals.reduce((a,e)=>a+(e.gls||0),0)/total:0;
+  const ghostHigh=S.evals.filter(e=>(e.gls||0)>50).length;
+  const highScore=S.evals.filter(e=>(e.score||0)>=4).length;
+
+  // Archetype breakdown
+  const archMap={};
+  S.evals.forEach(e=>{const a=e.archetype?.split('/')[0].trim().split(' ').slice(0,2).join(' ')||'Unknown';archMap[a]=(archMap[a]||0)+1;});
+  const archEntries=Object.entries(archMap).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  const maxArch=Math.max(...archEntries.map(e=>e[1]),1);
+
+  // Ghost rate by source
+  const srcMap={};
+  S.evals.forEach(e=>{if(e.source){if(!srcMap[e.source])srcMap[e.source]={total:0,highGLS:0};srcMap[e.source].total++;if((e.gls||0)>50)srcMap[e.source].highGLS++;}});
+
+  const funnelMax=Math.max(total,1);
+  const funnelColor=(s)=>s==='Applied'?'var(--cyan)':s==='Interview'?'var(--saffron)':s==='Offer'?'var(--green)':'var(--red)';
+
+  c.innerHTML=`
+    <div class="analytics-grid">
+      <div class="an-card"><div class="an-val">${total}</div><div class="an-label">Total Evaluated</div></div>
+      <div class="an-card"><div class="an-val">${avgScore.toFixed(1)}</div><div class="an-label">Avg Score</div></div>
+      <div class="an-card"><div class="an-val">${Math.round(avgGLS)}</div><div class="an-label">Avg GLS</div></div>
+      <div class="an-card"><div class="an-val">${highScore}</div><div class="an-label">Score ≥ 4.0</div></div>
+      <div class="an-card"><div class="an-val">${offer}</div><div class="an-label">Offers</div></div>
+      <div class="an-card"><div class="an-val">${applied?Math.round(interview/applied*100):0}%</div><div class="an-label">Interview Rate</div></div>
+    </div>
+
+    <div class="funnel">
+      <div class="funnel-title">📊 Application Funnel</div>
+      ${[['Evaluated',total,'var(--surface-2)'],['Applied',applied,'var(--cyan)'],['Interview',interview,'var(--saffron)'],['Offer',offer,'var(--green)'],['Rejected',rejected,'var(--red)']].map(([label,count,color])=>`
+        <div class="funnel-row">
+          <div class="funnel-label">${label}</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${(count/funnelMax*100).toFixed(1)}%;background:${color};"><span class="funnel-bar-label" style="color:${color==='var(--surface-2)'?'var(--text-2)':'#000'};">${count>0?count:''}</span></div></div>
+          <div class="funnel-count">${count}</div>
+        </div>`).join('')}
+    </div>
+
+    <div class="archetype-chart">
+      <div class="funnel-title">🎯 Roles by Archetype</div>
+      ${archEntries.map(([a,n])=>`<div class="at-row"><div class="at-label">${sanitize(a)}</div><div class="at-bar-wrap"><div class="at-bar" style="width:${(n/maxArch*100).toFixed(1)}%;"></div></div><div class="at-val">${n}</div></div>`).join('')}
+    </div>
+
+    <div class="ghost-stat">
+      <div class="ghost-stat-num">${ghostHigh}</div>
+      <div class="ghost-stat-text"><strong>High-risk ghost postings (GLS > 50)</strong><br>${total>0?Math.round(ghostHigh/total*100):0}% of your evaluations had suspicious ghost signals. ${ghostHigh>0?'Consider filtering for verified sources only.':'Good job filtering quality roles.'}</div>
+    </div>
+
+    ${Object.keys(srcMap).length?`<div class="card"><div class="funnel-title" style="margin-bottom:12px;">📡 Ghost Rate by Source</div>${Object.entries(srcMap).sort((a,b)=>b[1].total-a[1].total).map(([src,d])=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border-light);font-size:13px;"><span>${sanitize(src)}</span><span style="font-family:var(--fm);color:${d.highGLS/d.total>.5?'var(--red)':'var(--green)'};">${Math.round(d.highGLS/d.total*100)}% ghost risk (${d.total} roles)</span></div>`).join('')}</div>`:''}
+
+    <div class="card" style="background:var(--saffron-dim);border-color:rgba(255,153,51,.2);">
+      <div style="font-family:var(--fh);font-weight:600;font-size:14px;margin-bottom:8px;">💡 Insights</div>
+      <div style="font-size:13px;color:var(--text-2);line-height:1.8;">
+        ${avgScore>=4?'✅ Strong CV-job match — your profile aligns well with the roles you are targeting.':'⚠️ Average score below 4.0 — consider refining your target roles or updating your CV.'}
+        <br>${avgGLS>50?'👻 High average GLS — you may be spending time on ghost postings. Filter for verified sources.':'✅ Low average GLS — good job focusing on quality postings.'}
+        <br>${needsFollowUp().length>0?`⏰ ${needsFollowUp().length} application${needsFollowUp().length>1?'s':''} ${needsFollowUp().length>1?'need':'needs'} a follow-up (applied > 14 days ago).`:'✅ No pending follow-ups.'}
+      </div>
+    </div>`;
+}
+
+function needsFollowUp(){return S.evals.filter(e=>{if(e.status!=='Applied')return false;const days=(Date.now()-new Date(e.date).getTime())/(1000*60*60*24);return days>14;});}
+
+// ── FEEDBACK ──
 function selCat(el,c){document.querySelectorAll('.catc').forEach(x=>x.classList.remove('on'));el.classList.add('on');S.fbCat=c;}
 function submitFB(){
   const t=document.getElementById('fb-title').value.trim(),b=document.getElementById('fb-body').value.trim();
@@ -1310,10 +1677,22 @@ function submitFB(){
   toast('Opening GitHub','ok');
 }
 
-// INIT
+// ── IMPORT SCAN RESULTS (CLI handoff) ──
+function importScanResults(data){
+  // Accepts career-ops-india CLI scan output format
+  // Each item: {company, role, jd, url, source, date}
+  if(!data.scan_results){toast('Invalid scan file format','err');return;}
+  const items=data.scan_results;
+  toast(`Imported ${items.length} jobs from CLI scan. Tap each to evaluate.`,'ok');
+  // For now, populate JD textarea with first item
+  if(items[0]){document.getElementById('jd-input').value=items[0].jd||items[0].url||'';nav('evaluate');}
+}
+
+// ── INIT ──
 async function init(){
-  await initIDB();loadE();loadP();await loadSk();updStats();await loadIDBCache();
+  await initIDB();loadE();loadP();await loadSk();updStats();await loadIDBCache();loadFingerprints();
   document.getElementById('sw').style.display='block';
+  checkApiState();
   if(localStorage.getItem('coi_key_enc')&&!S.sessionKey)showPIN('unlock');
 }
 init();
