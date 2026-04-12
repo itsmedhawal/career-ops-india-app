@@ -551,7 +551,7 @@ select option{background:var(--surface);}
     <div class="pin-icon" id="pin-icon">🔐</div>
     <div class="pin-title" id="pin-title">Secure Your App</div>
     <div class="pin-sub" id="pin-sub">Set a <em>4-digit PIN</em> to protect your API key.</div>
-    <div class="pin-setup-note" id="pin-setup-note"><strong>Why a PIN?</strong> Your Anthropic API key is encrypted using your PIN. Even if something reads your browser storage, the key remains unreadable without your PIN.</div>
+    <div class="pin-setup-note" id="pin-setup-note"><strong>Why a PIN?</strong> Your API keys are encrypted using your PIN. Even if something reads your browser storage, the keys remain unreadable without your PIN.</div>
     <div class="pin-dots" id="pin-dots">
       <div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div>
       <div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div>
@@ -584,7 +584,7 @@ select option{background:var(--surface);}
     <div class="onb-slide next" id="os2">
       <div class="onb-icon">🔐</div>
       <h1 class="onb-title">Your data stays<br><em>on your device.</em></h1>
-      <p class="onb-sub">Your API key is encrypted with a PIN you set. Nothing is sent to any server except your direct call to Anthropic.</p>
+      <p class="onb-sub">Your API keys are encrypted with a PIN you set. Nothing is sent to any server except your direct calls to Anthropic or Google.</p>
     </div>
   </div>
   <div class="onb-footer">
@@ -641,7 +641,7 @@ select option{background:var(--surface);}
       <span style="font-size:24px;">🔑</span>
       <div style="flex:1;">
         <div style="font-family:var(--fh);font-weight:600;font-size:14px;margin-bottom:2px;">API key needed to evaluate</div>
-        <div style="font-size:12px;color:var(--text-2);">Add your Anthropic API key in Profile. The Tracker and Analytics tabs work without it.</div>
+        <div style="font-size:12px;color:var(--text-2);">Add a Claude or Gemini API key in Profile. The Tracker and Analytics tabs work without it.</div>
       </div>
       <button class="btn bs" style="font-size:12px;padding:6px 12px;flex-shrink:0;" onclick="nav('profile')">Go →</button>
     </div>
@@ -797,7 +797,7 @@ The more complete the JD, the better the evaluation."></textarea>
 <div class="panel" id="panel-profile"><div class="pi">
   <h2 style="margin-bottom:4px;">Your Profile</h2>
   <p style="margin-bottom:16px;font-size:13px;">Set up once. Powers every evaluation. Foundation for your custom CV later.</p>
-  <div class="pbanner"><span>🔒</span><span>Everything saved locally and encrypted. Your API key is protected by your PIN. Nothing leaves your browser except the direct API call to Anthropic.</span></div>
+  <div class="pbanner"><span>🔒</span><span>Everything saved locally and encrypted. Your API keys are protected by your PIN. Nothing leaves your browser except direct API calls to Anthropic or Google.</span></div>
 
   <div class="slabel">Anthropic API Key</div>
   <div class="card">
@@ -1269,7 +1269,7 @@ function nav(t){
   checkApiState();
 }
 function checkApiState(){
-  const hasKey=!!(localStorage.getItem('coi_key_enc')||document.getElementById('api-key')?.value.trim());
+  const hasKey=!!(localStorage.getItem('coi_key_enc')||localStorage.getItem('coi_gemini_enc')||document.getElementById('api-key')?.value.trim()||document.getElementById('gemini-key')?.value.trim());
   const banner=document.getElementById('no-api-banner');
   if(banner)banner.style.display=hasKey?'none':'flex';
 }

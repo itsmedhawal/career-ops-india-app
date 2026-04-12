@@ -59,23 +59,14 @@ career-ops-india-app/
 
 ---
 
-## Version History
-
-| Version | Highlights |
-|---------|-----------|
-| v7.0 | Hybrid local + cloud AI, Gemma 2 2B via WebLLM, Fast Scan, Sync Command Center |
-| v6.0 | Custom CV generator, Interview Prep, Analytics, Repost Detection, PDF export |
-| v5.1 | Model string fix, improved error visibility |
-| v5.0 | Circular GLS gauge, Take-Home calculator, Intern stipend chart, Dense tracker cards |
-| v4.0 | PIN encryption (AES-GCM + PBKDF2), XSS sanitization, CSP, PWA banner |
-| v3.0 | Journey-first UX, 4-tab mobile nav, onboarding, Profile tab, Extract from CV |
+See [CHANGELOG.md](CHANGELOG.md) for full version history.
 
 ---
 
 ## How to Use
 
 1. Open the app -- no installation needed
-2. **Profile tab** → add Anthropic API key → paste CV → tap Extract from CV
+2. **Profile tab** → add a Claude or Gemini API key → paste CV → tap Extract from CV
 3. **Evaluate tab** → paste any job description → tap Evaluate Job
 4. Review Score, Grade and GLS → decide whether to apply
 5. Save to **Tracker** → manage your full pipeline
@@ -86,7 +77,7 @@ career-ops-india-app/
 ## Privacy & Security
 
 - Your CV, API key, and job data never leave your browser
-- The only external call is your direct API request to Anthropic
+- The only external calls are your direct API requests to Anthropic or Google
 - API key encrypted with a 4-digit PIN using AES-GCM before storage
 - Decrypted key lives only in session memory -- cleared when tab closes
 - No analytics, no cookies, no third-party scripts
@@ -98,7 +89,7 @@ career-ops-india-app/
 | Layer | Stack |
 |-------|-------|
 | Runtime | Single HTML file -- no build step, no dependencies |
-| AI | Anthropic Claude API (direct browser call) |
+| AI | Anthropic Claude API · Google Gemini API (direct browser calls) |
 | Storage | localStorage + IndexedDB |
 | Security | WebCrypto AES-GCM + PBKDF2 (310,000 iterations) |
 | CV Export | HTML → .doc (opens in Word and Google Docs) |
