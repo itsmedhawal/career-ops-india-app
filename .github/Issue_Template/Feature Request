@@ -1,0 +1,40 @@
+---
+name: Feature Request
+about: Suggest something that would make the app more useful for Indian jobseekers
+title: '[Feature] '
+labels: enhancement
+assignees: ''
+---
+
+## What problem does this solve?
+
+<!-- Describe the jobseeker problem this feature addresses. Be specific about the Indian job market context if relevant. -->
+
+## Who does this help?
+
+- [ ] All users
+- [ ] Professional jobseekers
+- [ ] Students / freshers
+- [ ] Users in specific cities or Tier-2/3 markets
+- [ ] Users without API keys (local AI users)
+- [ ] Other: 
+
+## Proposed solution
+
+<!-- How would this feature work? What would the user experience be? -->
+
+## Alternatives considered
+
+<!-- Have you considered any alternative solutions or workarounds? -->
+
+## Constraints to keep in mind
+
+<!-- Please note: the app must remain a single index.html + worker.js, with no build tools, and must not send user data to any server. Features that violate the privacy model will not be accepted. -->
+
+## Data sources (if applicable)
+
+<!-- If your feature requires data (stipend benchmarks, company lists, GLS signal weights), what is the source? -->
+
+## Additional context
+
+<!-- Screenshots, mockups, or links to similar features in other tools -->
