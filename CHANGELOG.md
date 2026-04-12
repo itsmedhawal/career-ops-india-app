@@ -6,6 +6,13 @@ Format: `[Version] — Date — Summary`
 
 ---
 
+## [v7.5] — 2026-04-12 — Extract from CV UX Fix
+
+### Fixed
+- **Extract from CV — stuck in PIN loop with no key** — clicking "Extract from CV" with no API key configured showed the PIN prompt; after entering a PIN the function re-ran, found no key again, and re-showed the PIN — infinite loop. Now detects that no encrypted key is stored and redirects to Profile with a clear message instead
+
+---
+
 ## [v7.4] — 2026-04-12 — Critical JS & Extract from CV Fix
 
 ### Fixed

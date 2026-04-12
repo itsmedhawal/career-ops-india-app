@@ -1,0 +1,5 @@
+{
+  "livePreview.portNumber": 3000,
+  "livePreview.defaultPreviewPath": "/index.html",
+  "livePreview.openPreviewTarget": "External Browser"
+}
