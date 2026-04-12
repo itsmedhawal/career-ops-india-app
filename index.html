@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://esm.run https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://generativelanguage.googleapis.com https://raw.githubusercontent.com https://fonts.googleapis.com https://fonts.gstatic.com https://esm.run https://cdn.jsdelivr.net https://huggingface.co; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'; worker-src 'self' blob:;">
-<title>Career-Ops-India App — v7.2</title>
+<title>Career-Ops-India App — v7.3</title>
 <meta name="version" content="7.2">
 <meta name="build" content="2026-04-12">
 <link rel="manifest" href="manifest.json">
@@ -994,7 +994,7 @@ Skills and certifications"></textarea>
     <div class="made-with">
       <p>Made with Love and Innovation, driven by Intention, dedicated to the community.</p>
       <p style="margin-top:4px;">— <a href="https://www.linkedin.com/in/dhawalshrivastava" target="_blank">Dhawal Shrivastava</a></p>
-      <p style="margin-top:6px;font-size:11px;color:var(--text-3);font-family:var(--fm);">Career-Ops-India App v7.2</p>
+      <p style="margin-top:6px;font-size:11px;color:var(--text-3);font-family:var(--fm);">Career-Ops-India App v7.3</p>
     </div>
   </div>
 
@@ -1091,7 +1091,7 @@ Skills and certifications"></textarea>
   <span style="color:var(--border);">·</span>
   <span id="webgpu-badge-footer"></span>
   <span style="flex:1;"></span>
-  <span style="font-size:10px;color:var(--text-3);font-family:var(--fm);margin-right:8px;">v7.2</span>
+  <span style="font-size:10px;color:var(--text-3);font-family:var(--fm);margin-right:8px;">v7.3</span>
   <button onclick="openSyncModal()" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--text-3);font-family:var(--fm);padding:2px 6px;border-radius:var(--r-pill);border:1px solid var(--border);" id="sync-trigger-btn">⬇️ Sync</button>
 </div>
 
@@ -1205,7 +1205,11 @@ async function processPIN(){
     if(!ok){document.getElementById('pin-error').textContent='Incorrect PIN. Try again.';updatePinDots(4,true);setTimeout(()=>{S.pinStep='';resetPinDots();document.getElementById('pin-error').textContent='';},900);return;}
     S.sessionKey=pin;hidePIN();showSecVerified();document.getElementById('lock-btn').style.display='block';
     const blob=localStorage.getItem('coi_key_enc');if(blob){const dec=await decryptVal(pin,blob);if(dec){document.getElementById('api-key').value=dec;document.getElementById('ak-ok').style.display='flex';}}
+    // Also decrypt Gemini key if stored
+    const gblob=localStorage.getItem('coi_gemini_enc');if(gblob){const gdec=await decryptVal(pin,gblob);if(gdec){const gi=document.getElementById('gemini-key');if(gi)gi.value=gdec;}}
     toast('Unlocked ✓','ok');
+    // Resume any pending action that triggered the unlock
+    if(S._pendingAction){const fn=S._pendingAction;S._pendingAction=null;setTimeout(fn,200);}}
   }
   else if(mode==='change-old'){
     const ok=await verifyPIN(pin);
@@ -1309,18 +1313,43 @@ async function getDecryptedKey(){
 // ── EXTRACT FROM CV ──
 async function extractFromCV(){
   const cv=document.getElementById('cv-input').value.trim();
-  const key=await getDecryptedKey();
   if(!cv){toast('Paste your CV first','err');return;}
-  if(!key){toast('Add your API key first','err');if(localStorage.getItem('coi_pin_hash'))showPIN('unlock');return;}
+
+  // Resolve which key to use — prefer the active provider, fall back to whichever is available
+  let key=null, useGemini=false;
+  const claudeKey=await getDecryptedKey();
+  const geminiKey=await getGeminiKey();
+  if(P.provider!=='claude'&&geminiKey){key=geminiKey;useGemini=true;}
+  else if(claudeKey){key=claudeKey;useGemini=false;}
+  else if(geminiKey){key=geminiKey;useGemini=true;}
+
+  if(!key){
+    // No decrypted key available — prompt PIN then resume
+    S._pendingAction=extractFromCV;
+    if(!localStorage.getItem('coi_pin_hash'))showPIN('setup');
+    else showPIN('unlock');
+    toast('Enter your PIN to unlock and extract','err');
+    return;
+  }
+
   const btn=document.getElementById('extract-btn');btn.disabled=true;btn.textContent='Extracting...';
+  const prompt=`Extract from this CV. Return ONLY valid JSON, no markdown:\n{"name":"","ctc":"","city":"","workmode":"remote-first|full-remote|hybrid|wfo","notice":"immediate|30|60|90","buyout":"no|yes|self","sector":"all|startup|gcc|ai-native","college":"","cgpa":"","stipend":""}\n\nCV:\n${cv.substring(0,3000)}`;
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:600,messages:[{role:'user',content:`Extract from this CV. Return ONLY valid JSON, no markdown:\n{"name":"","ctc":"","city":"","workmode":"remote-first|full-remote|hybrid|wfo","notice":"immediate|30|60|90","buyout":"no|yes|self","sector":"all|startup|gcc|ai-native","college":"","cgpa":"","stipend":""}\n\nCV:\n${cv.substring(0,3000)}`}]})});
-    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`HTTP ${res.status}`);}
-    const data=await res.json();
-    const p=JSON.parse(data.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim());
-    const s=(id,v)=>{const e=document.getElementById(id);if(e&&v&&v.trim())e.value=v.trim();};
-    s('profile-name',p.name);s('profile-ctc',p.ctc);s('profile-city',p.city);
-    ['workmode','notice','buyout','sector'].forEach(k=>{const e=document.getElementById('profile-'+k);if(e&&p[k])e.value=p[k];});
+    let rawText;
+    if(useGemini){
+      const modelId=typeof GEMINI_MODELS!=='undefined'?(GEMINI_MODELS[P.provider]||'gemini-2.5-flash'):'gemini-2.5-flash';
+      const url=`https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent`;
+      const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':key},body:JSON.stringify({contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:600,temperature:0.1,responseMimeType:'text/plain'}})}); 
+      if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`Gemini HTTP ${res.status}`);}
+      const data=await res.json();
+      rawText=data.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('')||'';
+    }else{
+      const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:600,messages:[{role:'user',content:prompt}]})});
+      if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`HTTP ${res.status}`);}
+      const data=await res.json();
+      rawText=data.content.map(b=>b.text||'').join('');
+    }
+    const p=JSON.parse(rawText.replace(/```json|```/g,'').trim());
     s('profile-college',p.college);s('profile-cgpa',p.cgpa);s('profile-stipend',p.stipend);
     const t=document.getElementById('pf-trigger'),b=document.getElementById('pf-body');if(t&&b){t.classList.add('on');b.classList.add('on');}
     saveP();toast('Profile extracted ✓','ok');

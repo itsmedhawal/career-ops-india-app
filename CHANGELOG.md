@@ -6,6 +6,15 @@ Format: `[Version] — Date — Summary`
 
 ---
 
+## [v7.3] — 2026-04-12 — Extract from CV Fix
+
+### Fixed
+- **Extract from CV — PIN resume broken** — when the API key was PIN-encrypted, clicking "Extract from CV" showed the PIN unlock screen then silently returned; extraction never resumed after the user entered their PIN. Fixed via `S._pendingAction` callback: the function stores itself as a pending action before showing the PIN prompt, and `processPIN()` now runs it automatically after a successful unlock
+- **Extract from CV — Claude-only hardcode** — function was hardcoded to `https://api.anthropic.com/v1/messages` regardless of the selected provider; users with only a Gemini key could not use it. Now provider-aware: prefers the active `P.provider`, falls back to whichever key (Claude or Gemini) is available
+- **Gemini key not restored on unlock** — `processPIN()` unlock branch only decrypted the Claude key into the UI; Gemini key is now also restored from `coi_gemini_enc` on successful PIN entry
+
+---
+
 ## [v7.2] — 2026-04-12 — Security & Stability Patch
 
 ### Security
