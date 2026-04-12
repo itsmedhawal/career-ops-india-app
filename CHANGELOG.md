@@ -6,6 +6,25 @@ Format: `[Version] — Date — Summary`
 
 ---
 
+## [v7.2] — 2026-04-12 — Security & Stability Patch
+
+### Security
+- **Gemini API key moved out of URL** — key was previously passed as `?key=` query parameter (visible in browser history, DevTools, and server access logs); now sent as `x-goog-api-key` request header
+
+### Fixed
+- **Fast Scan / Deep Eval race condition** — clicking Fast Scan then Deep Eval could fire both simultaneously and race to overwrite results; Deep Eval and sticky buttons are now disabled while a Fast Scan is in progress and re-enabled via `finally` (cloud path) or worker `GLS_RESULT`/`GLS_ERROR` messages (local path)
+- **`importT()` silent overwrite** — importing a JSON backup with existing tracker data now prompts for confirmation instead of overwriting silently
+- **CV length cap in Deep Eval** — CV text was uncapped in Claude and Gemini eval prompts; now capped at 6,000 characters to stay within model context windows (Extract from CV was already capped at 3,000)
+- **`.doc` download correctly labelled** — CV download was labelled "Download .docx" and used `downloadCVDocx()`; the file is an HTML-in-Word wrapper (`.doc`), not OOXML; button label, filename, and function renamed to `.doc` / `downloadCVDoc`
+
+### Changed
+- `window._cvText`, `window._cvCompany`, `window._prepText`, `window._prepCompany` moved from global `window` into the `S` state object — reduces global scope pollution and aligns with rest of app state
+
+### Removed
+- Dead variables `_origHandleWorkerMessage` and `_workerMsgOrig` (unused leftover references from a prior refactor)
+
+---
+
 ## [v7.1] — 2026-04-12 — Hybrid Multimodal Patch
 
 ### Added
