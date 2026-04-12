@@ -6,6 +6,15 @@ Format: `[Version] — Date — Summary`
 
 ---
 
+## [v7.4] — 2026-04-12 — Critical JS & Extract from CV Fix
+
+### Fixed
+- **Broken script on load** — extra `}` in `processPIN` `unlock` branch caused `Unexpected token 'else'` parse error, silently killing all JS; every button in the app was dead on load
+- **Extract from CV — `s()` out of scope** — `extractFromCV` called `s()` which is a local helper defined only inside `loadP()`; threw `ReferenceError` silently inside `try/catch`; no extracted fields were ever written to the form. Fixed with a local `sf()` helper; now populates all fields (name, ctc, city, workmode, notice, buyout, sector, college, cgpa, stipend)
+- **Extract from CV — PIN setup path never resumed** — `processPIN` `setup-confirm` branch didn't run `S._pendingAction`; first-time users who had no PIN when clicking "Extract from CV" would set their PIN but extraction never resumed. Fixed — mirrors the `unlock` branch behaviour
+
+---
+
 ## [v7.3] — 2026-04-12 — Extract from CV Fix
 
 ### Fixed
