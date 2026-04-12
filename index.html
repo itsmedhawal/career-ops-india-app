@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://esm.run https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://raw.githubusercontent.com https://fonts.googleapis.com https://fonts.gstatic.com https://esm.run https://cdn.jsdelivr.net https://huggingface.co; img-src 'self' data:; object-src 'none'; base-uri 'self'; worker-src 'self' blob:;">
-<title>Career-Ops-India App</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://esm.run https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://generativelanguage.googleapis.com https://raw.githubusercontent.com https://fonts.googleapis.com https://fonts.gstatic.com https://esm.run https://cdn.jsdelivr.net https://huggingface.co; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'; worker-src 'self' blob:;">
+<title>Career-Ops-India App — v7.1</title>
+<meta name="version" content="7.1">
+<meta name="build" content="2026-04-12">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FF9933">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -408,7 +410,44 @@ select option{background:var(--surface);}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
 
-/* ── V7 LOCAL AI STYLES ── */
+/* ── V7.1 MULTIMODAL & PROVIDER STYLES ── */
+
+/* Provider selector */
+.provider-toggle{display:flex;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:3px;gap:3px;margin-bottom:12px;}
+.pvb{flex:1;padding:8px 6px;border:none;border-radius:6px;font-family:var(--fb);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;color:var(--text-2);background:none;display:flex;align-items:center;justify-content:center;gap:5px;}
+.pvb.on{background:var(--surface);color:var(--text-1);box-shadow:0 1px 4px rgba(0,0,0,.3);}
+.pvb.claude.on{border:1px solid rgba(255,153,51,.3);color:var(--saffron);}
+.pvb.gemini.on{border:1px solid rgba(88,166,255,.3);color:var(--cyan);}
+.provider-note{font-size:11px;color:var(--text-3);margin-bottom:14px;line-height:1.5;padding:8px 10px;background:var(--surface-2);border-radius:var(--r-sm);}
+.provider-note.free{color:var(--green);background:rgba(63,185,80,.06);border:1px solid rgba(63,185,80,.15);}
+
+/* Image upload */
+.jd-attach-wrap{position:relative;margin-top:8px;}
+.jd-attach-btn{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-3);background:none;border:1px dashed var(--border);border-radius:var(--r-sm);padding:7px 12px;cursor:pointer;transition:all .2s;font-family:var(--fb);width:100%;}
+.jd-attach-btn:hover{border-color:var(--cyan);color:var(--cyan);}
+.jd-attach-btn.has-image{border-color:var(--cyan);color:var(--cyan);background:rgba(88,166,255,.05);}
+.jd-img-preview{display:none;margin-top:8px;position:relative;border-radius:var(--r-sm);overflow:hidden;border:1px solid var(--cyan);}
+.jd-img-preview.on{display:block;}
+.jd-img-preview img{width:100%;max-height:160px;object-fit:cover;display:block;}
+.jd-img-remove{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.7);border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;line-height:1;}
+.jd-img-note{font-size:10px;color:var(--cyan);padding:4px 8px;background:rgba(88,166,255,.06);font-family:var(--fm);}
+.img-only-note{font-size:11px;color:var(--text-3);margin-top:6px;line-height:1.5;}
+
+/* Gemini model sub-selector */
+.gemini-model-row{display:flex;gap:6px;margin-bottom:10px;}
+.gmb{flex:1;padding:7px 8px;border:1px solid var(--border);border-radius:var(--r-sm);background:none;font-family:var(--fb);font-size:12px;cursor:pointer;color:var(--text-2);transition:all .2s;text-align:center;}
+.gmb.on{background:rgba(88,166,255,.1);border-color:var(--cyan);color:var(--cyan);font-weight:600;}
+.gmb:hover:not(.on){border-color:var(--cyan);}
+
+/* Gemini API key field */
+.gemini-key-wrap{display:none;}
+.gemini-key-wrap.on{display:block;}
+
+/* Provider badge on results */
+.provider-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:var(--r-pill);font-size:10px;font-family:var(--fm);font-weight:600;margin-bottom:10px;}
+.provider-badge.claude{background:rgba(255,153,51,.1);border:1px solid rgba(255,153,51,.25);color:var(--saffron);}
+.provider-badge.gemini{background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.25);color:var(--cyan);}
+</style>
 
 /* AI Mode indicator in footer */
 .ai-footer{
@@ -614,13 +653,37 @@ select option{background:var(--surface);}
     <button class="mb" onclick="setMode('intern')" id="mi">🎓 Student / Intern</button>
   </div>
   <div class="card card-hi">
+    <!-- Provider toggle -->
+    <div class="slabel" style="margin-bottom:8px;">Cloud Intelligence Provider</div>
+    <div class="provider-toggle" id="provider-toggle">
+      <button class="pvb claude on" onclick="setProvider('claude')" id="pv-claude">🟠 Claude</button>
+      <button class="pvb gemini" onclick="setProvider('gemini-flash')" id="pv-gemini-flash">🔵 Gemini Flash</button>
+      <button class="pvb gemini" onclick="setProvider('gemini-pro')" id="pv-gemini-pro">💎 Gemini Pro</button>
+    </div>
+    <div class="provider-note" id="provider-note">Claude Sonnet 4.6 · $3/$15 per 1M tokens · Recommended for best evaluation quality</div>
+
     <div class="fg" style="margin-bottom:0;">
       <label class="lr">Job Description</label>
       <textarea id="jd-input" rows="6" placeholder="Paste the full job description here...
 
 The more complete the JD, the better the evaluation."></textarea>
     </div>
-    <div class="cors-note"><span>ℹ️</span><span>Paste JD text directly for best results. URL extraction may fail on some job boards due to browser security restrictions.</span></div>
+
+    <!-- Image upload — shown only when Gemini selected -->
+    <div id="jd-image-section" style="display:none;margin-top:8px;">
+      <input type="file" id="jd-image-input" accept="image/png,image/jpeg,image/webp" style="display:none;" onchange="handleImageUpload(this)">
+      <button class="jd-attach-btn" id="jd-attach-btn" onclick="document.getElementById('jd-image-input').click()">
+        <span>📎</span><span id="jd-attach-label">Attach JD screenshot (optional)</span>
+      </button>
+      <div class="jd-img-preview" id="jd-img-preview">
+        <img id="jd-img-thumb" src="" alt="JD screenshot">
+        <button class="jd-img-remove" onclick="removeImage()" title="Remove image">✕</button>
+        <div class="jd-img-note">📷 Image will be sent directly to Gemini API · Not stored on any server</div>
+      </div>
+      <div class="img-only-note">Gemini can read job screenshots directly. Paste text above AND/OR attach an image — both are sent together for a more complete evaluation.</div>
+    </div>
+
+    <div class="cors-note" style="margin-top:8px;"><span>ℹ️</span><span>Paste JD text directly for best results. URL extraction may fail on some job boards due to browser security restrictions.</span></div>
   </div>
   <button class="btn bp bw bl mt desk-eval" onclick="runEval()" id="eval-btn">🚀 Evaluate Job</button>
 
@@ -752,6 +815,26 @@ The more complete the JD, the better the evaluation."></textarea>
     <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn bs" style="font-size:12px;padding:6px 12px;" onclick="saveApiKey()">🔐 Encrypt &amp; Save Key</button>
       <button class="btn bg" style="font-size:12px;padding:6px 12px;" onclick="showChangePIN()">🔑 Change PIN</button>
+    </div>
+  </div>
+
+  <!-- Gemini API Key -->
+  <div class="slabel" style="margin-top:16px;">Google Gemini API Key <span style="font-size:10px;color:var(--text-3);">(optional — for Gemini provider)</span></div>
+  <div class="card">
+    <div class="fg" style="margin-bottom:6px;">
+      <label>Gemini API Key</label>
+      <div class="akw">
+        <input type="password" id="gemini-key" placeholder="AIza..." autocomplete="off">
+        <button class="akeye" onclick="toggleGeminiKey()" id="gemini-eye">👁</button>
+      </div>
+      <p class="hint">Get yours free at <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com/app/apikey</a> → Free tier: 15 evaluations/minute at no cost.</p>
+    </div>
+    <div class="ak-ok" id="gemini-ak-ok" style="display:none;">🔐 Gemini key encrypted and saved</div>
+    <div style="background:rgba(63,185,80,.05);border:1px solid rgba(63,185,80,.15);border-radius:var(--r-sm);padding:10px 12px;margin-top:8px;font-size:12px;color:var(--green);line-height:1.6;">
+      ✨ <strong>Gemini 2.5 Flash free tier</strong> — up to 15 requests/minute at zero cost via Google AI Studio. No billing required to get started.
+    </div>
+    <div style="margin-top:10px;">
+      <button class="btn bs" style="font-size:12px;padding:6px 12px;" onclick="saveGeminiKey()">🔐 Encrypt &amp; Save Gemini Key</button>
     </div>
   </div>
 
@@ -912,6 +995,7 @@ Skills and certifications"></textarea>
     <div class="made-with">
       <p>Made with Love and Innovation, driven by Intention, dedicated to the community.</p>
       <p style="margin-top:4px;">— <a href="https://www.linkedin.com/in/dhawalshrivastava" target="_blank">Dhawal Shrivastava</a></p>
+      <p style="margin-top:6px;font-size:11px;color:var(--text-3);font-family:var(--fm);">Career-Ops-India App v7.1</p>
     </div>
   </div>
 
@@ -1008,6 +1092,7 @@ Skills and certifications"></textarea>
   <span style="color:var(--border);">·</span>
   <span id="webgpu-badge-footer"></span>
   <span style="flex:1;"></span>
+  <span style="font-size:10px;color:var(--text-3);font-family:var(--fm);margin-right:8px;">v7.1</span>
   <button onclick="openSyncModal()" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--text-3);font-family:var(--fm);padding:2px 6px;border-radius:var(--r-pill);border:1px solid var(--border);" id="sync-trigger-btn">⬇️ Sync</button>
 </div>
 
@@ -1282,58 +1367,55 @@ RULES: Cite exact CV lines. Score in LPA. Be direct and actionable.`;
 
 // ── EVALUATION ──
 async function runEval(){
-  const key=await getDecryptedKey();
   const jd=document.getElementById('jd-input').value.trim();
   const cv=localStorage.getItem('coi_cv')||'';
-  if(!key){
-    if(localStorage.getItem('coi_key_enc')){showPIN('unlock');toast('Enter PIN to unlock your API key','err');}
-    else{nav('profile');toast('Add your API key in Profile first','err');}
-    return;
-  }
-  if(!jd){toast('Paste a job description first','err');return;}
+
+  if(!jd&&!P.imageData){toast('Paste a JD or attach an image first','err');return;}
   if(!cv){nav('profile');toast('Add your CV in Profile first','err');return;}
 
-  // Check repost BEFORE evaluation
-  const repost=checkRepost(jd);
+  // Check correct key for selected provider
+  if(P.provider==='claude'){
+    const key=await getDecryptedKey();
+    if(!key){
+      if(localStorage.getItem('coi_key_enc')){showPIN('unlock');toast('Enter PIN to unlock your Claude API key','err');}
+      else{nav('profile');toast('Add your Claude API key in Profile first','err');}
+      return;
+    }
+  } else {
+    const key=await getGeminiKey();
+    if(!key){nav('profile');toast('Add your Gemini API key in Profile first','err');return;}
+  }
 
+  const repost=jd?checkRepost(jd):null;
   saveP();
   const g=id=>document.getElementById(id)?.value||'';
   const pr={name:g('profile-name')||'Candidate',ctc:g('profile-ctc')||'Not specified',city:g('profile-city')||'Not specified',workmode:g('profile-workmode'),notice:g('profile-notice')||'60',buyout:g('profile-buyout')||'no',sector:g('profile-sector'),mode:S.mode,college:g('profile-college'),cgpa:g('profile-cgpa'),stipend:g('profile-stipend')};
+
   document.getElementById('eval-btn').disabled=true;
   const seb=document.getElementById('seb');if(seb)seb.disabled=true;
   document.getElementById('eval-empty').style.display='none';
   document.getElementById('eval-results').style.display='none';
   document.getElementById('repost-warn-wrap').innerHTML='';
   document.getElementById('eval-history-wrap').innerHTML='';
+  document.getElementById('local-gls-result').innerHTML='';
   const ld=document.getElementById('loading');ld.style.display='block';
+  const loadLabel=ld.querySelector('div');
+  if(loadLabel)loadLabel.textContent='Evaluating via '+( PROVIDERS[P.provider]?.label||'AI')+'...';
   const ss=['ls1','ls2','ls3','ls4','ls5','ls6'];let si=0;
   const iv=setInterval(()=>{if(si>0)document.getElementById(ss[si-1]).className='ls done';if(si<ss.length){document.getElementById(ss[si]).className='ls act';si++;}},900);
   try{
-    const prompt=`${S.sh}\n\n${S.of}\n\nCANDIDATE:\nName: ${pr.name}\nCTC: ${pr.ctc}\nCity: ${pr.city}\nWork Mode: ${pr.workmode}\nNotice: ${pr.notice} days\nBuyout: ${pr.buyout}\nSector: ${pr.sector}\nMode: ${pr.mode}${pr.college?'\nCollege: '+pr.college:''}\n\nCV:\n${cv}\n\nJOB DESCRIPTION:\n${jd}\n\nEvaluate fully. Cite exact CV lines. CTC in LPA. In Block G, list every signal that fired with exact points.`;
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4000,messages:[{role:'user',content:prompt}]})});
-    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'API error '+res.status);}
-    const data=await res.json();const text=data.content.map(b=>b.text||'').join('\n');
+    const {text,provider}=await runCloudEval(jd||'[See attached image]',cv,pr);
     clearInterval(iv);ss.forEach(s=>document.getElementById(s).className='ls done');
-    const ev=parseEv(text,jd,pr);S.eval=ev;
-
-    // Store fingerprint
-    storeFingerprint(jd,ev);
-
-    // Check eval history for similar roles
+    const ev=parseEv(text,jd,pr);
+    ev.evalProvider=provider;
+    S.eval=ev;
+    if(jd)storeFingerprint(jd,ev);
     const similar=S.evals.filter(e=>e.company===ev.company||e.role===ev.role);
-
     setTimeout(()=>{
       ld.style.display='none';
       document.getElementById('eval-results').style.display='block';
-      // Repost warning
-      if(repost){
-        document.getElementById('repost-warn-wrap').innerHTML=`<div class="repost-warn"><span style="font-size:20px;flex-shrink:0;">⚠️</span><div><strong>Repost detected</strong> — This JD matches a role you evaluated on ${repost.date} (${repost.company}, Score: ${repost.score?.toFixed(1)||'--'}/5). This adds ~20 pts to GLS automatically.</div></div>`;
-      }
-      // Eval history
-      if(similar.length){
-        const rows=similar.slice(0,2).map(e=>`<div class="eh-row"><span>${sanitize(e.company)} — ${sanitize(e.role)}</span><span style="font-family:var(--fm);color:var(--saffron);">${e.score?.toFixed(1)||'--'}/5 · ${e.date}</span></div>`).join('');
-        document.getElementById('eval-history-wrap').innerHTML=`<div class="eval-history-card"><div class="eh-title">📋 You have evaluated similar roles before</div>${rows}</div>`;
-      }
+      if(repost){document.getElementById('repost-warn-wrap').innerHTML=`<div class="repost-warn"><span style="font-size:20px;flex-shrink:0;">⚠️</span><div><strong>Repost detected</strong> — This JD matches a role you evaluated on ${repost.date} (${repost.company}, Score: ${repost.score?.toFixed(1)||'--'}/5). This adds ~20 pts to GLS automatically.</div></div>`;}
+      if(similar.length){const rows=similar.slice(0,2).map(e=>`<div class="eh-row"><span>${sanitize(e.company)} — ${sanitize(e.role)}</span><span style="font-family:var(--fm);color:var(--saffron);">${e.score?.toFixed(1)||'--'}/5 · ${e.date}</span></div>`).join('');document.getElementById('eval-history-wrap').innerHTML=`<div class="eval-history-card"><div class="eh-title">📋 You have evaluated similar roles before</div>${rows}</div>`;}
       renderRes(ev);
       document.getElementById('eval-btn').disabled=false;if(seb)seb.disabled=false;
     },400);
@@ -1385,7 +1467,11 @@ function renderRes(ev){
   const assessColor={'High Confidence':'var(--green)','Proceed with Caution':'var(--amber)','Suspicious':'var(--gls-h)','Very High Risk':'var(--red)'};
   const aColor=assessColor[ev.glsA]||'var(--text-2)';
 
-  document.getElementById('sgrid').innerHTML=`
+  // Provider badge
+  const provKey=ev.evalProvider||P.provider;
+  const isGemini=provKey&&provKey.startsWith('gemini');
+  const providerBadge=`<div class="provider-badge ${isGemini?'gemini':'claude'}">${isGemini?'🔵 Evaluated via Gemini':'🟠 Evaluated via Claude'}</div>`;
+  document.getElementById('sgrid').innerHTML= providerBadge + `
     <div class="sc"><div class="scl">Job Fit</div><div class="scv" style="color:${gc[ev.grade]||'var(--saffron)'};">${ev.score?.toFixed(1)||'--'}</div><div class="scs">out of 5.0</div></div>
     <div class="sc"><div class="scl">Grade</div><div class="scv" style="color:${gc[ev.grade]||'var(--text-1)'};">${ev.grade||'--'}</div><div class="scs">${rec[ev.grade]||''}</div></div>
     <div class="sc"><div class="scl">Source</div><div class="scv" style="font-size:14px;color:${['Naukri','Foundit'].includes(ev.source)?'var(--amber)':'var(--green)'};">${sanitize(ev.source||'--')}</div><div class="scs">${['Naukri','Foundit'].includes(ev.source)?'Higher risk':'Lower risk'}</div></div>
@@ -1863,6 +1949,296 @@ function importScanResults(data){
 }
 
 // ══════════════════════════════════════════════════
+// V7.1 — MULTIMODAL PROVIDER ORCHESTRATOR
+// ══════════════════════════════════════════════════
+
+const PROVIDERS = {
+  'claude': {
+    label: 'Claude Sonnet 4.6',
+    badge: '🟠 Claude',
+    cost: '$3/$15 per 1M tokens · Recommended for best evaluation quality',
+    note_class: '',
+    supports_image: false
+  },
+  'gemini-flash': {
+    label: 'Gemini 2.5 Flash',
+    badge: '🔵 Gemini Flash',
+    cost: '✨ Free tier: 15 evals/minute at no cost · Paid: $0.30/$2.50 per 1M tokens · Multimodal',
+    note_class: 'free',
+    supports_image: true
+  },
+  'gemini-pro': {
+    label: 'Gemini 2.5 Pro',
+    badge: '💎 Gemini Pro',
+    cost: '$1.00/$10.00 per 1M tokens · Deeper reasoning · Multimodal',
+    note_class: '',
+    supports_image: true
+  }
+};
+
+const GEMINI_MODELS = {
+  'gemini-flash': 'gemini-2.5-flash',
+  'gemini-pro': 'gemini-2.5-pro'
+};
+
+// State
+const P = {
+  provider: localStorage.getItem('coi_provider')||'claude',
+  imageData: null,  // base64 string
+  imageMime: null   // image/png etc
+};
+
+// ── PROVIDER SELECTION ──
+function setProvider(p){
+  P.provider=p;
+  localStorage.setItem('coi_provider',p);
+
+  // Update toggle buttons
+  document.querySelectorAll('.pvb').forEach(b=>b.classList.remove('on'));
+  const btn=document.getElementById('pv-'+p);
+  if(btn)btn.classList.add('on');
+
+  // Update provider note
+  const note=document.getElementById('provider-note');
+  if(note){
+    note.textContent=PROVIDERS[p].cost;
+    note.className='provider-note'+(PROVIDERS[p].note_class?' '+PROVIDERS[p].note_class:'');
+  }
+
+  // Show/hide image upload section
+  const imgSection=document.getElementById('jd-image-section');
+  if(imgSection)imgSection.style.display=PROVIDERS[p].supports_image?'block':'none';
+
+  // Clear image if switching to Claude
+  if(!PROVIDERS[p].supports_image)removeImage();
+}
+
+// ── IMAGE UPLOAD ──
+function handleImageUpload(input){
+  const file=input.files[0];
+  if(!file)return;
+
+  // Validate type and size (max 5MB)
+  if(!file.type.startsWith('image/')){toast('Please upload an image file','err');return;}
+  if(file.size>5*1024*1024){toast('Image too large — max 5MB','err');return;}
+
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const dataUrl=e.target.result;
+    P.imageData=dataUrl.split(',')[1]; // base64 only
+    P.imageMime=file.type;
+
+    // Show thumbnail
+    const thumb=document.getElementById('jd-img-thumb');
+    const preview=document.getElementById('jd-img-preview');
+    const attachBtn=document.getElementById('jd-attach-btn');
+    const attachLabel=document.getElementById('jd-attach-label');
+    if(thumb)thumb.src=dataUrl;
+    if(preview)preview.classList.add('on');
+    if(attachBtn)attachBtn.classList.add('has-image');
+    if(attachLabel)attachLabel.textContent=file.name+' ('+Math.round(file.size/1024)+'KB)';
+    toast('Image attached ✓','ok');
+  };
+  reader.readAsDataURL(file);
+  input.value=''; // reset so same file can be re-selected
+}
+
+function removeImage(){
+  P.imageData=null;P.imageMime=null;
+  const thumb=document.getElementById('jd-img-thumb');
+  const preview=document.getElementById('jd-img-preview');
+  const attachBtn=document.getElementById('jd-attach-btn');
+  const attachLabel=document.getElementById('jd-attach-label');
+  if(thumb)thumb.src='';
+  if(preview)preview.classList.remove('on');
+  if(attachBtn)attachBtn.classList.remove('has-image');
+  if(attachLabel)attachLabel.textContent='Attach JD screenshot (optional)';
+}
+
+// ── GEMINI KEY MANAGEMENT ──
+function toggleGeminiKey(){
+  const i=document.getElementById('gemini-key'),b=document.getElementById('gemini-eye'),s=i.type==='password';
+  i.type=s?'text':'password';b.textContent=s?'🙈':'👁';
+}
+async function saveGeminiKey(){
+  const key=document.getElementById('gemini-key').value.trim();
+  if(!key){toast('Enter your Gemini API key first','err');return;}
+  if(!key.startsWith('AIza')){toast('Gemini keys start with AIza...','err');return;}
+  if(!S.sessionKey){
+    if(!localStorage.getItem('coi_pin_hash'))showPIN('setup');
+    else showPIN('unlock');
+    toast('Set or enter your PIN first','err');
+    return;
+  }
+  const blob=await encryptVal(S.sessionKey,key);
+  localStorage.setItem('coi_gemini_enc',blob);
+  document.getElementById('gemini-ak-ok').style.display='flex';
+  toast('Gemini key encrypted ✓','ok');
+}
+async function getGeminiKey(){
+  if(S.sessionKey){
+    const blob=localStorage.getItem('coi_gemini_enc');
+    if(blob){const dec=await decryptVal(S.sessionKey,blob);if(dec)return dec;}
+  }
+  return document.getElementById('gemini-key')?.value.trim()||null;
+}
+function loadGeminiKey(){
+  const enc=localStorage.getItem('coi_gemini_enc');
+  if(enc)document.getElementById('gemini-ak-ok').style.display='flex';
+}
+
+// ── GEMINI SYSTEM PROMPT ──
+// Adapted from career-ops-india engine for Gemini's instruction format
+function buildGeminiSystemPrompt(){
+  return `You are the Career-Ops-India Job Assessor specialising in the Indian job market.
+
+TASK: Evaluate a job description for Ghost Likelihood and provide a full A-G evaluation report.
+
+GHOST LIKELIHOOD SCORE (GLS) — 9 India-calibrated signals (total 100 pts):
+1. Repost Pattern — 20 pts
+2. Posting Age >60 days — 15 pts
+3. Apply CTA inactive/missing — 15 pts
+4. Source quality: Naukri/Foundit=15, LinkedIn=5, ATS=0 — 15 pts
+5. Boilerplate ratio >70% — 10 pts
+6. Impossible requirements — 10 pts
+7. Layoff/hiring freeze signals — 8 pts
+8. Unnamed client/consultancy — 4 pts
+9. Missing team+stack+location — 3 pts
+
+INDIA ARCHETYPES (classify into one):
+AI/ML Engineer | LLMOps/GenAI Engineer | Data Scientist | AI Product Manager | AI Solutions Architect | AI Consultant | AI Transformation Lead
+
+SCORING: CV Match (gate: <2.5 = SKIP), North Star, Compensation (LPA), Cultural Signals, Red Flags
+COMP: All in LPA. In-hand ~70-75%. Bond>6mo = -0.5. Variable>30% = -0.3. GCC = no equity penalty.
+GEO: Full Remote / Remote-First / Hybrid / WFO / Fake Remote 🚩
+STAGES: Early Startup / Growth Startup / Late Startup / GCC / Enterprise / Consulting
+
+INSTRUCTIONS:
+- If an image is provided alongside text, use BOTH for a more complete evaluation
+- Cite exact CV lines for evidence
+- Score compensation in LPA only
+- Be direct and actionable
+
+OUTPUT: Clean markdown with sections: ARCHETYPE, BLOCK A through G, GLOBAL SCORE, INDIA NOTES, EXTRACTED KEYWORDS`;
+}
+
+// ── CLOUD EVAL ORCHESTRATOR ──
+async function runCloudEval(jd, cv, profile){
+  const provider=P.provider;
+
+  if(provider==='claude'){
+    return runClaudeEval(jd, cv, profile);
+  } else {
+    return runGeminiEval(jd, cv, profile);
+  }
+}
+
+// ── CLAUDE EVAL (existing, extracted) ──
+async function runClaudeEval(jd, cv, profile){
+  const key=await getDecryptedKey();
+  if(!key)throw new Error('No Claude API key — add it in Profile');
+
+  const prompt=`${S.sh}\n\n${S.of}\n\nCANDIDATE:\nName: ${profile.name}\nCTC: ${profile.ctc}\nCity: ${profile.city}\nWork Mode: ${profile.workmode}\nNotice: ${profile.notice} days\nBuyout: ${profile.buyout}\nSector: ${profile.sector}\nMode: ${profile.mode}${profile.college?'\nCollege: '+profile.college:''}\n\nCV:\n${cv}\n\nJOB DESCRIPTION:\n${jd}\n\nEvaluate fully. Cite exact CV lines. CTC in LPA. In Block G, list every signal that fired with exact points.`;
+
+  const res=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4000,messages:[{role:'user',content:prompt}]})
+  });
+  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'Claude API error '+res.status);}
+  const data=await res.json();
+  return {text: data.content.map(b=>b.text||'').join('\n'), provider:'claude'};
+}
+
+// ── GEMINI EVAL ──
+async function runGeminiEval(jd, cv, profile){
+  const key=await getGeminiKey();
+  if(!key)throw new Error('No Gemini API key — add it in Profile');
+
+  const modelId=GEMINI_MODELS[P.provider]||'gemini-2.5-flash';
+  const systemPrompt=buildGeminiSystemPrompt();
+
+  // Build candidate context
+  const candidateContext=`CANDIDATE:
+Name: ${profile.name}
+CTC Target: ${profile.ctc}
+City: ${profile.city}
+Work Mode: ${profile.workmode}
+Notice: ${profile.notice} days
+Buyout: ${profile.buyout}
+Sector: ${profile.sector}
+Mode: ${profile.mode}${profile.college?'\nCollege: '+profile.college:''}
+
+CV:
+${cv}`;
+
+  // Build parts array — supports text + optional image
+  const parts=[];
+
+  // System context as first text part
+  parts.push({text: systemPrompt+'\n\n'+candidateContext});
+
+  // Add image if present
+  if(P.imageData&&P.imageMime){
+    parts.push({
+      inline_data:{
+        mime_type: P.imageMime,
+        data: P.imageData
+      }
+    });
+    parts.push({text: 'Job Description Image (above) and/or text below:'});
+  } else {
+    parts.push({text: 'Job Description:'});
+  }
+
+  // JD text
+  if(jd.trim()){
+    parts.push({text: jd});
+  }
+
+  parts.push({text: '\nEvaluate fully using the A-G framework. Cite CV lines. All compensation in LPA. List every GLS signal fired with exact points.'});
+
+  const body={
+    contents:[{role:'user',parts}],
+    generationConfig:{
+      maxOutputTokens: 4000,
+      temperature: 0.2,
+      responseMimeType: 'text/plain'
+    }
+  };
+
+  const url=`https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${key}`;
+
+  const res=await fetch(url,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  });
+
+  if(!res.ok){
+    const e=await res.json().catch(()=>({}));
+    const msg=e.error?.message||`Gemini API error ${res.status}`;
+    // Common Gemini errors
+    if(res.status===400&&msg.includes('API_KEY'))throw new Error('Invalid Gemini API key — check Profile');
+    if(res.status===429)throw new Error('Gemini rate limit — wait a moment and try again');
+    throw new Error(msg);
+  }
+
+  const data=await res.json();
+  const text=data.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('\n')||'';
+  if(!text)throw new Error('Empty response from Gemini — try again');
+
+  return {text, provider: P.provider};
+}
+
+// ── INIT PROVIDER STATE ──
+function initProviderState(){
+  const saved=P.provider;
+  // Restore provider toggle
+  setProvider(saved);
+  loadGeminiKey();
+}
+// ══════════════════════════════════════════════════
 // V7 — LOCAL AI (WebLLM + Gemma)
 // ══════════════════════════════════════════════════
 
@@ -1914,17 +2290,37 @@ async function checkWebGPU(){
 function initLocalWorker(){
   if(LOCAL_AI.worker)return;
   try{
+    // Try module worker first (needed for dynamic import in worker)
     LOCAL_AI.worker=new Worker('./worker.js',{type:'module'});
-    LOCAL_AI.worker.onmessage=handleWorkerMessage;
+    LOCAL_AI.worker.onmessage=handleWorkerMessagePatched;
     LOCAL_AI.worker.onerror=e=>{
-      console.error('Worker error:',e);
-      LOCAL_AI.state='error';
-      updateAIFooter();
-      toast('Local AI worker error — falling back to Cloud','err');
+      console.warn('Module worker failed, trying classic worker...',e);
+      LOCAL_AI.worker=null;
+      // Fallback: try without module type
+      try{
+        LOCAL_AI.worker=new Worker('./worker.js');
+        LOCAL_AI.worker.onmessage=handleWorkerMessagePatched;
+        LOCAL_AI.worker.onerror=e2=>{
+          console.error('Worker failed completely:',e2);
+          LOCAL_AI.worker=null;
+          LOCAL_AI.state='error';
+          updateAIFooter();
+          updateFastScanBtn();
+          // Don't toast — Fast Scan will just use Cloud fallback
+        };
+      }catch(e2){
+        LOCAL_AI.worker=null;
+        LOCAL_AI.state='error';
+        updateAIFooter();
+        updateFastScanBtn();
+      }
     };
   }catch(e){
     console.warn('Could not init worker:',e);
     LOCAL_AI.worker=null;
+    LOCAL_AI.state='error';
+    updateAIFooter();
+    updateFastScanBtn();
   }
 }
 
@@ -2058,18 +2454,18 @@ function updateAIFooter(){
   }
 }
 
-// ── UPDATE FAST SCAN BUTTON ──
+// Update Fast Scan button when worker state changes
 function updateFastScanBtn(){
   const btn=document.getElementById('fast-scan-btn');
   const hint=document.getElementById('fast-scan-hint');
   if(!btn)return;
 
-  if(!LOCAL_AI.webGPUSupported){
-    // WebGPU not available — show cloud fallback
+  if(!LOCAL_AI.webGPUSupported||LOCAL_AI.state==='error'||!LOCAL_AI.worker){
+    // WebGPU not available OR worker failed — show cloud fallback
     btn.className='btn btn-fast-scan cloud';
     btn.textContent='⚡ Fast Scan (Cloud)';
     btn.disabled=false;
-    btn.title='WebGPU not supported — using Cloud API for fast scan';
+    btn.title='Local AI unavailable — using Cloud API for fast scan';
     if(hint)hint.innerHTML='⚡ <strong>Fast Scan</strong> — quick GLS via Cloud API &nbsp;·&nbsp; 🔍 <strong>Deep Eval</strong> — full A–G evaluation via Claude API';
   }else if(LOCAL_AI.state==='ready'){
     btn.className='btn btn-fast-scan';
@@ -2298,6 +2694,9 @@ async function init(){
   await initIDB();loadE();loadP();await loadSk();updStats();await loadIDBCache();loadFingerprints();
   document.getElementById('sw').style.display='block';
   checkApiState();
+
+  // V7.1: restore provider state + Gemini key indicator
+  initProviderState();
 
   // V7: WebGPU check + local AI setup
   await checkWebGPU();
