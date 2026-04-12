@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://esm.run https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://generativelanguage.googleapis.com https://raw.githubusercontent.com https://fonts.googleapis.com https://fonts.gstatic.com https://esm.run https://cdn.jsdelivr.net https://huggingface.co; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'; worker-src 'self' blob:;">
-<title>Career-Ops-India App — v7.1</title>
-<meta name="version" content="7.1">
+<title>Career-Ops-India App — v7.2</title>
+<meta name="version" content="7.2">
 <meta name="build" content="2026-04-12">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FF9933">
@@ -1105,7 +1105,8 @@ const S={
   fbCat:'Bug Report',evals:[],sh:null,of:null,
   onbStep:0,pinStep:'',pinMode:'',sessionKey:null,
   idbCache:new Set(),deferredInstall:null,
-  jdFingerprints:{} // {hash: {date, company, role, score, gls}}
+  jdFingerprints:{}, // {hash: {date, company, role, score, gls}}
+  cvText:null,cvCompany:null,prepText:null,prepCompany:null
 };
 
 const STIPEND_BENCHMARKS={
@@ -1392,6 +1393,7 @@ async function runEval(){
 
   document.getElementById('eval-btn').disabled=true;
   const seb=document.getElementById('seb');if(seb)seb.disabled=true;
+  const fsBtn=document.getElementById('fast-scan-btn');if(fsBtn)fsBtn.disabled=true;
   document.getElementById('eval-empty').style.display='none';
   document.getElementById('eval-results').style.display='none';
   document.getElementById('repost-warn-wrap').innerHTML='';
@@ -1417,10 +1419,12 @@ async function runEval(){
       if(similar.length){const rows=similar.slice(0,2).map(e=>`<div class="eh-row"><span>${sanitize(e.company)} — ${sanitize(e.role)}</span><span style="font-family:var(--fm);color:var(--saffron);">${e.score?.toFixed(1)||'--'}/5 · ${e.date}</span></div>`).join('');document.getElementById('eval-history-wrap').innerHTML=`<div class="eval-history-card"><div class="eh-title">📋 You have evaluated similar roles before</div>${rows}</div>`;}
       renderRes(ev);
       document.getElementById('eval-btn').disabled=false;if(seb)seb.disabled=false;
+      updateFastScanBtn();
     },400);
   }catch(err){
     clearInterval(iv);ld.style.display='none';document.getElementById('eval-empty').style.display='block';
     document.getElementById('eval-btn').disabled=false;if(seb)seb.disabled=false;
+    updateFastScanBtn();
     toast('Error: '+err.message,'err');
   }
 }
@@ -1630,24 +1634,24 @@ Return ONLY the tailored CV in markdown. No explanation, no preamble.`;
         <div style="font-size:12px;color:var(--text-2);">Rewritten to match the JD, gaps addressed, ATS keywords injected.</div>
       </div>
       <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
-        <button class="btn bp" onclick="downloadCVDocx(${JSON.stringify(cvText).replace(/"/g,'&quot;')}, '${sanitize(ev.company)}')">⬇️ Download .docx</button>
+        <button class="btn bp" onclick="downloadCVDoc(${JSON.stringify(cvText).replace(/"/g,'&quot;')}, '${sanitize(ev.company)}')">⬇️ Download .doc</button>
         <button class="btn bs" onclick="copyCV(this)">📋 Copy Markdown</button>
       </div>
       <div class="rpt" style="background:var(--surface-2);border-radius:var(--r-md);padding:14px;max-height:400px;overflow-y:auto;">${mdown(cvText)}</div>
       <p style="font-size:11px;color:var(--text-3);margin-top:10px;">Review carefully before sending. The AI may have made assumptions — verify all facts and metrics.</p>`;
 
     // Store CV text for download
-    window._cvText=cvText;window._cvCompany=ev.company;
+    S.cvText=cvText;S.cvCompany=ev.company;
   }catch(err){
     document.getElementById('cv-gen-content').innerHTML=`<div class="api-locked"><div class="api-locked-icon">⚠️</div><div class="api-locked-title">Could not generate CV</div><div class="api-locked-sub">${sanitize(err.message)}</div></div>`;
   }
 }
 
 function copyCV(btn){
-  if(window._cvText){navigator.clipboard.writeText(window._cvText).then(()=>{btn.textContent='✓ Copied';setTimeout(()=>btn.textContent='📋 Copy Markdown',2000);}).catch(()=>toast('Could not copy','err'));}
+  if(S.cvText){navigator.clipboard.writeText(S.cvText).then(()=>{btn.textContent='✓ Copied';setTimeout(()=>btn.textContent='📋 Copy Markdown',2000);}).catch(()=>toast('Could not copy','err'));}
 }
 
-async function downloadCVDocx(cvText,company){
+async function downloadCVDoc(cvText,company){
   // Build a simple RTF-based doc (works as .doc that Word opens)
   // Using HTML → Blob approach for broad compatibility
   const html=`<!DOCTYPE html><html><head><meta charset="utf-8">
@@ -1720,17 +1724,17 @@ Practical items: documents, portal links, STAR story review, video background ch
         <button class="btn bp" onclick="dlPrep()">⬇️ Download</button>
       </div>
       <div class="rpt" style="background:var(--surface-2);border-radius:var(--r-md);padding:14px;max-height:500px;overflow-y:auto;">${mdown(prepText)}</div>`;
-    window._prepText=prepText;window._prepCompany=ev.company;
+    S.prepText=prepText;S.prepCompany=ev.company;
   }catch(err){
     document.getElementById('prep-content').innerHTML=`<div class="api-locked"><div class="api-locked-icon">⚠️</div><div class="api-locked-title">Could not generate prep</div><div class="api-locked-sub">${sanitize(err.message)}</div></div>`;
   }
 }
 
 function dlPrep(){
-  if(!window._prepText)return;
-  const c=`# Interview Prep: ${window._prepCompany||'Role'}\n\n${window._prepText}`;
+  if(!S.prepText)return;
+  const c=`# Interview Prep: ${S.prepCompany||'Role'}\n\n${S.prepText}`;
   const u=URL.createObjectURL(new Blob([c],{type:'text/markdown'}));
-  const a=document.createElement('a');a.href=u;a.download=`interview-prep-${(window._prepCompany||'role').toLowerCase().replace(/\s+/g,'-')}.md`;a.click();URL.revokeObjectURL(u);toast('Downloaded','ok');
+  const a=document.createElement('a');a.href=u;a.download=`interview-prep-${(S.prepCompany||'role').toLowerCase().replace(/\s+/g,'-')}.md`;a.click();URL.revokeObjectURL(u);toast('Downloaded','ok');
 }
 
 // ── TRACKER ──
@@ -1809,7 +1813,7 @@ async function exportT(){
 function importT(inp){
   const f=inp.files[0];if(!f)return;
   const r=new FileReader();
-  r.onload=async e=>{try{const d=JSON.parse(e.target.result);if(d.evaluations){S.evals=d.evaluations;saveE();}if(d.fingerprints){S.jdFingerprints={...S.jdFingerprints,...d.fingerprints};localStorage.setItem('coi_fps',JSON.stringify(S.jdFingerprints));}if(d.reports&&idb){for(const rpt of d.reports){await sRpt(rpt.id,rpt);S.idbCache.add(rpt.id);}}renderT();toast('Imported '+S.evals.length+' evaluations','ok');}catch(err){toast('Import failed','err');}};
+  r.onload=async e=>{try{const d=JSON.parse(e.target.result);if(d.evaluations){if(S.evals.length&&!confirm(`Import will replace your ${S.evals.length} existing evaluation(s) with the imported data. Continue?`))return;S.evals=d.evaluations;saveE();}if(d.fingerprints){S.jdFingerprints={...S.jdFingerprints,...d.fingerprints};localStorage.setItem('coi_fps',JSON.stringify(S.jdFingerprints));}if(d.reports&&idb){for(const rpt of d.reports){await sRpt(rpt.id,rpt);S.idbCache.add(rpt.id);}}renderT();toast('Imported '+S.evals.length+' evaluations','ok');}catch(err){toast('Import failed','err');}};
   r.readAsText(f);inp.value='';
 }
 
@@ -2137,7 +2141,7 @@ async function runClaudeEval(jd, cv, profile){
   const key=await getDecryptedKey();
   if(!key)throw new Error('No Claude API key — add it in Profile');
 
-  const prompt=`${S.sh}\n\n${S.of}\n\nCANDIDATE:\nName: ${profile.name}\nCTC: ${profile.ctc}\nCity: ${profile.city}\nWork Mode: ${profile.workmode}\nNotice: ${profile.notice} days\nBuyout: ${profile.buyout}\nSector: ${profile.sector}\nMode: ${profile.mode}${profile.college?'\nCollege: '+profile.college:''}\n\nCV:\n${cv}\n\nJOB DESCRIPTION:\n${jd}\n\nEvaluate fully. Cite exact CV lines. CTC in LPA. In Block G, list every signal that fired with exact points.`;
+  const prompt=`${S.sh}\n\n${S.of}\n\nCANDIDATE:\nName: ${profile.name}\nCTC: ${profile.ctc}\nCity: ${profile.city}\nWork Mode: ${profile.workmode}\nNotice: ${profile.notice} days\nBuyout: ${profile.buyout}\nSector: ${profile.sector}\nMode: ${profile.mode}${profile.college?'\nCollege: '+profile.college:''}\n\nCV:\n${cv.substring(0,6000)}\n\nJOB DESCRIPTION:\n${jd}\n\nEvaluate fully. Cite exact CV lines. CTC in LPA. In Block G, list every signal that fired with exact points.`;
 
   const res=await fetch('https://api.anthropic.com/v1/messages',{
     method:'POST',
@@ -2169,7 +2173,7 @@ Sector: ${profile.sector}
 Mode: ${profile.mode}${profile.college?'\nCollege: '+profile.college:''}
 
 CV:
-${cv}`;
+${cv.substring(0,6000)}`;
 
   // Build parts array — supports text + optional image
   const parts=[];
@@ -2206,11 +2210,11 @@ ${cv}`;
     }
   };
 
-  const url=`https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${key}`;
+  const url=`https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent`;
 
   const res=await fetch(url,{
     method:'POST',
-    headers:{'Content-Type':'application/json'},
+    headers:{'Content-Type':'application/json','x-goog-api-key':key},
     body:JSON.stringify(body)
   });
 
@@ -2384,6 +2388,9 @@ function handleWorkerMessage(event){
       LOCAL_AI.state='ready';
       updateAIFooter();
       handleLocalGLSResult(result);
+      // Re-enable eval buttons
+      {const d=document.getElementById('deep-eval-btn');if(d)d.disabled=false;}
+      {const s=document.getElementById('seb');if(s)s.disabled=false;}
       // Unload to free VRAM after scan
       setTimeout(()=>{
         if(LOCAL_AI.worker)LOCAL_AI.worker.postMessage({type:'UNLOAD'});
@@ -2395,6 +2402,9 @@ function handleWorkerMessage(event){
       updateAIFooter();
       toast('Local scan failed: '+message+' — try Deep Eval','err');
       hideLocalGLSLoading();
+      // Re-enable eval buttons
+      {const d=document.getElementById('deep-eval-btn');if(d)d.disabled=false;}
+      {const s=document.getElementById('seb');if(s)s.disabled=false;}
       break;
 
     case 'UNLOADED':
@@ -2490,9 +2500,15 @@ async function runFastScan(){
   const jd=document.getElementById('jd-input').value.trim();
   if(!jd){toast('Paste a job description first','err');return;}
 
+  // Prevent concurrent Fast Scan + Deep Eval runs
+  const _deBtn=document.getElementById('deep-eval-btn');
+  const _sebBtn=document.getElementById('seb');
+  if(_deBtn)_deBtn.disabled=true;
+  if(_sebBtn)_sebBtn.disabled=true;
+
   // If WebGPU not supported, fall back to cloud fast scan
   if(!LOCAL_AI.webGPUSupported){
-    runCloudFastScan(jd);
+    runCloudFastScan(jd);  // re-enables buttons in its finally block
     return;
   }
 
@@ -2504,6 +2520,10 @@ async function runFastScan(){
       LOCAL_AI.worker.postMessage({type:'LOAD_MODEL',payload:{modelKey:LOCAL_AI.selectedModelKey}});
       // After load, inference will be triggered by READY message
       window._pendingLocalJD=jd;
+    } else {
+      // Worker failed to initialise — restore eval buttons
+      if(_deBtn)_deBtn.disabled=false;
+      if(_sebBtn)_sebBtn.disabled=false;
     }
     return;
   }
@@ -2542,11 +2562,11 @@ JD: ${jd.substring(0,1500)}`;
   }catch(err){
     hideLocalGLSLoading();
     toast('Fast Scan failed: '+err.message,'err');
+  }finally{
+    const d=document.getElementById('deep-eval-btn');if(d)d.disabled=false;
+    const s=document.getElementById('seb');if(s)s.disabled=false;
   }
 }
-
-// Handle pending JD after model loads
-const _origHandleWorkerMessage=handleWorkerMessage;
 
 // ── RENDER LOCAL GLS RESULT ──
 function handleLocalGLSResult(result, isCloud=false){
@@ -2674,7 +2694,6 @@ function updateWebGPUBadge(){
 }
 
 // Handle pending JD scan after model becomes ready
-const _workerMsgOrig=handleWorkerMessage;
 // Patch: if READY and pending JD, auto-run GLS
 function handleWorkerMessagePatched(event){
   handleWorkerMessage(event);
