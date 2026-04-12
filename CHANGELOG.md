@@ -1,0 +1,166 @@
+# Changelog
+
+All notable changes to Career-Ops-India App are documented here.
+
+Format: `[Version] — Date — Summary`
+
+---
+
+## [v7.1] — 2026-04-12 — Hybrid Multimodal Patch
+
+### Added
+- **Google Gemini API support** — Gemini 2.5 Flash (default) and Gemini 2.5 Pro as cloud provider options alongside Claude
+- **Provider toggle** on Evaluate tab — switch between 🟠 Claude · 🔵 Gemini Flash · 💎 Gemini Pro
+- **Multimodal JD input** — attach a job screenshot (PNG/JPG) when using Gemini; image and text sent together in a single multimodal prompt
+- **Dual API key storage** — both Claude and Gemini keys encrypted with the same PIN via AES-GCM
+- **Free tier callout** — Gemini 2.5 Flash includes 15 evaluations/minute at no cost via Google AI Studio
+- **Provider badge on results** — shows which AI evaluated the role (🟠 Claude / 🔵 Gemini)
+- **Image privacy note** — "Images processed directly via Gemini API · Not stored on any server"
+
+### Changed
+- Gemini models updated to current versions: `gemini-2.5-flash` and `gemini-2.5-pro`
+- Worker error handling made non-fatal — app degrades gracefully to Cloud Fast Scan if worker fails
+- CSP updated to allow `generativelanguage.googleapis.com`
+
+### Fixed
+- Worker `[object Event]` error — replaced top-level `import` with lazy `dynamic import()` and CDN fallback chain
+- Version bumped to v7.1 in title, meta, AI footer, Credits
+
+---
+
+## [v7.0] — 2026-04-12 — Sovereign Edition (Hybrid Local + Cloud)
+
+### Added
+- **WebLLM integration** — Gemma 2 2B running entirely on-device via WebGPU
+- **`worker.js`** — dedicated Web Worker for model loading and inference (non-blocking UI)
+- **Fast Scan** — instant local GLS pre-check, free, offline after first download
+- **Sync Command Center modal** — opt-in 1.4GB model download with WiFi recommendation
+- **Model selector** — Gemma 2 2B Lite (default), Standard, and Gemma 4 E2B (coming soon placeholder)
+- **AI footer status bar** — 🧠 saffron when local active, cyan when cloud, amber when downloading
+- **WebGPU detection** — `navigator.gpu` check on init; Fast Scan falls back to Cloud API if WebGPU unavailable
+- **VRAM management** — `engine.unload()` after every scan to keep mid-range phones responsive
+- **PWA "Add to Home Screen" banner** on Evaluate tab (mobile only, once, dismissible)
+- **Subtle versioning** — v7.0 in `<title>`, meta tag, AI footer, and Credits
+
+### Architecture
+- Phase 1: Gemma 2 2B Lite + Claude Sonnet (live)
+- Phase 2: Gemma 4 E2B one-tap upgrade when MLC community compiles it (May 2026)
+
+---
+
+## [v6.0] — 2026-04-11 — Full Maturity
+
+### Added
+- **Custom CV Generator** — tailored CV for each specific role, downloadable as `.doc`
+- **Interview Prep Mode** — 8 STAR+R stories, CTC negotiation script, India-specific HR scenarios
+- **Pipeline Analytics tab** — application funnel, ghost rate by source, archetype breakdown, follow-up insights
+- **Repost Detection** — JD fingerprinting, flags previously evaluated roles
+- **Evaluation History Awareness** — shows previous evaluations of same company/role before results
+- **Follow-up Reminders** — amber border + chip on Tracker cards applied >14 days ago
+- **Export to PDF** — `window.print()` pipeline report, no library needed
+- **High-density Tracker cards** — score + GLS + grade on one line
+- **Three-row Tracker filters** — Status · Notice Period · Source Quality (Verified Only)
+- **Offline Cached indicator** — 💾 chip on cards with IDB report available
+- **CLI handoff** — `importScanResults()` foundation for career-ops-india scan output
+- **Notice Period Buyout** field in Profile — reduces notice red flag in evaluation
+
+### Changed
+- Analytics moved to dedicated tab (5-tab nav: Evaluate · Tracker · Analytics · Profile · More)
+- Tracker cards redesigned for density — company + badges on single line
+
+---
+
+## [v5.1] — 2026-04-10 — Patch
+
+### Fixed
+- Model string corrected from `claude-sonnet-4-20250514` to `claude-sonnet-4-6`
+- Error handling in Extract from CV — now shows actual API error message instead of generic fallback
+- Version bumped to v5.1
+
+---
+
+## [v5.0] — 2026-04-10 — Command Center Visual Upgrade
+
+### Added
+- **Circular GLS gauge** — SVG-based progress ring replacing horizontal bar
+- **GLS Signal Breakdown** — expandable "Why this score?" section with per-signal points
+- **Take-Home Salary Calculator** — CTC → in-hand (PF + new tax regime FY25–26), Annual/Monthly toggle
+- **Intern Stipend Bar Chart** — offered stipend vs city medians (10 Indian cities, 2025 data)
+- **Source Quality detection** — portal detected and stored at eval time, shown in score grid
+- **Verified Only filter** in Tracker — hides Naukri/Foundit sourced evaluations
+- **Notice Period filters** — Any / Immediate / ≤30 Days / ≤60 Days
+
+### Changed
+- Score grid updated: Job Fit · Grade · Source · Archetype (4 cards)
+- Tracker cards denser with stage pills (GCC / Startup)
+
+---
+
+## [v4.0] — 2026-04-09 — Security First
+
+### Added
+- **PIN-encrypted API key** — WebCrypto AES-GCM + PBKDF2 (310,000 iterations)
+- **4-digit PIN modal** — numeric keypad, mobile-optimised, shoulder-surfing resistant
+- **Session memory** — decrypted key lives only in RAM, cleared on tab close
+- **Lock button** in header — one tap to lock and clear session
+- **Security Verified indicator** — animated green pill after unlock
+- **Change PIN flow** — requires old PIN first
+- **XSS sanitization** — DOMParser-based, strips all scripts/event handlers before innerHTML render
+- **CSP meta tag** — restricts script-src, blocks data exfiltration
+- **API key obfuscation** — shows `••••` by default, eye toggle to reveal
+
+### Changed
+- `warn-box` copy strengthened — explicit financial risk warning
+- Onboarding slide 3 updated to reflect PIN security story
+
+---
+
+## [v3.0] — 2026-04-08 — Journey First
+
+### Added
+- **3-screen onboarding** — swipeable, skip button, never shows again
+- **Profile tab** (new) — API key, CV, personal details, student profile, GLS settings
+- **Extract from CV** — one API call auto-fills all profile fields
+- **Evaluate tab** — laser-focused: mode toggle + JD input + button only
+- **Sticky Evaluate button** — fixed above bottom nav on mobile
+- **Bottom sheet "More"** — About, Usage, Feedback, Credits on mobile
+- **Profile icon** in header — one tap to Profile from anywhere
+- **Profile nudge** on Evaluate — guides first-time users to set up profile
+
+### Changed
+- Nav reduced to 4 tabs: Evaluate · Tracker · Profile · More
+- About, Usage, Feedback, Credits moved to More bottom sheet
+- Evaluate tab empty state rewritten — warm, action-oriented
+- Sample name changed to "Dhawal Shrivastava" in placeholders
+
+---
+
+## [v2.0] — 2026-04-07 — Mobile First Rebuild
+
+### Added
+- **Responsive nav** — bottom nav on mobile (4 items), top tabs on tablet/desktop
+- **"More" bottom sheet** — slides up from bottom, drag handle, Usage/Feedback/Credits
+- **Progressive disclosure** on About tab — feature cards collapsed on mobile
+- **Saffron usage discipline** — reserved for 2-3 key moments only
+- **Spacing pass** — more breathing room between sections
+- **About tab** cut to 1-screen hero on mobile
+
+### Changed
+- Header — saffron gradient dot replaces broken flag emoji
+- Logo — `career-ops-india` with styled accent, no emoji dependency
+- Made with line — locked: "Made with Love and Innovation, driven by Intention, dedicated to the community."
+
+---
+
+## [v1.0] — 2026-04-06 — Initial Release
+
+### Added
+- Single HTML file PWA — no build step, no dependencies
+- Full A–G evaluation via Claude Sonnet API
+- Ghost Likelihood Score (GLS) — 0–100 across 9 signals
+- 7 India archetypes
+- Tracker with IndexedDB storage
+- Dark/Light theme
+- Export/Import tracker as JSON
+- Feedback via GitHub Discussions
+- Credits — Dhawal + Santiago lineage
