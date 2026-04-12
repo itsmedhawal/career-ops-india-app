@@ -1,0 +1,45 @@
+---
+name: Bug Report
+about: Something is broken or not working as expected
+title: '[Bug] '
+labels: bug
+assignees: ''
+---
+
+## What happened?
+
+<!-- Describe the bug clearly. What did you expect? What actually happened? -->
+
+## Steps to reproduce
+
+1. Go to...
+2. Tap...
+3. See error...
+
+## App version
+
+<!-- Check the AI footer bar at the bottom of the app, or More → Credits -->
+Version: v
+
+## Device and browser
+
+- Device: (e.g. Redmi Note 12, iPhone 14, MacBook)
+- Browser: (e.g. Chrome 121 Android, Safari iOS 17, Chrome desktop)
+- OS: (e.g. Android 13, iOS 17, macOS Sonoma)
+
+## Provider
+
+Which AI provider were you using when the bug occurred?
+- [ ] Claude Sonnet 4.6
+- [ ] Gemini 2.5 Flash
+- [ ] Gemini 2.5 Pro
+- [ ] Local AI (Fast Scan via WebGPU)
+- [ ] Not applicable
+
+## Screenshots or error messages
+
+<!-- If you see an error message in the app, paste it here. Screenshots welcome. -->
+
+## Additional context
+
+<!-- Anything else that might be relevant -->
