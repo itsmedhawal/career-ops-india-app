@@ -1,92 +1,93 @@
 // Phase 1 (Today) → Gemma 2 2B Lite + Claude Sonnet
 /**
- * Career-Ops-India App — Local AI Worker
- * Handles WebLLM engine lifecycle in a Web Worker
- * so the main UI thread stays responsive during model
- * loading and inference.
+ * Career-Ops-India App — Local AI Worker v7.1
+ * Web Worker for WebLLM + Gemma inference.
+ *
+ * Uses dynamic import() instead of top-level import
+ * for better compatibility with GitHub Pages and
+ * mobile browsers that restrict module workers.
  *
  * Current model: gemma-2-2b-it-q4f16_1-MLC-1k (low resource)
- * Swap model ID below when Gemma 4 E2B lands in WebLLM registry.
+ * Swap model ID when Gemma 4 E2B lands in WebLLM registry.
  */
 
-import * as webllm from 'https://esm.run/@mlc-ai/web-llm';
-
-// ── MODEL REGISTRY ──────────────────────────────────────────
-// To upgrade: change ACTIVE_MODEL to the new model ID.
-// All other code stays identical.
+// ── MODEL REGISTRY ───────────────────────────────────────────
 const MODEL_REGISTRY = {
   'gemma-2-2b-standard': {
     id: 'gemma-2-2b-it-q4f16_1-MLC',
     label: 'Gemma 2 2B — Standard',
     vram_mb: 1895,
-    low_resource: false,
-    size_gb: '~1.9 GB'
+    size_gb: '~1.9 GB',
+    available: true
   },
   'gemma-2-2b-lite': {
     id: 'gemma-2-2b-it-q4f16_1-MLC-1k',
     label: 'Gemma 2 2B — Lite (Recommended)',
     vram_mb: 1584,
-    low_resource: true,
-    size_gb: '~1.6 GB'
+    size_gb: '~1.6 GB',
+    available: true,
+    recommended: true
   },
   'gemma-4-e2b': {
-    id: 'gemma-4-e2b-it-q4f16_1-MLC',  // placeholder — swap when available
-    label: 'Gemma 4 E2B — Upgrade (Coming Soon)',
+    id: 'gemma-4-e2b-it-q4f16_1-MLC',
+    label: 'Gemma 4 E2B — Upgrade',
     vram_mb: 1400,
-    low_resource: true,
-    size_gb: '~1.4 GB'
+    size_gb: '~1.4 GB',
+    available: false,
+    comingSoon: true
   }
 };
 
-const DEFAULT_MODEL_KEY = 'gemma-2-2b-lite';
-
 // ── STATE ────────────────────────────────────────────────────
 let engine = null;
-let currentModelKey = DEFAULT_MODEL_KEY;
-let engineState = 'uninitialized'; // uninitialized | downloading | ready | processing | error
+let webllm = null;
+let currentModelKey = 'gemma-2-2b-lite';
+let engineState = 'uninitialized';
 
 // ── GLS SYSTEM PROMPT ────────────────────────────────────────
-// India-calibrated Ghost Likelihood Score assessor.
-// Uses chain-of-thought reasoning before outputting structured JSON.
 const GLS_SYSTEM_PROMPT = `You are the Career-Ops-India Job Assessor — a specialist in detecting ghost job postings in the Indian job market.
 
-Your task is to evaluate a Job Description (JD) for Ghost Likelihood across 9 weighted signals.
+Evaluate the Job Description for Ghost Likelihood across 9 weighted signals:
+1. Repost Pattern (20 pts)
+2. Posting Age >60 days (15 pts)
+3. Apply CTA inactive/missing (15 pts)
+4. Source Quality: Naukri/Foundit=high risk, ATS/company site=low risk (15 pts)
+5. Boilerplate ratio >70% (10 pts)
+6. Impossible requirements combo (10 pts)
+7. Layoff/hiring freeze signals (8 pts)
+8. Unnamed client/consultancy (4 pts)
+9. Missing team+stack+location (3 pts)
 
-SCORING SIGNALS (total 100 points):
-1. Repost Pattern (20 pts) — Signs the role has been reposted multiple times
-2. Posting Age (15 pts) — Indicators the role is stale or old
-3. Apply Button / CTA (15 pts) — Vague or missing application instructions
-4. Source Quality (15 pts) — Naukri/Foundit = higher risk; ATS/company site = lower risk
-5. Boilerplate Ratio (10 pts) — Generic template language > 70% of JD
-6. Requirements Realism (10 pts) — Impossible combinations (e.g. 10 years exp in 3-year-old tech)
-7. Layoff / Hiring Freeze Signals (8 pts) — Company in news for layoffs or freeze
-8. Consultancy / Unnamed Client (4 pts) — "Our client", unnamed MNC, third-party recruiter
-9. Missing Specifics (3 pts) — No team size, tech stack, or location details
+Think step by step. Only flag signals you can evidence from the JD text.
+Respond ONLY with valid JSON — no explanation outside the JSON object:
+{"gls":<0-100>,"risk_level":"<Low|Moderate|High|Very High>","confidence":"<High Confidence|Proceed with Caution|Suspicious|Very High Risk>","signals_fired":[{"signal":"<name>","pts":<n>,"reason":"<evidence>"}],"top_3_red_flags":["<flag1>","<flag2>","<flag3>"],"recommendation":"<one sentence>"}`;
 
-INSTRUCTIONS:
-- Think step by step through each signal based only on the JD text provided
-- Assign points only for signals you can evidence from the JD text
-- Be conservative — only flag signals you are confident about
-- Calculate total GLS out of 100
+// ── WEBLLM LOADER ────────────────────────────────────────────
+// CDN fallback chain — tries multiple CDNs
+const WEBLLM_CDNS = [
+  'https://esm.run/@mlc-ai/web-llm',
+  'https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm/+esm'
+];
 
-OUTPUT FORMAT — respond ONLY with valid JSON, no explanation outside the JSON:
-{
-  "gls": <number 0-100>,
-  "risk_level": "<Low|Moderate|High|Very High>",
-  "confidence": "<High Confidence|Proceed with Caution|Suspicious|Very High Risk>",
-  "signals_fired": [
-    {"signal": "<signal name>", "pts": <points assigned>, "reason": "<specific evidence from JD>"}
-  ],
-  "top_3_red_flags": ["<flag 1>", "<flag 2>", "<flag 3>"],
-  "recommendation": "<one sentence recommendation>"
-}`;
+async function loadWebLLM() {
+  for (const cdn of WEBLLM_CDNS) {
+    try {
+      const mod = await import(cdn);
+      if (mod && (mod.CreateMLCEngine || mod.default?.CreateMLCEngine)) {
+        return mod.default || mod;
+      }
+    } catch (e) {
+      // Try next CDN
+    }
+  }
+  throw new Error('Could not load WebLLM from any CDN. Check your internet connection.');
+}
 
 // ── MESSAGE HANDLER ──────────────────────────────────────────
 self.onmessage = async (event) => {
   const { type, payload } = event.data;
 
   switch (type) {
-
     case 'GET_STATUS':
       self.postMessage({
         type: 'STATUS',
@@ -105,7 +106,7 @@ self.onmessage = async (event) => {
       break;
 
     case 'SET_MODEL':
-      if (MODEL_REGISTRY[payload.modelKey]) {
+      if (MODEL_REGISTRY[payload?.modelKey]) {
         if (engine) {
           try { await engine.unload(); } catch (e) {}
           engine = null;
@@ -114,7 +115,7 @@ self.onmessage = async (event) => {
         engineState = 'uninitialized';
         self.postMessage({ type: 'MODEL_SET', modelKey: currentModelKey });
       } else {
-        self.postMessage({ type: 'ERROR', message: 'Unknown model key: ' + payload.modelKey });
+        self.postMessage({ type: 'ERROR', message: 'Unknown model key: ' + payload?.modelKey });
       }
       break;
 
@@ -143,14 +144,16 @@ async function loadModel(modelKey) {
 
   const modelInfo = MODEL_REGISTRY[currentModelKey];
 
-  // Gemma 4 E2B is not yet in WebLLM registry — block gracefully
+  // Gemma 4 E2B not yet available
   if (currentModelKey === 'gemma-4-e2b') {
     self.postMessage({
       type: 'ERROR',
-      message: 'Gemma 4 E2B is not yet available in WebLLM. It will be added when the MLC community compiles it. Using Gemma 2 2B Lite instead.',
+      message: 'Gemma 4 E2B is not yet compiled for WebLLM. Falling back to Gemma 2 2B Lite.',
       fallbackKey: 'gemma-2-2b-lite'
     });
     currentModelKey = 'gemma-2-2b-lite';
+    // Retry with fallback
+    await loadModel('gemma-2-2b-lite');
     return;
   }
 
@@ -163,14 +166,28 @@ async function loadModel(modelKey) {
   self.postMessage({ type: 'DOWNLOADING', modelKey: currentModelKey, model: modelInfo });
 
   try {
-    engine = await webllm.CreateMLCEngine(
+    // Lazy load WebLLM only when needed
+    if (!webllm) {
+      self.postMessage({
+        type: 'PROGRESS',
+        text: 'Loading WebLLM engine...',
+        progress: 0.01,
+        modelKey: currentModelKey
+      });
+      webllm = await loadWebLLM();
+    }
+
+    const CreateMLCEngine = webllm.CreateMLCEngine;
+    if (!CreateMLCEngine) throw new Error('WebLLM CreateMLCEngine not found');
+
+    engine = await CreateMLCEngine(
       modelInfo.id,
       {
         initProgressCallback: (progress) => {
           self.postMessage({
             type: 'PROGRESS',
-            text: progress.text,
-            progress: progress.progress,  // 0.0 to 1.0
+            text: progress.text || '',
+            progress: progress.progress || 0,
             modelKey: currentModelKey
           });
         }
@@ -195,12 +212,12 @@ async function loadModel(modelKey) {
   }
 }
 
-// ── RUN GLS INFERENCE ────────────────────────────────────────
+// ── RUN GLS ──────────────────────────────────────────────────
 async function runGLS(jd) {
   if (!engine || engineState !== 'ready') {
     self.postMessage({
       type: 'GLS_ERROR',
-      message: 'Model not loaded. Please load the model first.'
+      message: 'Model not loaded. Please sync your Command Center first.'
     });
     return;
   }
@@ -220,65 +237,45 @@ async function runGLS(jd) {
     const response = await engine.chat.completions.create({
       messages,
       max_tokens: 600,
-      temperature: 0.1,  // Low temperature for consistent structured output
+      temperature: 0.1,
       stream: false
     });
 
-    const rawText = response.choices[0]?.message?.content || '';
+    const rawText = response.choices?.[0]?.message?.content || '';
 
-    // Parse JSON from response
+    // Parse JSON
     let result;
     try {
-      // Strip any markdown fences if model added them
       const cleaned = rawText.replace(/```json|```/g, '').trim();
-      // Find JSON object in response
       const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) throw new Error('No JSON found in response');
+      if (!jsonMatch) throw new Error('No JSON found');
       result = JSON.parse(jsonMatch[0]);
     } catch (parseErr) {
-      // If JSON parsing fails, construct a minimal result
       result = {
         gls: 50,
         risk_level: 'Moderate',
         confidence: 'Proceed with Caution',
         signals_fired: [],
-        top_3_red_flags: ['Could not parse detailed signals'],
-        recommendation: 'Manual review recommended — could not parse AI response.',
-        parse_error: rawText.substring(0, 200)
+        top_3_red_flags: ['Could not parse detailed signals — review manually'],
+        recommendation: 'Manual review recommended.'
       };
     }
 
-    // Validate and clamp GLS
     result.gls = Math.max(0, Math.min(100, parseInt(result.gls) || 0));
 
-    self.postMessage({
-      type: 'GLS_RESULT',
-      result,
-      modelKey: currentModelKey
-    });
+    self.postMessage({ type: 'GLS_RESULT', result, modelKey: currentModelKey });
 
   } catch (err) {
-    self.postMessage({
-      type: 'GLS_ERROR',
-      message: 'Inference failed: ' + err.message
-    });
+    self.postMessage({ type: 'GLS_ERROR', message: 'Inference failed: ' + err.message });
   } finally {
-    // Always unload after inference to free VRAM
-    // Critical for mid-range Indian phones
-    engineState = 'ready'; // reset to ready, not unloaded
-    // Note: we keep engine loaded for potential follow-up scans
-    // Call UNLOAD explicitly to free VRAM when done
+    engineState = 'ready';
   }
 }
 
-// ── UNLOAD ENGINE ────────────────────────────────────────────
+// ── UNLOAD ───────────────────────────────────────────────────
 async function unloadEngine() {
   if (engine) {
-    try {
-      await engine.unload();
-    } catch (e) {
-      // Swallow unload errors
-    }
+    try { await engine.unload(); } catch (e) {}
     engine = null;
   }
   engineState = 'uninitialized';
