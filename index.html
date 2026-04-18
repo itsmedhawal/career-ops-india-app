@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://esm.run https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://generativelanguage.googleapis.com https://raw.githubusercontent.com https://fonts.googleapis.com https://fonts.gstatic.com https://esm.run https://cdn.jsdelivr.net https://huggingface.co; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'; worker-src 'self' blob:;">
-<title>Career-Ops-India App — v7.7</title>
-<meta name="version" content="7.7">
+<title>Career-Ops-India App — v7.8</title>
+<meta name="version" content="7.8">
 <meta name="build" content="2026-04-19">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FF9933">
@@ -1000,7 +1000,7 @@ Skills and certifications"></textarea>
     <div class="made-with">
       <p>Made with Love and Innovation, driven by Intention, dedicated to the community.</p>
       <p style="margin-top:4px;">— <a href="https://www.linkedin.com/in/dhawalshrivastava" target="_blank">Dhawal Shrivastava</a></p>
-      <p style="margin-top:6px;font-size:11px;color:var(--text-3);font-family:var(--fm);">Career-Ops-India App v7.7</p>
+      <p style="margin-top:6px;font-size:11px;color:var(--text-3);font-family:var(--fm);">Career-Ops-India App v7.8</p>
     </div>
   </div>
 
@@ -1097,7 +1097,7 @@ Skills and certifications"></textarea>
   <span style="color:var(--border);">·</span>
   <span id="webgpu-badge-footer"></span>
   <span style="flex:1;"></span>
-  <span style="font-size:10px;color:var(--text-3);font-family:var(--fm);margin-right:8px;">v7.7</span>
+  <span style="font-size:10px;color:var(--text-3);font-family:var(--fm);margin-right:8px;">v7.8</span>
   <button onclick="openSyncModal()" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--text-3);font-family:var(--fm);padding:2px 6px;border-radius:var(--r-pill);border:1px solid var(--border);" id="sync-trigger-btn">⬇️ Sync</button>
 </div>
 
@@ -1675,12 +1675,23 @@ function resetEval(){S.eval=null;document.getElementById('eval-results').style.d
 async function generateCV(evId){
   const ev=S.evals.find(e=>e.id===evId);if(!ev)return;
   const cv=localStorage.getItem('coi_cv')||'';
-  const key=await getDecryptedKey();
-  if(!key){showPIN('unlock');toast('Enter PIN to unlock','err');return;}
+  const isClaude=P.provider==='claude';
+  let key;
+  if(isClaude){
+    key=await getDecryptedKey();
+    if(!key){
+      if(localStorage.getItem('coi_key_enc')){showPIN('unlock');toast('Enter PIN to unlock','err');}
+      else{nav('profile');toast('Add your Claude API key in Profile first','err');}
+      return;
+    }
+  } else {
+    key=await getGeminiKey();
+    if(!key){nav('profile');toast('Add your Gemini API key in Profile first','err');return;}
+  }
   if(!cv){toast('Add your CV in Profile first','err');return;}
 
   const mo=document.getElementById('cvmo');
-  document.getElementById('cv-gen-content').innerHTML=`<div style="text-align:center;padding:40px 20px;"><div class="spin" style="margin:0 auto 14px;"></div><div style="font-size:13px;color:var(--text-2);">Generating your tailored CV...</div></div>`;
+  document.getElementById('cv-gen-content').innerHTML=`<div style="text-align:center;padding:40px 20px;"><div class="spin" style="margin:0 auto 14px;"></div><div style="font-size:13px;color:var(--text-2);">Generating your tailored CV via ${isClaude?'Claude':'Gemini'}...</div></div>`;
   mo.classList.add('on');
 
   try{
@@ -1712,9 +1723,19 @@ INSTRUCTIONS:
 
 Return ONLY the tailored CV in markdown. No explanation, no preamble.`;
 
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:3000,messages:[{role:'user',content:prompt}]})});
-    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'API error');}
-    const data=await res.json();const cvText=data.content.map(b=>b.text||'').join('');
+    let cvText;
+    if(isClaude){
+      const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:3000,messages:[{role:'user',content:prompt}]})});
+      if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'Claude API error');}
+      const data=await res.json();cvText=data.content.map(b=>b.text||'').join('');
+    } else {
+      const modelId=GEMINI_MODELS[P.provider]||'gemini-2.5-flash';
+      const url=`https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent`;
+      const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':key},body:JSON.stringify({contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:3000,temperature:0.3,responseMimeType:'text/plain'}})});
+      if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`Gemini API error ${res.status}`);}
+      const data=await res.json();cvText=data.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('\n')||'';
+      if(!cvText)throw new Error('Empty response from Gemini — try again');
+    }
 
     document.getElementById('cv-gen-content').innerHTML=`
       <div style="margin-bottom:14px;">
@@ -1886,7 +1907,7 @@ function renderT(){
   c.innerHTML=list.map(ev=>{
     const cached=S.idbCache.has(ev.id),attn=needsAttention(ev);
     const stagePill=ev.stage?.toLowerCase().includes('gcc')?'<span style="font-size:9px;background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.2);color:var(--cyan);padding:1px 5px;border-radius:3px;font-family:var(--fm);">GCC</span>':ev.stage?.toLowerCase().includes('startup')?'<span style="font-size:9px;background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.2);color:var(--green);padding:1px 5px;border-radius:3px;font-family:var(--fm);">Startup</span>':'';
-    const hasKey=!!(localStorage.getItem('coi_key_enc')||document.getElementById('api-key')?.value.trim());
+    const hasKey=!!(localStorage.getItem('coi_key_enc')||localStorage.getItem('coi_gemini_enc')||document.getElementById('api-key')?.value.trim()||document.getElementById('gemini-key')?.value.trim());
     return`<div class="app-card${attn?' needs-attention':''}">
       <div class="ac-row1">
         <div class="ac-company">${sanitize(ev.company)}</div>
@@ -2664,8 +2685,15 @@ async function runFastScan(){
 
 // Cloud fallback for fast scan (when WebGPU unavailable)
 async function runCloudFastScan(jd){
-  const key=await getDecryptedKey();
-  if(!key){nav('profile');toast('Add your API key in Profile first','err');return;}
+  const isClaude=P.provider==='claude';
+  let key;
+  if(isClaude){
+    key=await getDecryptedKey();
+    if(!key){nav('profile');toast('Add your Claude API key in Profile first','err');return;}
+  } else {
+    key=await getGeminiKey();
+    if(!key){nav('profile');toast('Add your Gemini API key in Profile first','err');return;}
+  }
 
   showLocalGLSLoading();
   try{
@@ -2678,10 +2706,20 @@ Return ONLY valid JSON:
 
 JD: ${jd.substring(0,1500)}`;
 
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:500,messages:[{role:'user',content:prompt}]})});
-    if(!res.ok)throw new Error('API error '+res.status);
-    const data=await res.json();
-    const text=data.content.map(b=>b.text||'').join('');
+    let text;
+    if(isClaude){
+      const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:500,messages:[{role:'user',content:prompt}]})});
+      if(!res.ok)throw new Error('Claude API error '+res.status);
+      const data=await res.json();
+      text=data.content.map(b=>b.text||'').join('');
+    } else {
+      const modelId=GEMINI_MODELS[P.provider]||'gemini-2.5-flash';
+      const url=`https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent`;
+      const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':key},body:JSON.stringify({contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:500,temperature:0.2,responseMimeType:'text/plain'}})});
+      if(!res.ok)throw new Error('Gemini API error '+res.status);
+      const data=await res.json();
+      text=data.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('')||'';
+    }
     const cleaned=text.replace(/```json|```/g,'').trim();
     const jsonMatch=cleaned.match(/\{[\s\S]*\}/);
     if(!jsonMatch)throw new Error('No JSON in response');
@@ -2865,7 +2903,7 @@ async function init(){
     LOCAL_AI.worker.postMessage({type:'GET_STATUS'});
   }
 
-  if(localStorage.getItem('coi_key_enc')&&!S.sessionKey)showPIN('unlock');
+  if((localStorage.getItem('coi_key_enc')||localStorage.getItem('coi_gemini_enc'))&&!S.sessionKey)showPIN('unlock');
 
   // Register service worker for offline PWA
   if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}

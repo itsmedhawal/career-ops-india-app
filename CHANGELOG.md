@@ -6,6 +6,16 @@ Format: `[Version] — Date — Summary`
 
 ---
 
+## [v7.8] — 2026-04-19 — Gemini Parity Fix for All AI Features
+
+### Fixed
+- **Tracker Prep/CV buttons hidden for Gemini-only users** — `hasKey` check now includes `coi_gemini_enc` and `#gemini-key` input alongside Claude sources.
+- **CV Generator (`generateCV`) Claude-only** — now provider-aware: uses Gemini API when Gemini is selected, with proper key resolution and error messages.
+- **Cloud Fast Scan (`runCloudFastScan`) Claude-only** — now provider-aware: Gemini-only users can use the cloud GLS fallback when WebGPU is unavailable.
+- **Startup PIN prompt skipped for Gemini-only users** — `init()` now checks both `coi_key_enc` and `coi_gemini_enc` to trigger PIN unlock on load.
+
+---
+
 ## [v7.7] — 2026-04-19 — More Page Redesign & Credits Refresh
 
 ### Added
