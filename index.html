@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://esm.run https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://generativelanguage.googleapis.com https://raw.githubusercontent.com https://fonts.googleapis.com https://fonts.gstatic.com https://esm.run https://cdn.jsdelivr.net https://huggingface.co; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'; worker-src 'self' blob:;">
-<title>Career-Ops-India App — v7.6</title>
-<meta name="version" content="7.6">
-<meta name="build" content="2026-04-12">
+<title>Career-Ops-India App — v7.7</title>
+<meta name="version" content="7.7">
+<meta name="build" content="2026-04-19">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FF9933">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -344,6 +344,7 @@ select option{background:var(--surface);}
 /* MORE */
 .more-section{margin-bottom:28px;}
 .more-label{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-3);margin-bottom:12px;padding-bottom:7px;border-bottom:1px solid var(--border);}
+
 .pcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:18px;margin-bottom:10px;}
 .pname{font-family:var(--fh);font-size:17px;font-weight:700;margin-bottom:2px;}
 .prole{font-size:12px;color:var(--text-2);margin-bottom:10px;}
@@ -906,14 +907,15 @@ Skills and certifications"></textarea>
 
   <div class="more-section">
     <div class="more-label">About</div>
-    <p style="font-size:15px;color:var(--text-1);margin-bottom:8px;">Career-Ops-India App evaluates any job against your profile — in 60 seconds.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
-      <span class="pill ps">👻 Ghost Likelihood Score</span><span class="pill pg">🇮🇳 7 India Archetypes</span>
-      <span class="pill pc">🎓 Intern Mode</span><span class="pill ps">🔐 PIN-Encrypted</span>
+    <div class="ctrig" onclick="this.classList.toggle('on');this.nextElementSibling.classList.toggle('on');">✨ 6 things this app does for you <span class="carr">▼</span></div>
+    <div class="cbody">
+      <div class="how-step"><span class="hs-icon">📋</span><div><div class="hs-title">Evaluate any job in 60 seconds</div><div class="hs-desc">Paste a JD — get a score, ghost check, and India-specific archetype match</div></div></div>
+      <div class="how-step"><span class="hs-icon">👻</span><div><div class="hs-title">Spot ghost postings before you apply</div><div class="hs-desc">Ghost Likelihood Score checks 9 red-flag signals and scores 0–100</div></div></div>
+      <div class="how-step"><span class="hs-icon">🎤</span><div><div class="hs-title">Prep for interviews with AI</div><div class="hs-desc">STAR stories, CTC negotiation scripts, and technical questions — from your CV</div></div></div>
+      <div class="how-step"><span class="hs-icon">📄</span><div><div class="hs-title">Generate a custom CV per role</div><div class="hs-desc">Tailored to each job, downloadable, ready to submit</div></div></div>
+      <div class="how-step"><span class="hs-icon">🗂️</span><div><div class="hs-title">Track your entire pipeline</div><div class="hs-desc">Save every evaluation, filter by status, get follow-up reminders</div></div></div>
+      <div class="how-step"><span class="hs-icon">🔐</span><div><div class="hs-title">Your data never leaves your device</div><div class="hs-desc">PIN-encrypted keys, local storage, works offline as a PWA</div></div></div>
     </div>
-    <div class="how-step"><span class="hs-icon">📋</span><div><div class="hs-title">Paste a Job Description</div><div class="hs-desc">From Naukri, LinkedIn, iimjobs, any company careers page</div></div></div>
-    <div class="how-step" style="border-color:var(--saffron);box-shadow:var(--saffron-glow);"><span class="hs-icon">👻</span><div><div class="hs-title" style="color:var(--saffron);">GLS Pre-check</div><div class="hs-desc">Is this a real opening? Ghost Likelihood Score 0–100</div></div></div>
-    <div class="how-step"><span class="hs-icon">🎯</span><div><div class="hs-title">A–F Evaluation</div><div class="hs-desc">CV match · CTC/LPA · archetype · work mode · red flags</div></div></div>
     <div class="card mt" style="text-align:center;padding:18px;">
       <p style="font-size:13px;color:var(--text-1);margin-bottom:8px;">Powered by the open source career-ops-india engine</p>
       <a href="https://github.com/itsmedhawal/career-ops-india" target="_blank" class="btn bs">⭐ View Engine Repo</a>
@@ -968,10 +970,13 @@ Skills and certifications"></textarea>
       <div class="prole">Creator · Sr. Security Assurance Engineering Lead · Microsoft</div>
       <div class="pdesc">Created Career-Ops-India App and the career-ops-india CLI fork. Built everything you are interacting with.</div>
       <div style="font-size:13px;color:var(--text-2);line-height:1.8;">
-        <div>✦ <strong style="color:var(--text-1);">Career-Ops-India App</strong> — this app. Browser-native, PIN-encrypted, mobile-first.</div>
-        <div>✦ <strong style="color:var(--text-1);">Ghost Likelihood Score (GLS)</strong> — original 0–100 ghost posting detector.</div>
-        <div>✦ <strong style="color:var(--text-1);">Intern Mode</strong> — PPO probability, brand value, stipend benchmarks.</div>
-        <div>✦ 7 India archetypes · CTC/LPA · GCC stage · Fake Remote detection</div>
+        <div style="font-family:var(--fh);font-weight:600;font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Innovation by Dhawal</div>
+        <div>✦ <strong style="color:var(--saffron);">First-in-India: Ghost Likelihood Score</strong></div>
+        <div>✦ <strong style="color:var(--saffron);">First-in-India: On-device AI job evaluation</strong></div>
+        <div>✦ <strong style="color:var(--saffron);">First-in-India: 7 India employer archetypes</strong></div>
+        <div>✦ <strong style="color:var(--text-1);">Single-file architecture</strong></div>
+        <div>✦ <strong style="color:var(--text-1);">Hybrid AI pipeline</strong></div>
+        <div>✦ <strong style="color:var(--text-1);">Security-first on the browser</strong></div>
       </div>
       <div class="plinks">
         <a href="https://github.com/itsmedhawal/career-ops-india" target="_blank" class="btn bg">⭐ career-ops-india</a>
@@ -995,7 +1000,7 @@ Skills and certifications"></textarea>
     <div class="made-with">
       <p>Made with Love and Innovation, driven by Intention, dedicated to the community.</p>
       <p style="margin-top:4px;">— <a href="https://www.linkedin.com/in/dhawalshrivastava" target="_blank">Dhawal Shrivastava</a></p>
-      <p style="margin-top:6px;font-size:11px;color:var(--text-3);font-family:var(--fm);">Career-Ops-India App v7.6</p>
+      <p style="margin-top:6px;font-size:11px;color:var(--text-3);font-family:var(--fm);">Career-Ops-India App v7.7</p>
     </div>
   </div>
 
@@ -1092,7 +1097,7 @@ Skills and certifications"></textarea>
   <span style="color:var(--border);">·</span>
   <span id="webgpu-badge-footer"></span>
   <span style="flex:1;"></span>
-  <span style="font-size:10px;color:var(--text-3);font-family:var(--fm);margin-right:8px;">v7.6</span>
+  <span style="font-size:10px;color:var(--text-3);font-family:var(--fm);margin-right:8px;">v7.7</span>
   <button onclick="openSyncModal()" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--text-3);font-family:var(--fm);padding:2px 6px;border-radius:var(--r-pill);border:1px solid var(--border);" id="sync-trigger-btn">⬇️ Sync</button>
 </div>
 

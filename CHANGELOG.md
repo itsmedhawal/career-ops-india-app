@@ -6,6 +6,17 @@ Format: `[Version] — Date — Summary`
 
 ---
 
+## [v7.7] — 2026-04-19 — More Page Redesign & Credits Refresh
+
+### Added
+- **"What you can do" section** in More → About — collapsible list of 6 user-facing capabilities (Evaluate, Ghost detection, Interview Prep, CV Generator, Pipeline Tracker, Privacy/PWA). Collapsed by default, uses existing collapsible pattern.
+
+### Changed
+- **About section streamlined** — removed redundant feature pills (GLS, Archetypes, Intern, PIN) and 3 how-step cards that duplicated the new "What you can do" list. Kept one-liner + engine repo link.
+- **Credits: Dhawal's card rewritten** — replaced feature list with "Innovation by Dhawal" section highlighting 3 First-in-India innovations (Ghost Likelihood Score, on-device AI job evaluation, 7 India employer archetypes) and 3 engineering innovations (single-file architecture, hybrid AI pipeline, security-first on the browser).
+
+---
+
 ## [v7.6] — 2026-04-19 — Offline PWA, PPO Probability & Interview Prep Overhaul
 
 ### Added

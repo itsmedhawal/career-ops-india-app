@@ -4,7 +4,7 @@
  * so Tracker, Analytics, and Profile work without connectivity.
  */
 
-const CACHE_NAME = 'coi-v7.6';
+const CACHE_NAME = 'coi-v7.7';
 
 const SHELL_ASSETS = [
   './',
