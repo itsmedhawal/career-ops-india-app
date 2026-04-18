@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://esm.run https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://generativelanguage.googleapis.com https://raw.githubusercontent.com https://fonts.googleapis.com https://fonts.gstatic.com https://esm.run https://cdn.jsdelivr.net https://huggingface.co; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'; worker-src 'self' blob:;">
-<title>Career-Ops-India App — v7.8</title>
-<meta name="version" content="7.8">
+<title>Career-Ops-India App — v7.9</title>
+<meta name="version" content="7.9">
 <meta name="build" content="2026-04-19">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FF9933">
@@ -1000,7 +1000,7 @@ Skills and certifications"></textarea>
     <div class="made-with">
       <p>Made with Love and Innovation, driven by Intention, dedicated to the community.</p>
       <p style="margin-top:4px;">— <a href="https://www.linkedin.com/in/dhawalshrivastava" target="_blank">Dhawal Shrivastava</a></p>
-      <p style="margin-top:6px;font-size:11px;color:var(--text-3);font-family:var(--fm);">Career-Ops-India App v7.8</p>
+      <p style="margin-top:6px;font-size:11px;color:var(--text-3);font-family:var(--fm);">Career-Ops-India App v7.9</p>
     </div>
   </div>
 
@@ -1097,7 +1097,7 @@ Skills and certifications"></textarea>
   <span style="color:var(--border);">·</span>
   <span id="webgpu-badge-footer"></span>
   <span style="flex:1;"></span>
-  <span style="font-size:10px;color:var(--text-3);font-family:var(--fm);margin-right:8px;">v7.8</span>
+  <span style="font-size:10px;color:var(--text-3);font-family:var(--fm);margin-right:8px;">v7.9</span>
   <button onclick="openSyncModal()" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--text-3);font-family:var(--fm);padding:2px 6px;border-radius:var(--r-pill);border:1px solid var(--border);" id="sync-trigger-btn">⬇️ Sync</button>
 </div>
 
@@ -1237,7 +1237,8 @@ async function saveApiKey(){
 function sanitize(html){
   const doc=new DOMParser().parseFromString(html,'text/html');
   ['script','style','iframe','object','embed','form','link','meta'].forEach(t=>doc.querySelectorAll(t).forEach(e=>e.remove()));
-  doc.querySelectorAll('*').forEach(el=>{Array.from(el.attributes).forEach(a=>{const n=a.name.toLowerCase();if(n.startsWith('on')||(n==='href'&&a.value.toLowerCase().startsWith('javascript:'))||(n==='src'&&a.value.toLowerCase().startsWith('javascript:'))||n==='action'||n==='formaction')el.removeAttribute(a.name);});});
+  const badUri=v=>{const s=v.replace(/[\s\x00-\x1f]+/g,'').toLowerCase();return s.startsWith('javascript:')||s.startsWith('data:')||s.startsWith('vbscript:');};
+  doc.querySelectorAll('*').forEach(el=>{Array.from(el.attributes).forEach(a=>{const n=a.name.toLowerCase();if(n.startsWith('on')||(n==='href'&&badUri(a.value))||(n==='src'&&badUri(a.value))||n==='action'||n==='formaction')el.removeAttribute(a.name);});});
   return doc.body.innerHTML;
 }
 function mdown(t){
@@ -1423,6 +1424,7 @@ RULES: Cite exact CV lines. Score in LPA. Be direct and actionable.`;
 
 // ── EVALUATION ──
 async function runEval(){
+  if(S._evalRunning){toast('Evaluation already in progress','err');return;}
   const jd=document.getElementById('jd-input').value.trim();
   const cv=localStorage.getItem('coi_cv')||'';
 
@@ -1447,6 +1449,7 @@ async function runEval(){
   const g=id=>document.getElementById(id)?.value||'';
   const pr={name:g('profile-name')||'Candidate',ctc:g('profile-ctc')||'Not specified',city:g('profile-city')||'Not specified',workmode:g('profile-workmode'),notice:g('profile-notice')||'60',buyout:g('profile-buyout')||'no',sector:g('profile-sector'),mode:S.mode,college:g('profile-college'),cgpa:g('profile-cgpa'),stipend:g('profile-stipend')};
 
+  S._evalRunning=true;
   document.getElementById('eval-btn').disabled=true;
   const seb=document.getElementById('seb');if(seb)seb.disabled=true;
   const fsBtn=document.getElementById('fast-scan-btn');if(fsBtn)fsBtn.disabled=true;
@@ -1471,16 +1474,16 @@ async function runEval(){
     setTimeout(()=>{
       ld.style.display='none';
       document.getElementById('eval-results').style.display='block';
-      if(repost){document.getElementById('repost-warn-wrap').innerHTML=`<div class="repost-warn"><span style="font-size:20px;flex-shrink:0;">⚠️</span><div><strong>Repost detected</strong> — This JD matches a role you evaluated on ${repost.date} (${repost.company}, Score: ${repost.score?.toFixed(1)||'--'}/5). This adds ~20 pts to GLS automatically.</div></div>`;}
-      if(similar.length){const rows=similar.slice(0,2).map(e=>`<div class="eh-row"><span>${sanitize(e.company)} — ${sanitize(e.role)}</span><span style="font-family:var(--fm);color:var(--saffron);">${e.score?.toFixed(1)||'--'}/5 · ${e.date}</span></div>`).join('');document.getElementById('eval-history-wrap').innerHTML=`<div class="eval-history-card"><div class="eh-title">📋 You have evaluated similar roles before</div>${rows}</div>`;}
+      if(repost){document.getElementById('repost-warn-wrap').innerHTML=`<div class="repost-warn"><span style="font-size:20px;flex-shrink:0;">⚠️</span><div><strong>Repost detected</strong> — This JD matches a role you evaluated on ${sanitize(repost.date)} (${sanitize(repost.company)}, Score: ${repost.score?.toFixed(1)||'--'}/5). This adds ~20 pts to GLS automatically.</div></div>`;}
+      if(similar.length){const rows=similar.slice(0,2).map(e=>`<div class="eh-row"><span>${sanitize(e.company)} — ${sanitize(e.role)}</span><span style="font-family:var(--fm);color:var(--saffron);">${e.score?.toFixed(1)||'--'}/5 · ${sanitize(e.date)}</span></div>`).join('');document.getElementById('eval-history-wrap').innerHTML=`<div class="eval-history-card"><div class="eh-title">📋 You have evaluated similar roles before</div>${rows}</div>`;}
       renderRes(ev);
       document.getElementById('eval-btn').disabled=false;if(seb)seb.disabled=false;
-      updateFastScanBtn();
+      updateFastScanBtn();S._evalRunning=false;
     },400);
   }catch(err){
     clearInterval(iv);ld.style.display='none';document.getElementById('eval-empty').style.display='block';
     document.getElementById('eval-btn').disabled=false;if(seb)seb.disabled=false;
-    updateFastScanBtn();
+    updateFastScanBtn();S._evalRunning=false;
     toast('Error: '+err.message,'err');
   }
 }
@@ -1972,14 +1975,15 @@ function exportPDF(){
   if(!S.evals.length){toast('No evaluations to export','err');return;}
   const gc={A:'#238636',B:'#1f6feb',C:'#9e6a03',D:'#da6820',F:'#b62324'};
   const ge=g=>g<=25?'🟢':g<=50?'🟡':g<=75?'🟠':'🔴';
+  const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   const rows=S.evals.map(ev=>`
     <tr>
-      <td><strong>${ev.company}</strong><br><span style="color:#666;font-size:11px;">${ev.role}</span></td>
+      <td><strong>${esc(ev.company)}</strong><br><span style="color:#666;font-size:11px;">${esc(ev.role)}</span></td>
       <td style="text-align:center;color:${gc[ev.grade]||'#333'};font-weight:bold;">${ev.score?.toFixed(1)||'--'}/5<br><small>(${ev.grade||'--'})</small></td>
       <td style="text-align:center;">${ge(ev.gls||0)} ${ev.gls??'--'}</td>
-      <td style="text-align:center;">${ev.status||'--'}</td>
-      <td style="text-align:center;font-size:11px;">${ev.date}</td>
-      <td style="font-size:11px;color:#666;">${ev.archetype?.split(' ').slice(0,2).join(' ')||'--'}</td>
+      <td style="text-align:center;">${esc(ev.status)||'--'}</td>
+      <td style="text-align:center;font-size:11px;">${esc(ev.date)}</td>
+      <td style="font-size:11px;color:#666;">${esc(ev.archetype?.split(' ').slice(0,2).join(' '))||'--'}</td>
     </tr>`).join('');
   const stats={total:S.evals.length,applied:S.evals.filter(e=>e.status==='Applied').length,interview:S.evals.filter(e=>e.status==='Interview').length,offer:S.evals.filter(e=>e.status==='Offer').length};
   const html=`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Career-Ops-India Pipeline</title>

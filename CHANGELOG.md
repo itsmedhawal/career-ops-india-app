@@ -6,6 +6,19 @@ Format: `[Version] — Date — Summary`
 
 ---
 
+## [v7.9] — 2026-04-19 — Security Hardening & Race Condition Fix
+
+### Security
+- **`sanitize()` now blocks `data:` and `vbscript:` URI schemes** — previously only stripped `javascript:` from `href`/`src` attributes; now rejects all dangerous protocols including whitespace-obfuscated variants.
+- **Repost warning sanitized** — `repost.date` and `repost.company` are now passed through `sanitize()` before innerHTML injection; prevents stored XSS via tampered localStorage.
+- **Similar-eval history date sanitized** — `e.date` in the eval-history rows now wrapped in `sanitize()`.
+- **`exportPDF()` HTML-escaped** — `ev.company`, `ev.role`, `ev.status`, `ev.date`, and `ev.archetype` are now entity-escaped (`&`, `<`, `>`, `"`) before injection into the print popup's `document.write()` HTML.
+
+### Fixed
+- **`runEval()` re-entrancy guard** — added `S._evalRunning` flag; double-tapping Evaluate while a cloud request is in-flight now shows "Evaluation already in progress" toast instead of firing a second concurrent API call. Flag is cleared in both success and error paths.
+
+---
+
 ## [v7.8] — 2026-04-19 — Gemini Parity Fix for All AI Features
 
 ### Fixed
