@@ -6,6 +6,31 @@ Format: `[Version] — Date — Summary`
 
 ---
 
+## [v8.0] — 2026-04-19 — Streaming, Sharing & Visual Refresh
+
+### Added
+- **Streaming evaluation** — AI responses now stream in real-time for both Claude and Gemini. Live text appears as the model generates, replacing the loading spinner.
+- **WhatsApp sharing** — one-tap share of evaluation results (score, grade, GLS) via WhatsApp.
+- **Sample report viewer** — "View Sample Report" button on the empty Evaluate tab lets new users see a full example evaluation before setting up an API key.
+- **Notes on tracker cards** — add free-text notes to any tracked evaluation; persisted in storage.
+- **Hero metric chips** — three feature pills ("GLS in seconds", "India-first scoring", "Privacy local-first") on the Evaluate hero section.
+
+### Changed
+- **Full visual refresh** — gradient backgrounds with saffron/cyan glow, dot-grid overlay, frosted glass header/nav, gradient cards and buttons, panel fade-in animations. Light theme overhauled with semi-transparent surfaces.
+- **README hero image** — replaced external PNG with local SVG badge strip (`.github/assets/hero.svg`).
+
+### Security (backmerged from v7.8–v7.9)
+- **`sanitize()` hardened** — now blocks `data:` and `vbscript:` URI schemes alongside `javascript:`, with whitespace stripping.
+- **Repost warning sanitized** — `repost.date` and `repost.company` passed through `sanitize()` before innerHTML.
+- **Similar-eval `e.date` sanitized** — eval-history rows now sanitize date values.
+- **`exportPDF()` HTML-escaped** — all user fields entity-escaped via `esc()` helper.
+- **`runEval()` re-entrancy guard** — `S._evalRunning` flag prevents double-tap duplicate API calls.
+- **`generateCV()` provider-aware** — now uses Gemini API when Gemini is selected, with proper key resolution.
+- **`runCloudFastScan()` provider-aware** — Gemini-only users can use the cloud GLS fallback.
+- **`init()` PIN dual-check** — checks both `coi_key_enc` and `coi_gemini_enc` to trigger PIN unlock on load.
+
+---
+
 ## [v7.9] — 2026-04-19 — Security Hardening & Race Condition Fix
 
 ### Security

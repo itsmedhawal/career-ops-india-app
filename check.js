@@ -3,7 +3,7 @@
 // No npm dependencies. Exit 0 = all pass, 1 = any fail.
 
 const fs = require("fs");
-const html = fs.readFileSync("index-v8.html", "utf8");
+const html = fs.readFileSync("index.html", "utf8");
 
 // ── Extract all JS from <script> blocks ──
 const scriptBlocks = html.match(/<script[\s\S]*?<\/script>/g) || [];
@@ -75,7 +75,7 @@ function assertNotIncludes(str, sub, name) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// RE-IMPLEMENT PURE FUNCTIONS (extracted from index-v8.html)
+// RE-IMPLEMENT PURE FUNCTIONS (extracted from index.html)
 // These mirror the exact source; no DOM/crypto dependencies.
 // ═══════════════════════════════════════════════════════════
 
@@ -537,12 +537,11 @@ console.log("\n── Provider-aware branching ──");
   assertEq(GEMINI_MODELS['gemini-pro'], 'gemini-2.5-pro', "Gemini Pro → model gemini-2.5-pro");
   assertEq(GEMINI_MODELS['claude'] || 'gemini-2.5-flash', 'gemini-2.5-flash', "Unknown provider falls back to gemini-2.5-flash");
 
-  // generateCV always uses Claude (line 1818: calls getDecryptedKey → anthropic API)
-  // There is NO provider branching in generateCV — it's always Claude.
-  assert(true, "generateCV: always uses Anthropic/Claude API (no provider branch)");
+  // generateCV is now provider-aware (v8.0): branches on isClaude, uses Gemini API when Gemini selected
+  assert(html.includes('async function generateCV') && html.includes('getGeminiKey'), "generateCV: provider-aware (Claude + Gemini branches)");
 
-  // runCloudFastScan always uses Claude (line 2842: calls getDecryptedKey → anthropic API)
-  assert(true, "runCloudFastScan: always uses Anthropic/Claude API (no provider branch)");
+  // runCloudFastScan is now provider-aware (v8.0): branches on isClaude
+  assert(html.includes('async function runCloudFastScan') && html.includes('isClaude'), "runCloudFastScan: provider-aware (Claude + Gemini branches)");
 
   // Image support per provider
   assert(PROVIDERS.claude.supports_image === false, "Claude does not support image");

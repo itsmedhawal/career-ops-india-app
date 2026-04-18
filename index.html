@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://esm.run https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://generativelanguage.googleapis.com https://raw.githubusercontent.com https://fonts.googleapis.com https://fonts.gstatic.com https://esm.run https://cdn.jsdelivr.net https://huggingface.co; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'; worker-src 'self' blob:;">
-<title>Career-Ops-India App — v7.9</title>
-<meta name="version" content="7.9">
+<title>Career-Ops-India App — v8.0</title>
+<meta name="version" content="8.0">
 <meta name="build" content="2026-04-19">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FF9933">
@@ -17,6 +17,7 @@
 <style>
 :root{
   --bg:#0d1117;--surface:#161b22;--surface-2:#1c2128;
+  --bg-2:#131a22;--bg-3:#0a0e13;
   --border:#30363d;--border-light:#21262d;
   --saffron:#FF9933;--saffron-dim:rgba(255,153,51,0.12);
   --saffron-glow:0 0 28px rgba(255,153,51,0.10);
@@ -32,37 +33,45 @@
 }
 [data-theme="light"]{
   --bg:#ffffff;--surface:#f6f8fa;--surface-2:#eaeef2;
+  --bg-2:#f6f8fb;--bg-3:#edf1f6;
   --border:#d0d7de;--border-light:#e4e8ec;
   --text-1:#1f2328;--text-2:#656d76;--text-3:#818b98;
   --shadow:0 4px 16px rgba(0,0,0,0.08);
   --saffron-dim:rgba(255,153,51,0.08);
 }
+[data-theme="light"] .hdr{background:rgba(255,255,255,.86);border-bottom:1px solid rgba(208,215,222,.85);}
+[data-theme="light"] .top-nav{background:rgba(255,255,255,.9);border-bottom:1px solid rgba(208,215,222,.9);}
+[data-theme="light"] .bot-nav{background:rgba(246,248,250,.92);border-top:1px solid rgba(208,215,222,.9);}
+[data-theme="light"] .hero-chip{background:rgba(255,255,255,.78);border-color:rgba(208,215,222,.9);}
+[data-theme="light"] .empty{background:linear-gradient(180deg,rgba(246,248,250,.92),rgba(234,238,242,.92));border-color:rgba(208,215,222,.95);}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{-webkit-tap-highlight-color:transparent;}
-body{font-family:var(--fb);background:var(--bg);color:var(--text-1);min-height:100vh;font-size:15px;line-height:1.6;transition:background .2s,color .2s;padding-bottom:calc(var(--bot-h) + 36px + env(safe-area-inset-bottom));overflow-x:hidden;}
+body{font-family:var(--fb);background:radial-gradient(1200px 520px at 10% -5%,rgba(255,153,51,.14),transparent 55%),radial-gradient(900px 500px at 95% -12%,rgba(88,166,255,.11),transparent 60%),linear-gradient(180deg,var(--bg),var(--bg-2) 44%,var(--bg-3));color:var(--text-1);min-height:100vh;font-size:15px;line-height:1.6;transition:background .3s,color .2s;padding-bottom:calc(var(--bot-h) + 36px + env(safe-area-inset-bottom));overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 22% 14%,rgba(255,153,51,.08),transparent 28%),radial-gradient(circle at 82% 20%,rgba(88,166,255,.06),transparent 32%);z-index:-2;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:48px 48px;opacity:.14;z-index:-1;}
 @media(min-width:768px){body{padding-bottom:36px;}}
 
 /* HEADER */
-.hdr{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 16px;backdrop-filter:blur(12px);}
+.hdr{position:sticky;top:0;z-index:100;background:rgba(13,17,23,.78);border-bottom:1px solid rgba(48,54,61,.72);height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 16px;backdrop-filter:blur(18px);}
 .logo{font-family:var(--fh);font-weight:700;font-size:16px;color:var(--text-1);text-decoration:none;display:flex;align-items:center;gap:8px;letter-spacing:-.3px;}
 .logo-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--saffron),#e67e00);box-shadow:0 0 8px rgba(255,153,51,.5);}
 .logo em{font-style:normal;color:var(--saffron);}
 .hdr-r{display:flex;align-items:center;gap:8px;}
-.theme-btn{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-pill);padding:5px 12px;font-size:13px;font-family:var(--fb);color:var(--text-2);cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s;}
+.theme-btn{background:linear-gradient(180deg,var(--surface),var(--surface-2));border:1px solid var(--border);border-radius:var(--r-pill);padding:5px 12px;font-size:13px;font-family:var(--fb);color:var(--text-2);cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s;}
 .theme-btn:hover{border-color:var(--saffron);color:var(--saffron);}
 .ico-btn{background:none;border:none;cursor:pointer;font-size:20px;padding:4px;color:var(--text-2);transition:color .2s;}
 .ico-btn:hover{color:var(--saffron);}
 
 /* TOP NAV */
-.top-nav{display:none;border-bottom:1px solid var(--border);background:var(--bg);padding:0 16px;gap:2px;overflow-x:auto;scrollbar-width:none;}
+.top-nav{display:none;border-bottom:1px solid rgba(48,54,61,.7);background:rgba(13,17,23,.88);padding:0 16px;gap:8px;overflow-x:auto;scrollbar-width:none;backdrop-filter:blur(14px);}
 .top-nav::-webkit-scrollbar{display:none;}
 @media(min-width:768px){.top-nav{display:flex;}}
-.tnb{font-family:var(--fb);font-size:14px;font-weight:500;color:var(--text-2);background:none;border:none;padding:12px 14px;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
+.tnb{font-family:var(--fb);font-size:14px;font-weight:500;color:var(--text-2);background:none;border:1px solid transparent;padding:9px 14px;cursor:pointer;border-radius:999px;transition:all .2s;white-space:nowrap;margin:8px 0;}
 .tnb:hover{color:var(--text-1);}
-.tnb.on{color:var(--saffron);border-bottom-color:var(--saffron);}
+.tnb.on{color:var(--saffron);border-color:rgba(255,153,51,.4);background:var(--saffron-dim);}
 
 /* BOTTOM NAV */
-.bot-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--surface);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:8px 0 max(8px,env(safe-area-inset-bottom));}
+.bot-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(22,27,34,.88);border-top:1px solid rgba(48,54,61,.74);display:flex;justify-content:space-around;padding:8px 0 max(8px,env(safe-area-inset-bottom));backdrop-filter:blur(14px);}
 @media(min-width:768px){.bot-nav{display:none;}}
 .bnb{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;cursor:pointer;padding:4px 8px;color:var(--text-3);font-family:var(--fb);font-size:10px;font-weight:500;transition:color .2s;min-width:60px;}
 .bnb .bi{font-size:22px;line-height:1;}
@@ -74,6 +83,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text-1);min-height:1
 .pi{max-width:640px;margin:0 auto;padding:20px 16px;}
 @media(min-width:768px){.pi{padding:28px 24px;max-width:720px;}}
 @media(min-width:1024px){.pi{padding:32px 28px;max-width:860px;}}
+.panel.on .pi{animation:fadeUp .3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 
 /* TYPOGRAPHY */
 h1{font-family:var(--fh);font-size:clamp(24px,5vw,36px);font-weight:700;line-height:1.2;}
@@ -85,18 +96,18 @@ a:hover{text-decoration:underline;}
 code{font-family:var(--fm);font-size:12px;background:var(--surface-2);padding:2px 6px;border-radius:4px;color:var(--saffron);}
 
 /* CARDS */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:16px;margin-bottom:12px;}
-.card-hi{border-color:var(--saffron);box-shadow:var(--saffron-glow);}
+.card{background:linear-gradient(180deg,var(--surface),var(--surface-2));border:1px solid rgba(48,54,61,.82);border-radius:var(--r-md);padding:16px;margin-bottom:12px;box-shadow:var(--shadow);}
+.card-hi{border-color:var(--saffron);box-shadow:0 14px 28px rgba(0,0,0,.2),var(--saffron-glow);}
 
 /* BUTTONS */
-.btn{font-family:var(--fb);font-size:14px;font-weight:500;padding:10px 18px;border-radius:var(--r-sm);border:none;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;}
-.bp{background:var(--saffron);color:#000;}
-.bp:hover{background:#ffad47;transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,153,51,.3);}
+.btn{font-family:var(--fb);font-size:14px;font-weight:500;padding:10px 18px;border-radius:var(--r-sm);border:none;cursor:pointer;transition:all .22s ease;display:inline-flex;align-items:center;gap:7px;}
+.bp{background:linear-gradient(135deg,var(--saffron),#ffb75d);color:#1a130a;box-shadow:0 10px 18px rgba(255,153,51,.2);}
+.bp:hover{background:linear-gradient(135deg,#ffad47,#ffc878);transform:translateY(-2px);box-shadow:0 12px 24px rgba(255,153,51,.26);}
 .bp:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-.bs{background:var(--surface-2);color:var(--text-1);border:1px solid var(--border);}
-.bs:hover{border-color:var(--saffron);color:var(--saffron);}
+.bs{background:linear-gradient(180deg,var(--surface-2),var(--surface));color:var(--text-1);border:1px solid var(--border);}
+.bs:hover{border-color:var(--saffron);color:var(--saffron);transform:translateY(-1px);}
 .bg{background:none;color:var(--text-2);border:1px solid var(--border);}
-.bg:hover{color:var(--text-1);background:var(--surface);}
+.bg:hover{color:var(--text-1);background:var(--surface);transform:translateY(-1px);}
 .bw{width:100%;justify-content:center;}
 .bl{padding:13px 24px;font-size:15px;}
 
@@ -116,6 +127,7 @@ textarea::placeholder,input::placeholder{color:var(--text-3);}
 select option{background:var(--surface);}
 .hint{font-size:12px;color:var(--text-3);margin-top:4px;line-height:1.5;}
 .slabel{font-family:var(--fm);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:var(--text-3);margin-bottom:10px;}
+textarea,input,select{background:linear-gradient(180deg,var(--surface),var(--surface-2));}
 
 /* API KEY */
 .akw{position:relative;}
@@ -185,8 +197,11 @@ select option{background:var(--surface);}
 .pwa-x{background:none;border:none;color:var(--text-3);cursor:pointer;font-size:16px;padding:4px;flex-shrink:0;}
 
 /* EVALUATE */
-.eval-hero{padding:28px 0 20px;}
+.eval-hero{padding:26px 18px 22px;border:1px solid rgba(48,54,61,.75);border-radius:var(--r-lg);background:linear-gradient(115deg,rgba(255,153,51,.11),rgba(88,166,255,.07) 48%,transparent 78%);margin-bottom:14px;position:relative;overflow:hidden;}
+.eval-hero::after{content:'';position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,var(--saffron-dim),transparent 68%);top:-84px;right:-44px;pointer-events:none;}
 .eval-hero h1 em{font-style:normal;color:var(--saffron);}
+.hero-metrics{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.hero-chip{font-size:11px;font-family:var(--fm);padding:4px 10px;border-radius:999px;border:1px solid rgba(48,54,61,.85);background:rgba(28,33,40,.78);color:var(--text-2);}
 .mtog{display:flex;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:3px;gap:3px;margin-bottom:16px;}
 .mb{flex:1;padding:9px;border:none;border-radius:6px;font-family:var(--fb);font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;color:var(--text-2);background:none;display:flex;align-items:center;justify-content:center;gap:6px;}
 .mb.on{background:var(--saffron);color:#000;}
@@ -217,7 +232,7 @@ select option{background:var(--surface);}
 .ls.done .lsd{border-color:var(--green);background:rgba(63,185,80,.1);color:var(--green);}
 
 /* RESULTS */
-.empty{text-align:center;padding:40px 20px;color:var(--text-3);}
+.empty{text-align:center;padding:40px 20px;color:var(--text-3);background:linear-gradient(180deg,rgba(22,27,34,.72),rgba(28,33,40,.62));border:1px dashed rgba(48,54,61,.88);border-radius:var(--r-md);}
 .ei{font-size:40px;margin-bottom:10px;}
 .et{font-family:var(--fh);font-size:16px;color:var(--text-2);margin-bottom:5px;}
 .ed{font-size:13px;}
@@ -344,7 +359,6 @@ select option{background:var(--surface);}
 /* MORE */
 .more-section{margin-bottom:28px;}
 .more-label{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-3);margin-bottom:12px;padding-bottom:7px;border-bottom:1px solid var(--border);}
-
 .pcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:18px;margin-bottom:10px;}
 .pname{font-family:var(--fh);font-size:17px;font-weight:700;margin-bottom:2px;}
 .prole{font-size:12px;color:var(--text-2);margin-bottom:10px;}
@@ -634,6 +648,11 @@ select option{background:var(--surface);}
   <div class="eval-hero">
     <h1>Found a job?<br><em>Let's see if it's worth your time.</em></h1>
     <p style="margin-top:8px;font-size:14px;">Paste the JD below and hit Evaluate. Takes about 30 seconds.</p>
+    <div class="hero-metrics">
+      <span class="hero-chip">GLS in seconds</span>
+      <span class="hero-chip">India-first scoring</span>
+      <span class="hero-chip">Privacy local-first</span>
+    </div>
   </div>
 
   <!-- API not configured state -->
@@ -708,6 +727,7 @@ The more complete the JD, the better the evaluation."></textarea>
       <div class="ls" id="ls4"><div class="lsd">4</div>Analysing CV match</div>
       <div class="ls" id="ls5"><div class="lsd">5</div>Researching compensation</div>
       <div class="ls" id="ls6"><div class="lsd">6</div>Generating report</div>
+      <div id="stream-live-text" style="display:none;margin-top:16px;max-height:200px;overflow-y:auto;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:10px;font-size:11px;color:var(--text-2);font-family:var(--fm);line-height:1.5;white-space:pre-wrap;word-break:break-word;"></div>
     </div>
   </div>
 
@@ -715,6 +735,7 @@ The more complete the JD, the better the evaluation."></textarea>
     <div class="ei">👆</div>
     <div class="et">Paste a JD above</div>
     <div class="ed">Score, grade, ghost risk and full report appear here.</div>
+    <button class="btn bp" onclick="viewSampleReport()" style="margin-top:16px;">📋 View Sample Report</button>
   </div>
 
   <div id="eval-results" style="display:none;margin-top:20px;">
@@ -731,6 +752,7 @@ The more complete the JD, the better the evaluation."></textarea>
     <div class="fw" style="margin-top:16px;">
       <button class="btn bp" onclick="saveTracker()">💾 Save to Tracker</button>
       <button class="btn bs" onclick="dlReport()">⬇️ Download</button>
+      <button class="btn bg" onclick="shareWhatsApp()">📱 Share on WhatsApp</button>
       <button class="btn bg" onclick="resetEval()">🔄 New Evaluation</button>
     </div>
   </div>
@@ -981,6 +1003,7 @@ Skills and certifications"></textarea>
       <div class="plinks">
         <a href="https://github.com/itsmedhawal/career-ops-india" target="_blank" class="btn bg">⭐ career-ops-india</a>
         <a href="https://www.linkedin.com/in/dhawalshrivastava" target="_blank" class="btn bg">💼 LinkedIn</a>
+        <a href="https://buymeacoffee.com/dhawals" target="_blank" class="btn bg">☕ Buy me a coffee</a>
       </div>
     </div>
     <div class="pcard">
@@ -1000,7 +1023,7 @@ Skills and certifications"></textarea>
     <div class="made-with">
       <p>Made with Love and Innovation, driven by Intention, dedicated to the community.</p>
       <p style="margin-top:4px;">— <a href="https://www.linkedin.com/in/dhawalshrivastava" target="_blank">Dhawal Shrivastava</a></p>
-      <p style="margin-top:6px;font-size:11px;color:var(--text-3);font-family:var(--fm);">Career-Ops-India App v7.9</p>
+      <p style="margin-top:6px;font-size:11px;color:var(--text-3);font-family:var(--fm);">Career-Ops-India App v8.0</p>
     </div>
   </div>
 
@@ -1097,7 +1120,7 @@ Skills and certifications"></textarea>
   <span style="color:var(--border);">·</span>
   <span id="webgpu-badge-footer"></span>
   <span style="flex:1;"></span>
-  <span style="font-size:10px;color:var(--text-3);font-family:var(--fm);margin-right:8px;">v7.9</span>
+  <span style="font-size:10px;color:var(--text-3);font-family:var(--fm);margin-right:8px;">v8.0</span>
   <button onclick="openSyncModal()" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--text-3);font-family:var(--fm);padding:2px 6px;border-radius:var(--r-pill);border:1px solid var(--border);" id="sync-trigger-btn">⬇️ Sync</button>
 </div>
 
@@ -1464,8 +1487,13 @@ async function runEval(){
   const ss=['ls1','ls2','ls3','ls4','ls5','ls6'];let si=0;
   const iv=setInterval(()=>{if(si>0)document.getElementById(ss[si-1]).className='ls done';if(si<ss.length){document.getElementById(ss[si]).className='ls act';si++;}},900);
   try{
-    const {text,provider}=await runCloudEval(jd||'[See attached image]',cv,pr);
+    const streamContainer=document.getElementById('stream-live-text');
+    let fullText='';
+    const stream={text:fullText,onChunk:(chunk)=>{fullText+=chunk;if(streamContainer){stream.text=fullText;streamContainer.textContent=fullText;streamContainer.scrollTop=streamContainer.scrollHeight;}}};
+    streamContainer.style.display='block';
+    const {text,provider}=await runCloudEval(jd||'[See attached image]',cv,pr,stream);
     clearInterval(iv);ss.forEach(s=>document.getElementById(s).className='ls done');
+    streamContainer.style.display='none';
     const ev=parseEv(text,jd,pr);
     ev.evalProvider=provider;
     S.eval=ev;
@@ -1509,7 +1537,6 @@ function parseEv(text,jd,pr){
     const ppoMatch=text.match(/PPO[^:]*:\s*([0-9]+)\s*%/i)||text.match(/PPO[^0-9]*([0-9]+)/i);
     if(ppoMatch)ppo=Math.max(0,Math.min(100,parseInt(ppoMatch[1])));
     else{
-      // Deterministic PPO estimate from score + GLS + company stage
       let base=50;
       if(sc>=4.5)base+=25;else if(sc>=4)base+=15;else if(sc>=3.5)base+=5;else base-=15;
       if(gls!==null){if(gls<=25)base+=10;else if(gls>50)base-=15;}
@@ -1518,7 +1545,7 @@ function parseEv(text,jd,pr){
       ppo=Math.max(5,Math.min(95,base));
     }
   }
-  return{id:crypto.randomUUID(),date:new Date().toISOString().split('T')[0],company:co,role:ro,score:sc,grade:gr,gls,glsA:ga,archetype:arch,workMode:wm,stage:st,source:src,signals,ctcRaw,notice:pr.notice,mode:pr.mode,status:'Evaluated',fullText:text,jd:jd.substring(0,400),profile:pr,ppo};
+  return{id:crypto.randomUUID(),date:new Date().toISOString().split('T')[0],company:co,role:ro,score:sc,grade:gr,gls,glsA:ga,archetype:arch,workMode:wm,stage:st,source:src,signals,ctcRaw,notice:pr.notice,mode:pr.mode,status:'Evaluated',notes:'',fullText:text,jd:jd.substring(0,400),profile:pr,ppo};
 }
 
 // ── CIRCULAR GLS GAUGE ──
@@ -1672,7 +1699,123 @@ function dlReport(){
   const u=URL.createObjectURL(new Blob([c],{type:'text/markdown'}));
   const a=document.createElement('a');a.href=u;a.download=`${ev.company.toLowerCase().replace(/\s+/g,'-')}-${ev.date}.md`;a.click();URL.revokeObjectURL(u);toast('Downloaded','ok');
 }
+function shareWhatsApp(){
+  if(!S.eval)return;const ev=S.eval;
+  const msg=`I evaluated *${ev.company}* for *${ev.role}*\n\n📊 Score: ${ev.score?.toFixed(1)||'--'}/5 (${ev.grade})\n👻 Ghost Likelihood: ${ev.gls}/100 ${ev.gls<=25?'🟢':ev.gls<=50?'🟡':ev.gls<=75?'🟠':'🔴'}\n\n${ev.glsA}\n\nEvaluated on Career-Ops-India App v8.0`;
+  const encoded=encodeURIComponent(msg);
+  window.open(`https://wa.me/?text=${encoded}`,'_blank');
+  toast('Opening WhatsApp...','ok');
+}
 function resetEval(){S.eval=null;document.getElementById('eval-results').style.display='none';document.getElementById('eval-empty').style.display='block';document.getElementById('jd-input').value='';document.getElementById('repost-warn-wrap').innerHTML='';document.getElementById('eval-history-wrap').innerHTML='';window.scrollTo(0,0);}
+function viewSampleReport(){
+  const sampleEval={
+    id:'sample-001',date:new Date().toISOString().split('T')[0],company:'TechCorp AI',role:'Senior AI/ML Engineer',
+    score:4.2,grade:'B',gls:38,glsA:'Proceed with Caution',
+    archetype:'AI/ML Engineer / LLMOps Engineer',workMode:'Remote-First',stage:'Growth Startup',source:'LinkedIn',
+    evalProvider:'claude',notes:'',
+    signals:[
+      {label:'Boilerplate JD bullet points',pts:8,reason:'Generic requirements'},
+      {label:'Unnamed client mention',pts:4,reason:'Client acquisition model'},
+      {label:'Age of posting — 5 days',pts:3,reason:'Recent posting'},
+    ],
+    ctcRaw:50,notice:'60',mode:'professional',status:'Evaluated',
+    jd:'Senior AI/ML Engineer - TechCorp AI\n\nWe are looking for an experienced AI/ML engineer...',
+    profile:{name:'Sample User',ctc:'45 LPA',city:'Bangalore',workmode:'remote-first',notice:'60',buyout:'no',sector:'startup',mode:'professional'},
+    fullText:`## ARCHETYPE
+Senior AI/ML Engineer / LLMOps Engineer
+
+## BLOCK A - ROLE SUMMARY
+| Field | Value |
+|-------|-------|
+| Archetype | AI/ML Engineer / LLMOps Engineer |
+| Seniority | Senior (5-7 years) |
+| Work Mode | Remote-First |
+| Company Stage | Growth Startup B-C Round |
+| Location | Bangalore / India-based |
+| Source | LinkedIn |
+| TL;DR | Building production ML systems; need hands-on architecture + team mentorship |
+
+## BLOCK B - CV MATCH
+| JD Requirement | CV Evidence | Strength |
+|---|---|---|
+| 5+ years ML end-to-end | 6 years data science + ops | Strong ✓ |
+| PyTorch/TF production systems | 2 production models at scale | Strong ✓ |
+| Team mentorship | Mentored 2 junior engineers | Moderate ✓ |
+| API design experience | REST + gRPC pipelines | Strong ✓ |
+
+GAPS: Nice-to-have. Leadership experience not mentioned. Cloud ops (GCP/AWS) depth not specified.
+
+## BLOCK C - LEVEL & STRATEGY
+Realistic role. Compensation aligns with BLR startup senior IC. No red flags on tech stack. 
+**Recommendation:** Strong fit for technical chops. Interview to assess mentorship readiness and team fit.
+
+## BLOCK D - COMP & MARKET
+| Component | Details | Flag |
+|---|---|---|
+| CTC Range | 45-50 LPA | Fair |
+| Variable | 15% (~7.5 LPA) | Standard |
+| In-Hand Est | ~3.5 LPA/month | Reasonable |
+| Bond | None mentioned | ✓ Positive |
+
+Comp Score: 4/5
+
+## BLOCK E - PERSONALIZATION
+**Top 5 CV changes:** 
+1. Quantify model impact (accuracy %, latency, throughput)
+2. Mention specific cloud infra (GKE, ECS, Lambda if relevant)
+3. Add mentorship examples with outcomes
+4. Highlight any API design or backend optimization work
+5. Note any open-source contributions or papers
+
+**Top 5 ATS keywords:** PyTorch, LLM Fine-tuning, Model Deployment, Kubernetes, FastAPI
+
+## BLOCK F - INTERVIEW PLAN
+**6-8 STAR+R stories:**
+1. Most complex ML project — architecture, bottleneck, solution
+2. Production failure — root cause, debugging, fix
+3. Team mentorship — challenge, approach, outcome
+4. Cross-functional work — alignment with backend/product
+
+**3 red-flag questions:**
+1. Why did you leave your last role?
+2. How would you approach a model that degraded in QA?
+3. What's your experience with model monitoring / observability?
+
+## BLOCK G - GHOST LIKELIHOOD SCORE
+Signals firing:
+- Boilerplate JD bullet points: +8 pts *(generic copy-paste)*
+- Unnamed client mention: +4 pts *(consulting engagement risk)*
+- Age of posting (5 days): +3 pts *(recent, lower age risk)*
+
+TOTAL GLS: 38/100 [🟡]  
+Assessment: **Proceed with Caution** — Startup legitimacy is real; comp is fair; team may be young.
+
+## GLOBAL SCORE
+| Dimension | Score |
+|---|---|
+| CV Match | 4/5 |
+| North Star | 4/5 |
+| Compensation | 4/5 |
+| Cultural Signals | 3/5 |
+| Red Flags | -1 |
+| **GLOBAL** | **4.2/5** |
+
+Grade: **B** — Worth applying. Strong technical fit with moderate ghosting risk.
+
+## INDIA NOTES
+- **Notice period:** 60 days acceptable for growth stage.
+- **Buyout:** None mentioned — smooth transition expected.
+- **CTC breakdown:** ~70% in-hand (~3.5L/month), 15% variable bonus, 15% equity (standard for B-round).
+- **Location:** Bangalore BLR talent market is competitive; this is fair mid-to-senior IC pay.
+- **Recommendation:** **Apply.** Schedule initial screening to gauge team structure and product roadmap. Clarify mentorship scope in first call.`
+  };
+  S.eval=sampleEval;
+  document.getElementById('eval-empty').style.display='none';
+  document.getElementById('eval-results').style.display='block';
+  renderRes(sampleEval);
+  setTimeout(()=>window.scrollTo(0,0),200);
+  toast('Sample report loaded','ok');
+}
 
 // ── CUSTOM CV GENERATOR ──
 async function generateCV(evId){
@@ -1936,6 +2079,8 @@ function renderT(){
         ${hasKey?`<button class="btn bg" style="font-size:11px;padding:4px 9px;color:var(--green);border-color:var(--green);" onclick="prepInterview('${ev.id}')">🎤 Prep</button>`:''}
         <button class="btn bg" style="font-size:11px;padding:4px 9px;color:var(--red);border-color:var(--red);" onclick="delEv('${ev.id}')">Delete</button>
       </div>
+      ${hasKey?`<div style="font-size:11px;color:var(--text-3);padding:4px 0 2px;line-height:1.5;">🎤 <strong style="color:var(--text-2);">Prep</strong> — AI-generated STAR stories, CTC negotiation script &amp; India-specific scenarios for this role.</div>`:''}
+      ${ev.notes?`<div class="ac-notes"><textarea placeholder="Add notes..." class="notes-input" onchange="updateNotes('${ev.id}',this.value)" style="width:100%;padding:8px;border:1px solid var(--border);border-radius:var(--r-sm);background:var(--surface-2);color:var(--text-1);font-size:12px;font-family:var(--fb);resize:none;height:60px;">${sanitize(ev.notes)}</textarea></div>`:`<div class="ac-notes-empty"><button class="btn bg" style="font-size:11px;padding:4px 9px;" onclick="addNotes('${ev.id}')">📝 Add Notes</button></div>`}
     </div>`;
   }).join('');
 }
@@ -1949,6 +2094,8 @@ function filt(type,val){
 }
 function updSt(id,s){const ev=S.evals.find(e=>e.id===id);if(ev){ev.status=s;saveE();updStats();toast('Status: '+s,'ok');}}
 function delEv(id){if(!confirm('Delete?'))return;S.evals=S.evals.filter(e=>e.id!==id);S.idbCache.delete(id);saveE();renderT();}
+function addNotes(id){const ev=S.evals.find(e=>e.id===id);if(ev){ev.notes='';saveE();renderT();}}
+function updateNotes(id,text){const ev=S.evals.find(e=>e.id===id);if(ev){ev.notes=text;saveE();}}
 async function viewR(id){
   const ev=S.evals.find(e=>e.id===id);if(!ev)return;
   let r=null;try{r=await gRpt(id);}catch(e){}
@@ -2279,14 +2426,15 @@ INSTRUCTIONS:
 OUTPUT: Clean markdown with sections: ARCHETYPE, BLOCK A through G, GLOBAL SCORE, INDIA NOTES, EXTRACTED KEYWORDS`;
 }
 
-// ── CLOUD EVAL ORCHESTRATOR ──
-async function runCloudEval(jd, cv, profile){
+// ── CLOUD EVAL ORCHESTRATOR (STREAMING-ENABLED) ──
+async function runCloudEval(jd, cv, profile, stream=null){
   const provider=P.provider;
-
-  if(provider==='claude'){
-    return runClaudeEval(jd, cv, profile);
+  if(stream){
+    if(provider==='claude')return runClaudeEvalStreaming(jd, cv, profile, stream);
+    else return runGeminiEvalStreaming(jd, cv, profile, stream);
   } else {
-    return runGeminiEval(jd, cv, profile);
+    if(provider==='claude')return runClaudeEval(jd, cv, profile);
+    else return runGeminiEval(jd, cv, profile);
   }
 }
 
@@ -2389,6 +2537,34 @@ ${cv.substring(0,6000)}`;
 }
 
 // ── INIT PROVIDER STATE ──
+// ── CLAUDE STREAMING ──
+async function runClaudeEvalStreaming(jd, cv, profile, stream){
+  const key=await getDecryptedKey();
+  if(!key)throw new Error('No Claude API key');
+  const prompt=`${S.sh}\n\n${S.of}\n\nCANDIDATE:\nName: ${profile.name}\nCTC: ${profile.ctc}\nCity: ${profile.city}\nWork Mode: ${profile.workmode}\nNotice: ${profile.notice} days\nBuyout: ${profile.buyout}\nSector: ${profile.sector}\nMode: ${profile.mode}${profile.college?'\nCollege: '+profile.college:''}\n\nCV:\n${cv.substring(0,6000)}\n\nJOB DESCRIPTION:\n${jd}\n\nEvaluate fully. Cite exact CV lines. CTC in LPA. In Block G, list every signal that fired with exact points.`;
+  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4000,stream:true,messages:[{role:'user',content:prompt}]})});
+  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'Claude error');}
+  const reader=res.body.getReader(),decoder=new TextDecoder();let fullText='';
+  try{while(true){const {done,value}=await reader.read();if(done)break;const chunk=decoder.decode(value,{stream:true});chunk.split('\n').forEach(line=>{if(line.startsWith('data: '))try{const data=JSON.parse(line.slice(6));if(data.type==='content_block_delta'&&data.delta.type==='text_delta'){fullText+=data.delta.text;if(stream.onChunk)stream.onChunk(data.delta.text);}}catch(e){}});}}catch(e){throw e;}finally{reader.cancel();}
+  return {text:fullText,provider:'claude'};
+}
+
+// ── GEMINI STREAMING ──
+async function runGeminiEvalStreaming(jd, cv, profile, stream){
+  const key=await getGeminiKey();if(!key)throw new Error('No Gemini API key');
+  const modelId=GEMINI_MODELS[P.provider]||'gemini-2.5-flash';const systemPrompt=buildGeminiSystemPrompt();
+  const ctx=`CANDIDATE:\nName: ${profile.name}\nCTC Target: ${profile.ctc}\nCity: ${profile.city}\nWork Mode: ${profile.workmode}\nNotice: ${profile.notice} days\nBuyout: ${profile.buyout}\nSector: ${profile.sector}\nMode: ${profile.mode}${profile.college?'\nCollege: '+profile.college:''}\n\nCV:\n${cv.substring(0,6000)}`;
+  const parts=[{text:systemPrompt+'\n\n'+ctx}];
+  if(P.imageData&&P.imageMime){parts.push({inline_data:{mime_type:P.imageMime,data:P.imageData}});parts.push({text:'Job Description Image (above):'});}
+  if(jd.trim()){parts.push({text:'Job Description:\n'+jd});}
+  parts.push({text:'\nEvaluate fully using A-G. Cite CV. All comp in LPA. List every GLS signal with points.'});
+  const url=`https://generativelanguage.googleapis.com/v1beta/models/${modelId}:streamGenerateContent`;
+  const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':key},body:JSON.stringify({contents:[{role:'user',parts}],generationConfig:{maxOutputTokens:4000,temperature:0.2,responseMimeType:'text/plain'}})});
+  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`Gemini error ${res.status}`);}
+  const reader=res.body.getReader(),decoder=new TextDecoder();let fullText='';
+  try{while(true){const {done,value}=await reader.read();if(done)break;const chunk=decoder.decode(value,{stream:true});chunk.split('\n').forEach(line=>{if(line.trim().startsWith('{')){try{const data=JSON.parse(line.trim());if(data.candidates?.[0]?.content?.parts?.[0]?.text){fullText+=data.candidates[0].content.parts[0].text;if(stream.onChunk)stream.onChunk(data.candidates[0].content.parts[0].text);}}catch(e){}}});}}catch(e){throw e;}finally{reader.cancel();}
+  return {text:fullText,provider:P.provider};
+}
 function initProviderState(){
   const saved=P.provider;
   // Restore provider toggle
