@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 320" width="960" height="320">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="saffronGlow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF9933" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#FF9933" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="gaugeArc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF9933"/>
+      <stop offset="100%" stop-color="#ffb366"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="320" rx="16" fill="url(#bg)"/>
+
+  <!-- Subtle saffron glow top-left -->
+  <ellipse cx="120" cy="60" rx="200" ry="120" fill="url(#saffronGlow)"/>
+
+  <!-- Saffron dot -->
+  <circle cx="60" cy="56" r="8" fill="#FF9933"/>
+
+  <!-- App name -->
+  <text x="80" y="62" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="22" font-weight="700" fill="#f0f6fc" letter-spacing="-0.5">COI-App</text>
+
+  <!-- Tagline -->
+  <text x="60" y="96" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="15" fill="#8b949e">Score any job in 60 seconds. Ghost detection. Interview prep. Privacy-first.</text>
+
+  <!-- Divider line -->
+  <line x1="60" y1="120" x2="900" y2="120" stroke="#21262d" stroke-width="1"/>
+
+  <!-- === Metric Cards Row === -->
+
+  <!-- Card 1: GLS Gauge -->
+  <rect x="60" y="142" width="200" height="130" rx="12" fill="#161b22" stroke="#21262d" stroke-width="1"/>
+  <text x="84" y="170" font-family="system-ui,sans-serif" font-size="11" fill="#8b949e" text-transform="uppercase" letter-spacing="1">GHOST LIKELIHOOD</text>
+  <!-- Gauge ring background -->
+  <circle cx="160" cy="222" r="32" fill="none" stroke="#21262d" stroke-width="5"/>
+  <!-- Gauge ring value (32/100 = ~115deg) -->
+  <circle cx="160" cy="222" r="32" fill="none" stroke="#238636" stroke-width="5" stroke-dasharray="64 137" stroke-dashoffset="50" stroke-linecap="round" transform="rotate(-90 160 222)"/>
+  <!-- Score text -->
+  <text x="160" y="228" font-family="system-ui,sans-serif" font-size="18" font-weight="700" fill="#f0f6fc" text-anchor="middle">32</text>
+  <text x="160" y="242" font-family="system-ui,sans-serif" font-size="9" fill="#238636" text-anchor="middle">LOW RISK</text>
+  <!-- Status label below gauge -->
+  <circle cx="120" cy="264" r="3" fill="#238636"/>
+  <text x="128" y="268" font-family="system-ui,sans-serif" font-size="10" fill="#8b949e">Safe to apply</text>
+
+  <!-- Card 2: Job Fit Score -->
+  <rect x="280" y="142" width="200" height="130" rx="12" fill="#161b22" stroke="#21262d" stroke-width="1"/>
+  <text x="304" y="170" font-family="system-ui,sans-serif" font-size="11" fill="#8b949e" letter-spacing="1">JOB FIT SCORE</text>
+  <text x="380" y="230" font-family="system-ui,sans-serif" font-size="48" font-weight="700" fill="#FF9933" text-anchor="middle">4.2</text>
+  <text x="380" y="250" font-family="system-ui,sans-serif" font-size="14" fill="#8b949e" text-anchor="middle">/5 · Grade B</text>
+
+  <!-- Card 3: Archetype -->
+  <rect x="500" y="142" width="200" height="130" rx="12" fill="#161b22" stroke="#21262d" stroke-width="1"/>
+  <text x="524" y="170" font-family="system-ui,sans-serif" font-size="11" fill="#8b949e" letter-spacing="1">ARCHETYPE</text>
+  <text x="524" y="200" font-family="system-ui,sans-serif" font-size="16" font-weight="600" fill="#f0f6fc">AI/ML Engineer</text>
+  <text x="524" y="222" font-family="system-ui,sans-serif" font-size="12" fill="#8b949e">GCC · Hybrid · Senior</text>
+  <!-- Provider badge -->
+  <rect x="524" y="238" width="90" height="22" rx="6" fill="rgba(88,166,255,0.1)"/>
+  <text x="534" y="254" font-family="system-ui,sans-serif" font-size="11" fill="#58a6ff">🔵 Gemini Flash</text>
+
+  <!-- Card 4: Features strip -->
+  <rect x="720" y="142" width="200" height="130" rx="12" fill="#161b22" stroke="#21262d" stroke-width="1"/>
+  <text x="744" y="170" font-family="system-ui,sans-serif" font-size="11" fill="#8b949e" letter-spacing="1">ALSO INCLUDED</text>
+  <!-- Feature pills -->
+  <rect x="744" y="182" width="64" height="20" rx="4" fill="rgba(255,153,51,0.1)"/>
+  <text x="752" y="196" font-family="system-ui,sans-serif" font-size="10" fill="#FF9933">📄 CV Gen</text>
+  <rect x="816" y="182" width="80" height="20" rx="4" fill="rgba(255,153,51,0.1)"/>
+  <text x="824" y="196" font-family="system-ui,sans-serif" font-size="10" fill="#FF9933">🎤 Interview</text>
+  <rect x="744" y="210" width="72" height="20" rx="4" fill="rgba(88,166,255,0.1)"/>
+  <text x="752" y="224" font-family="system-ui,sans-serif" font-size="10" fill="#58a6ff">📊 Analytics</text>
+  <rect x="824" y="210" width="72" height="20" rx="4" fill="rgba(88,166,255,0.1)"/>
+  <text x="832" y="224" font-family="system-ui,sans-serif" font-size="10" fill="#58a6ff">📋 Tracker</text>
+  <rect x="744" y="238" width="56" height="20" rx="4" fill="rgba(35,134,54,0.1)"/>
+  <text x="752" y="252" font-family="system-ui,sans-serif" font-size="10" fill="#238636">🔒 PIN</text>
+  <rect x="808" y="238" width="52" height="20" rx="4" fill="rgba(35,134,54,0.1)"/>
+  <text x="816" y="252" font-family="system-ui,sans-serif" font-size="10" fill="#238636">📱 PWA</text>
+
+  <!-- Bottom tagline -->
+  <text x="60" y="302" font-family="system-ui,sans-serif" font-size="12" fill="#484f58">COI-App · Single HTML file · No build step · No dependencies · PIN-encrypted · Works offline</text>
+</svg>
