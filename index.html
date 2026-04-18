@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://esm.run https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://generativelanguage.googleapis.com https://raw.githubusercontent.com https://fonts.googleapis.com https://fonts.gstatic.com https://esm.run https://cdn.jsdelivr.net https://huggingface.co; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'; worker-src 'self' blob:;">
-<title>Career-Ops-India App — v7.5</title>
-<meta name="version" content="7.2">
+<title>Career-Ops-India App — v7.6</title>
+<meta name="version" content="7.6">
 <meta name="build" content="2026-04-12">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FF9933">
@@ -723,6 +723,7 @@ The more complete the JD, the better the evaluation."></textarea>
     <div class="score-grid" id="sgrid"></div>
     <div id="gls-hero-wrap"></div>
     <div id="takehome-wrap"></div>
+    <div id="ppo-wrap"></div>
     <div id="stipend-wrap"></div>
     <div class="ctrig mt" onclick="toggleC(this)">📄 See Full Report (A–G) <span class="carr">▼</span></div>
     <div class="cbody"><div id="rblocks"></div></div>
@@ -994,7 +995,7 @@ Skills and certifications"></textarea>
     <div class="made-with">
       <p>Made with Love and Innovation, driven by Intention, dedicated to the community.</p>
       <p style="margin-top:4px;">— <a href="https://www.linkedin.com/in/dhawalshrivastava" target="_blank">Dhawal Shrivastava</a></p>
-      <p style="margin-top:6px;font-size:11px;color:var(--text-3);font-family:var(--fm);">Career-Ops-India App v7.5</p>
+      <p style="margin-top:6px;font-size:11px;color:var(--text-3);font-family:var(--fm);">Career-Ops-India App v7.6</p>
     </div>
   </div>
 
@@ -1091,7 +1092,7 @@ Skills and certifications"></textarea>
   <span style="color:var(--border);">·</span>
   <span id="webgpu-badge-footer"></span>
   <span style="flex:1;"></span>
-  <span style="font-size:10px;color:var(--text-3);font-family:var(--fm);margin-right:8px;">v7.5</span>
+  <span style="font-size:10px;color:var(--text-3);font-family:var(--fm);margin-right:8px;">v7.6</span>
   <button onclick="openSyncModal()" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--text-3);font-family:var(--fm);padding:2px 6px;border-radius:var(--r-pill);border:1px solid var(--border);" id="sync-trigger-btn">⬇️ Sync</button>
 </div>
 
@@ -1494,7 +1495,22 @@ function parseEv(text,jd,pr){
   const ctcRaw=parseFloat((text.match(/CTC Range[^|]*\|\s*([0-9.]+)/i)||[])[1])||null;
   const co=(jd.match(/^([A-Z][A-Za-z\s&.,]{2,30}?)[\n|–\-]/m)||[])[1]?.trim()||'Company';
   const ro=(jd.match(/(?:role|position|title)[:\s]+([^\n]{5,50})/i)||[])[1]?.trim()||'Role';
-  return{id:crypto.randomUUID(),date:new Date().toISOString().split('T')[0],company:co,role:ro,score:sc,grade:gr,gls,glsA:ga,archetype:arch,workMode:wm,stage:st,source:src,signals,ctcRaw,notice:pr.notice,mode:pr.mode,status:'Evaluated',fullText:text,jd:jd.substring(0,400),profile:pr};
+  // PPO probability for intern mode — parse from AI text or compute deterministically
+  let ppo=null;
+  if(pr.mode==='intern'){
+    const ppoMatch=text.match(/PPO[^:]*:\s*([0-9]+)\s*%/i)||text.match(/PPO[^0-9]*([0-9]+)/i);
+    if(ppoMatch)ppo=Math.max(0,Math.min(100,parseInt(ppoMatch[1])));
+    else{
+      // Deterministic PPO estimate from score + GLS + company stage
+      let base=50;
+      if(sc>=4.5)base+=25;else if(sc>=4)base+=15;else if(sc>=3.5)base+=5;else base-=15;
+      if(gls!==null){if(gls<=25)base+=10;else if(gls>50)base-=15;}
+      if(st&&st.toLowerCase().includes('gcc'))base+=8;
+      if(st&&st.toLowerCase().includes('startup'))base-=5;
+      ppo=Math.max(5,Math.min(95,base));
+    }
+  }
+  return{id:crypto.randomUUID(),date:new Date().toISOString().split('T')[0],company:co,role:ro,score:sc,grade:gr,gls,glsA:ga,archetype:arch,workMode:wm,stage:st,source:src,signals,ctcRaw,notice:pr.notice,mode:pr.mode,status:'Evaluated',fullText:text,jd:jd.substring(0,400),profile:pr,ppo};
 }
 
 // ── CIRCULAR GLS GAUGE ──
@@ -1548,6 +1564,23 @@ function renderRes(ev){
 
   if(ev.mode!=='intern'&&ev.ctcRaw){document.getElementById('takehome-wrap').innerHTML=renderTakeHome(ev.ctcRaw);}
   else{document.getElementById('takehome-wrap').innerHTML='';}
+
+  // PPO probability card for intern mode
+  if(ev.mode==='intern'&&ev.ppo!==null){
+    const ppoColor=ev.ppo>=70?'var(--green)':ev.ppo>=45?'var(--amber)':'var(--red)';
+    const ppoLabel=ev.ppo>=70?'High — Strong PPO signal':ev.ppo>=45?'Moderate — Possible with strong performance':'Low — PPO unlikely based on signals';
+    document.getElementById('ppo-wrap').innerHTML=`
+      <div class="gls-hero" style="border-color:${ppoColor};">
+        <div class="gls-hero-inner">
+          <div class="gls-gauge-wrap">${glsGaugeSVG(ev.ppo,ppoColor).replace('/100','%')}</div>
+          <div class="gls-right">
+            <div class="gls-title">🎓 PPO Probability</div>
+            <div class="gls-assess" style="background:${ppoColor}22;border:1px solid ${ppoColor}44;color:${ppoColor};">${ppoLabel}</div>
+            <div class="gls-note">Based on job fit score, ghost risk, and company stage. Higher = better PPO chances.</div>
+          </div>
+        </div>
+      </div>`;
+  }else{document.getElementById('ppo-wrap').innerHTML='';}
 
   if(ev.mode==='intern'){
     const offered=parseInt((ev.profile?.stipend||'').replace(/[^0-9]/g,''))||null;
@@ -1720,19 +1753,34 @@ async function downloadCVDoc(cvText,company){
 // ── INTERVIEW PREP ──
 async function prepInterview(evId){
   const ev=S.evals.find(e=>e.id===evId);if(!ev)return;
+
+  // Check IDB cache first
+  try{const cached=await gRpt('prep-'+ev.id);if(cached&&cached.prepText){showPrepResult(ev,cached.prepText);return;}}catch(e){}
+
   const cv=localStorage.getItem('coi_cv')||'';
-  const key=await getDecryptedKey();
-  if(!key){showPIN('unlock');toast('Enter PIN to unlock','err');return;}
+  const isClaude=P.provider==='claude';
+  let key;
+  if(isClaude){
+    key=await getDecryptedKey();
+    if(!key){
+      if(localStorage.getItem('coi_key_enc')){showPIN('unlock');toast('Enter PIN to unlock','err');}
+      else{nav('profile');toast('Add your Claude API key in Profile first','err');}
+      return;
+    }
+  } else {
+    key=await getGeminiKey();
+    if(!key){nav('profile');toast('Add your Gemini API key in Profile first','err');return;}
+  }
 
   const mo=document.getElementById('prepmo');
-  document.getElementById('prep-content').innerHTML=`<div style="text-align:center;padding:40px 20px;"><div class="spin" style="margin:0 auto 14px;"></div><div style="font-size:13px;color:var(--text-2);">Preparing your interview kit...</div></div>`;
+  document.getElementById('prep-content').innerHTML=`<div style="text-align:center;padding:40px 20px;"><div class="spin" style="margin:0 auto 14px;"></div><div style="font-size:13px;color:var(--text-2);">Preparing your interview kit via ${isClaude?'Claude':'Gemini'}...</div></div>`;
   mo.classList.add('on');
 
   try{
     const prompt=`You are an expert interview coach for the Indian tech job market.
 
 CANDIDATE CV:
-${cv.substring(0,2000)}
+${cv.substring(0,6000)}
 
 JOB: ${ev.company} — ${ev.role}
 ARCHETYPE: ${ev.archetype}
@@ -1744,6 +1792,11 @@ Create a comprehensive interview prep kit. Use markdown with clear sections:
 ## 🎯 8 STAR+R Stories
 For each story: Situation, Task, Action, Result, Relevance to this role.
 Map each story to a specific JD requirement.
+
+## 🧠 Technical / Domain Questions
+8-10 likely technical or domain-specific questions based on the JD and archetype.
+For each: the question, why they ask it, a strong answer outline referencing the CV.
+Cover system design, ML concepts, coding, or domain knowledge as relevant.
 
 ## 💰 CTC Negotiation Script
 India-specific. Based on target CTC and company stage.
@@ -1761,23 +1814,41 @@ Questions that reveal company culture, notice period flexibility, role stability
 ## ✅ Day-Before Checklist
 Practical items: documents, portal links, STAR story review, video background check.`;
 
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:3000,messages:[{role:'user',content:prompt}]})});
-    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'API error');}
-    const data=await res.json();const prepText=data.content.map(b=>b.text||'').join('');
+    let prepText;
+    if(isClaude){
+      const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:3000,messages:[{role:'user',content:prompt}]})});
+      if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'Claude API error');}
+      const data=await res.json();prepText=data.content.map(b=>b.text||'').join('');
+    } else {
+      const modelId=GEMINI_MODELS[P.provider]||'gemini-2.5-flash';
+      const url=`https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent`;
+      const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':key},body:JSON.stringify({contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:3000,temperature:0.3,responseMimeType:'text/plain'}})});
+      if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`Gemini API error ${res.status}`);}
+      const data=await res.json();prepText=data.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('\n')||'';
+      if(!prepText)throw new Error('Empty response from Gemini — try again');
+    }
 
-    document.getElementById('prep-content').innerHTML=`
-      <div style="margin-bottom:14px;">
-        <div style="font-family:var(--fh);font-weight:600;font-size:15px;margin-bottom:4px;">Interview Prep — ${sanitize(ev.company)}</div>
-        <div style="font-size:12px;color:var(--text-2);">STAR stories, CTC negotiation, red flag questions, India-specific scenarios.</div>
-      </div>
-      <div style="display:flex;gap:8px;margin-bottom:14px;">
-        <button class="btn bp" onclick="dlPrep()">⬇️ Download</button>
-      </div>
-      <div class="rpt" style="background:var(--surface-2);border-radius:var(--r-md);padding:14px;max-height:500px;overflow-y:auto;">${mdown(prepText)}</div>`;
-    S.prepText=prepText;S.prepCompany=ev.company;
+    // Cache in IndexedDB
+    try{await sRpt('prep-'+ev.id,{prepText,company:ev.company});}catch(e){}
+
+    showPrepResult(ev,prepText);
   }catch(err){
     document.getElementById('prep-content').innerHTML=`<div class="api-locked"><div class="api-locked-icon">⚠️</div><div class="api-locked-title">Could not generate prep</div><div class="api-locked-sub">${sanitize(err.message)}</div></div>`;
   }
+}
+function showPrepResult(ev,prepText){
+  const mo=document.getElementById('prepmo');mo.classList.add('on');
+  document.getElementById('prep-content').innerHTML=`
+    <div style="margin-bottom:14px;">
+      <div style="font-family:var(--fh);font-weight:600;font-size:15px;margin-bottom:4px;">Interview Prep — ${sanitize(ev.company)}</div>
+      <div style="font-size:12px;color:var(--text-2);">STAR stories, technical questions, CTC negotiation, India-specific scenarios.</div>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:14px;">
+      <button class="btn bp" onclick="dlPrep()">⬇️ Download</button>
+      <button class="btn bs" onclick="copyPrep(this)">📋 Copy Markdown</button>
+    </div>
+    <div class="rpt" style="background:var(--surface-2);border-radius:var(--r-md);padding:14px;max-height:500px;overflow-y:auto;">${mdown(prepText)}</div>`;
+  S.prepText=prepText;S.prepCompany=ev.company;
 }
 
 function dlPrep(){
@@ -1785,6 +1856,9 @@ function dlPrep(){
   const c=`# Interview Prep: ${S.prepCompany||'Role'}\n\n${S.prepText}`;
   const u=URL.createObjectURL(new Blob([c],{type:'text/markdown'}));
   const a=document.createElement('a');a.href=u;a.download=`interview-prep-${(S.prepCompany||'role').toLowerCase().replace(/\s+/g,'-')}.md`;a.click();URL.revokeObjectURL(u);toast('Downloaded','ok');
+}
+function copyPrep(btn){
+  if(S.prepText){navigator.clipboard.writeText(S.prepText).then(()=>{btn.textContent='✓ Copied';setTimeout(()=>btn.textContent='📋 Copy Markdown',2000);}).catch(()=>toast('Could not copy','err'));}
 }
 
 // ── TRACKER ──
@@ -2787,6 +2861,9 @@ async function init(){
   }
 
   if(localStorage.getItem('coi_key_enc')&&!S.sessionKey)showPIN('unlock');
+
+  // Register service worker for offline PWA
+  if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
 }
 init();
 </script>

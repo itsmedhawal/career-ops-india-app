@@ -1,0 +1,28 @@
+{
+  "name": "career-ops-india-app",
+  "version": "1.0.0",
+  "description": "<img width=\"2816\" height=\"1536\" alt=\"Gemini_Generated_for-COI-App-by-Dhawal\" src=\"https://github.com/user-attachments/assets/c6f79a14-36b9-40ee-805c-1b0e97749c85\" />",
+  "main": "check.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "jest --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itsmedhawal/career-ops-india-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/itsmedhawal/career-ops-india-app/issues"
+  },
+  "homepage": "https://github.com/itsmedhawal/career-ops-india-app#readme",
+  "devDependencies": {
+    "jest": "^30.3.0",
+    "jsdom": "^29.0.2"
+  }
+}

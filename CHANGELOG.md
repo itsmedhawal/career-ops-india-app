@@ -6,6 +6,25 @@ Format: `[Version] — Date — Summary`
 
 ---
 
+## [v7.6] — 2026-04-19 — Offline PWA, PPO Probability & Interview Prep Overhaul
+
+### Added
+- **Offline-first PWA** — added `sw.js` service worker that pre-caches the app shell (HTML, manifest, worker, fonts) on first visit. Tracker, Analytics, and Profile now work without internet. API calls still require connectivity, everything else works offline.
+- **PPO Probability gauge (intern mode)** — new circular gauge card showing estimated PPO chances, displayed between the take-home calculator and stipend chart. Tries to pick up a PPO percentage from the AI evaluation text first; if the AI didn't mention one, computes a deterministic estimate based on job fit score, ghost likelihood, and company stage (GCC gets a boost, startups get a slight penalty). Clamped between 5–95% with a High / Moderate / Low label.
+- **Interview prep caching** — generated interview kits are now saved in IndexedDB. Clicking "Interview Prep" a second time for the same evaluation loads instantly from cache instead of burning another API call.
+- **Copy Markdown button** — the interview prep modal now has a 📋 Copy Markdown button alongside Download, so you can paste your prep kit straight into Notion, Obsidian, or a notes app.
+- **Technical / Domain Questions section** — the interview prep prompt now asks the AI for 8–10 role-specific technical questions (system design, ML, coding, etc.) with "why they ask it" context and answer outlines drawn from your CV.
+
+### Changed
+- **Interview prep works with Gemini** — previously hardcoded to Claude only; now respects the active provider toggle and falls back correctly if a key isn't set.
+- **CV context tripled** — interview prep now sends the first 6,000 characters of your CV (up from 2,000), giving the AI much richer material for STAR stories and technical question mapping.
+- **Prep modal refactored** — extracted a `showPrepResult()` helper so both fresh generations and cached loads render through the same path.
+
+### Fixed
+- **Version meta tag out of sync** — `<meta name="version">` was still showing 7.2 while the title said v7.5; now both read v7.6.
+
+---
+
 ## [v7.5] — 2026-04-12 — Extract from CV UX Fix
 
 ### Fixed

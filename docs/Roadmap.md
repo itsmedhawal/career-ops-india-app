@@ -6,7 +6,7 @@ This document reflects current thinking on where Career-Ops-India App is heading
 
 ## Where We Are
 
-**v7.1 (Current)** — Hybrid Multimodal Command Center
+**v7.5 (Current)** — Hybrid Multimodal Command Center
 
 - ⚡ Fast Scan — local Gemma 2 2B GLS via WebGPU, offline
 - 🔍 Deep Eval — Claude Sonnet or Gemini 2.5 Flash/Pro
