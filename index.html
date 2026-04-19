@@ -4,10 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://esm.run https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://generativelanguage.googleapis.com https://raw.githubusercontent.com https://fonts.googleapis.com https://fonts.gstatic.com https://esm.run https://cdn.jsdelivr.net https://huggingface.co; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'; worker-src 'self' blob:;">
-<title>Career-Ops-India App — v8.0</title>
-<meta name="version" content="8.0">
+<title>COI-App</title>
+<meta name="version" content="8.1">
 <meta name="build" content="2026-04-19">
 <link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3CclipPath id='fi'%3E%3Ccircle cx='16' cy='16' r='15'/%3E%3C/clipPath%3E%3Ccircle cx='16' cy='16' r='16' fill='%230d1117'/%3E%3Cg clip-path='url(%23fi)'%3E%3Crect x='1' y='1' width='30' height='10' fill='%23FF9933'/%3E%3Crect x='1' y='11' width='30' height='10' fill='%23fff'/%3E%3Crect x='1' y='21' width='30' height='10' fill='%23138808'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='3' fill='none' stroke='%23000080' stroke-width='.7'/%3E%3Ccircle cx='16' cy='16' r='15' fill='none' stroke='%2321262d' stroke-width='1'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Crect width='180' height='180' rx='36' fill='%230d1117'/%3E%3CclipPath id='fa'%3E%3Ccircle cx='90' cy='90' r='68'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23fa)'%3E%3Crect x='22' y='22' width='136' height='46' fill='%23FF9933'/%3E%3Crect x='22' y='68' width='136' height='44' fill='%23fff'/%3E%3Crect x='22' y='112' width='136' height='46' fill='%23138808'/%3E%3C/g%3E%3Ccircle cx='90' cy='90' r='10' fill='none' stroke='%23000080' stroke-width='2'/%3E%3Ccircle cx='90' cy='90' r='68' fill='none' stroke='%2321262d' stroke-width='2'/%3E%3C/svg%3E">
 <meta name="theme-color" content="#FF9933">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -54,7 +56,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;background-ima
 /* HEADER */
 .hdr{position:sticky;top:0;z-index:100;background:rgba(13,17,23,.78);border-bottom:1px solid rgba(48,54,61,.72);height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 16px;backdrop-filter:blur(18px);}
 .logo{font-family:var(--fh);font-weight:700;font-size:16px;color:var(--text-1);text-decoration:none;display:flex;align-items:center;gap:8px;letter-spacing:-.3px;}
-.logo-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--saffron),#e67e00);box-shadow:0 0 8px rgba(255,153,51,.5);}
+.logo-dot{width:18px;height:18px;flex-shrink:0;}
 .logo em{font-style:normal;color:var(--saffron);}
 .hdr-r{display:flex;align-items:center;gap:8px;}
 .theme-btn{background:linear-gradient(180deg,var(--surface),var(--surface-2));border:1px solid var(--border);border-radius:var(--r-pill);padding:5px 12px;font-size:13px;font-family:var(--fb);color:var(--text-2);cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s;}
@@ -171,23 +173,19 @@ textarea,input,select{background:linear-gradient(180deg,var(--surface),var(--sur
 @keyframes fadeInOut{0%{opacity:0;transform:translateX(-50%) translateY(-4px);}15%{opacity:1;transform:translateX(-50%) translateY(0);}80%{opacity:1;}100%{opacity:0;}}
 
 /* ONBOARDING */
-.onb{position:fixed;inset:0;z-index:500;background:var(--bg);display:flex;flex-direction:column;}
+.onb{position:fixed;inset:0;z-index:500;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;}
 .onb.gone{display:none;}
-.onb-slides{flex:1;overflow:hidden;position:relative;}
-.onb-slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center;transition:transform .4s ease,opacity .4s ease;}
-.onb-slide.prev{transform:translateX(-100%);opacity:0;}
-.onb-slide.active{transform:translateX(0);opacity:1;}
-.onb-slide.next{transform:translateX(100%);opacity:0;}
-.onb-icon{font-size:64px;margin-bottom:24px;}
-.onb-title{font-family:var(--fh);font-size:clamp(22px,5vw,30px);font-weight:700;margin-bottom:12px;line-height:1.2;}
+.onb-body{display:flex;flex-direction:column;align-items:center;text-align:center;padding:32px 24px;max-width:400px;width:100%;}
+.onb-icon{font-size:52px;margin-bottom:16px;}
+.onb-title{font-family:var(--fh);font-size:clamp(22px,5vw,28px);font-weight:700;margin-bottom:8px;line-height:1.2;}
 .onb-title em{font-style:normal;color:var(--saffron);}
-.onb-sub{font-size:15px;color:var(--text-2);max-width:320px;line-height:1.6;}
-.onb-footer{padding:20px 24px max(24px,env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px;align-items:center;}
-.onb-dots{display:flex;gap:7px;}
-.onb-dot{width:7px;height:7px;border-radius:50%;background:var(--border);transition:all .3s;}
-.onb-dot.on{background:var(--saffron);width:20px;border-radius:4px;}
-.onb-actions{display:flex;gap:10px;width:100%;max-width:340px;}
-.onb-skip{font-family:var(--fb);font-size:13px;color:var(--text-3);background:none;border:none;cursor:pointer;padding:8px;}
+.onb-sub{font-size:14px;color:var(--text-2);max-width:320px;line-height:1.5;margin-bottom:20px;}
+.onb-features{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-bottom:24px;}
+.onb-feat{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:10px 12px;font-size:13px;color:var(--text-1);text-align:left;}
+.onb-feat span:first-child{font-size:20px;flex-shrink:0;}
+.onb-footer{display:flex;flex-direction:column;gap:10px;width:100%;max-width:340px;align-items:center;}
+.onb-footer .btn{width:100%;}
+.onb-sample{font-family:var(--fb);font-size:13px;color:var(--saffron);background:none;border:none;cursor:pointer;padding:6px;text-decoration:underline;}
 
 /* PWA BANNER */
 .pwa-banner{display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:12px 14px;margin-bottom:16px;align-items:center;gap:12px;}
@@ -585,30 +583,20 @@ textarea,input,select{background:linear-gradient(180deg,var(--surface),var(--sur
 
 <!-- ONBOARDING -->
 <div class="onb" id="onb">
-  <div class="onb-slides">
-    <div class="onb-slide active" id="os0">
-      <div class="onb-icon">🎯</div>
-      <h1 class="onb-title">Found a job?<br>Know if it's worth your<br><em>time in 60 seconds.</em></h1>
-      <p class="onb-sub">Career-Ops-India App evaluates any job against your profile — score, grade, and ghost likelihood. Built for the Indian job market.</p>
+  <div class="onb-body">
+    <div class="onb-icon">🎯</div>
+    <p class="onb-sub" style="margin-bottom:8px;color:var(--text-2);">Tired of applying blind with no clarity on what you're getting into?</p>
+    <h1 class="onb-title">Is this job worth<br><em>your time?</em></h1>
+    <p class="onb-sub">Paste a job description, get a fit score, ghost risk, take-home salary and a full report — in 60 seconds.</p>
+    <div class="onb-features">
+      <div class="onb-feat"><span>👻</span><span>Ghost<br>Detection</span></div>
+      <div class="onb-feat"><span>💰</span><span>Salary<br>Calculator</span></div>
+      <div class="onb-feat"><span>📄</span><span>Tailored<br>CV</span></div>
+      <div class="onb-feat"><span>🔐</span><span>100%<br>Private</span></div>
     </div>
-    <div class="onb-slide next" id="os1">
-      <div class="onb-icon">📄</div>
-      <h1 class="onb-title">Paste your CV once.<br><em>We handle the rest.</em></h1>
-      <p class="onb-sub">We extract your details automatically — CTC target, city, work mode, notice period. Review and tweak. Done in 30 seconds.</p>
-    </div>
-    <div class="onb-slide next" id="os2">
-      <div class="onb-icon">🔐</div>
-      <h1 class="onb-title">Your data stays<br><em>on your device.</em></h1>
-      <p class="onb-sub">Your API keys are encrypted with a PIN you set. Nothing is sent to any server except your direct calls to Anthropic or Google.</p>
-    </div>
-  </div>
-  <div class="onb-footer">
-    <div class="onb-dots">
-      <div class="onb-dot on" id="od0"></div><div class="onb-dot" id="od1"></div><div class="onb-dot" id="od2"></div>
-    </div>
-    <div class="onb-actions">
-      <button class="onb-skip" onclick="skipOnb()">Skip</button>
-      <button class="btn bp bw bl" id="onb-next" onclick="nextOnb()">Get Started →</button>
+    <div class="onb-footer">
+      <button class="btn bp bw bl" onclick="skipOnb()">Get Started →</button>
+      <button class="onb-sample" onclick="skipOnb();viewSampleReport();">or see a Sample Report first</button>
     </div>
   </div>
 </div>
@@ -616,7 +604,7 @@ textarea,input,select{background:linear-gradient(180deg,var(--surface),var(--sur
 <!-- HEADER -->
 <header class="hdr">
   <a class="logo" href="#" onclick="nav('evaluate');return false;">
-    <span class="logo-dot"></span>Career-Ops-<em>India</em> App
+    <svg class="logo-dot" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><clipPath id="ld"><circle cx="9" cy="9" r="9"/></clipPath><g clip-path="url(#ld)"><rect y="0" width="18" height="6" fill="#FF9933"/><rect y="6" width="18" height="6" fill="#fff"/><rect y="12" width="18" height="6" fill="#138808"/></g><circle cx="9" cy="9" r="2" fill="none" stroke="#000080" stroke-width=".6"/><circle cx="9" cy="9" r="9" fill="none" stroke="#21262d" stroke-width=".8"/></svg>COI-App
   </a>
   <div class="hdr-r">
     <button class="ico-btn" onclick="lockApp()" title="Lock" id="lock-btn" style="display:none;">🔒</button>
@@ -646,25 +634,31 @@ textarea,input,select{background:linear-gradient(180deg,var(--surface),var(--sur
   </div>
 
   <div class="eval-hero">
-    <h1>Found a job?<br><em>Let's see if it's worth your time.</em></h1>
-    <p style="margin-top:8px;font-size:14px;">Paste the JD below and hit Evaluate. Takes about 30 seconds.</p>
+    <p style="font-size:13px;color:var(--text-2);margin:0 0 6px;line-height:1.5;">Tired of applying blind with no clarity on what you're getting into?</p>
+    <h1>Is this job worth<br><em>your time?</em></h1>
+    <p style="margin-top:8px;font-size:14px;">Paste a job description → get a fit score, ghost risk, take-home salary & a full report. 60 seconds. Free.</p>
     <div class="hero-metrics">
-      <span class="hero-chip">GLS in seconds</span>
-      <span class="hero-chip">India-first scoring</span>
-      <span class="hero-chip">Privacy local-first</span>
+      <span class="hero-chip">� Full job report</span>
+      <span class="hero-chip">🎯 Get a fit score</span>
+      <span class="hero-chip">🔐 100% private</span>
     </div>
   </div>
 
-  <!-- API not configured state -->
+  <!-- API not configured — inline key setup -->
   <div id="no-api-banner" style="display:none;" class="card" style="border-color:var(--amber);">
-    <div style="display:flex;align-items:center;gap:12px;">
-      <span style="font-size:24px;">🔑</span>
-      <div style="flex:1;">
-        <div style="font-family:var(--fh);font-weight:600;font-size:14px;margin-bottom:2px;">API key needed to evaluate</div>
-        <div style="font-size:12px;color:var(--text-2);">Add a Claude or Gemini API key in Profile. The Tracker and Analytics tabs work without it.</div>
+    <div style="font-family:var(--fh);font-weight:600;font-size:15px;margin-bottom:6px;">🔑 Add an API key to evaluate</div>
+    <p style="font-size:12px;color:var(--text-2);margin-bottom:12px;line-height:1.5;">Gemini is free (15 req/min, no billing). Or use Claude for deeper analysis. You need at least one.</p>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;gap:8px;align-items:center;">
+        <input type="password" id="inline-gemini-key" placeholder="Gemini key — AIza..." autocomplete="off" style="flex:1;font-size:13px;padding:8px 10px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--text-1);">
+        <button class="btn bp" style="font-size:12px;padding:7px 14px;flex-shrink:0;" onclick="inlineSaveKey()">Save</button>
       </div>
-      <button class="btn bs" style="font-size:12px;padding:6px 12px;flex-shrink:0;" onclick="nav('profile')">Go →</button>
+      <div style="display:flex;gap:12px;font-size:11px;">
+        <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:var(--green);">✨ Get free Gemini key →</a>
+        <a href="https://console.anthropic.com/settings/keys" target="_blank" style="color:var(--text-3);">or get Claude key →</a>
+      </div>
     </div>
+    <div style="margin-top:8px;font-size:11px;color:var(--text-3);">🔒 Key is encrypted with your PIN and never leaves your browser.</div>
   </div>
 
   <div class="mtog">
@@ -733,9 +727,9 @@ The more complete the JD, the better the evaluation."></textarea>
 
   <div class="empty" id="eval-empty" style="padding-top:24px;">
     <div class="ei">👆</div>
-    <div class="et">Paste a JD above</div>
-    <div class="ed">Score, grade, ghost risk and full report appear here.</div>
-    <button class="btn bp" onclick="viewSampleReport()" style="margin-top:16px;">📋 View Sample Report</button>
+    <div class="et">Paste a job description above</div>
+    <div class="ed">You'll get a score, grade, ghost risk, salary estimate & full report — in under a minute.</div>
+    <button class="btn bp" onclick="viewSampleReport()" style="margin-top:16px;">📋 See what you'll get</button>
   </div>
 
   <div id="eval-results" style="display:none;margin-top:20px;">
@@ -1023,7 +1017,7 @@ Skills and certifications"></textarea>
     <div class="made-with">
       <p>Made with Love and Innovation, driven by Intention, dedicated to the community.</p>
       <p style="margin-top:4px;">— <a href="https://www.linkedin.com/in/dhawalshrivastava" target="_blank">Dhawal Shrivastava</a></p>
-      <p style="margin-top:6px;font-size:11px;color:var(--text-3);font-family:var(--fm);">Career-Ops-India App v8.0</p>
+      <p style="margin-top:6px;font-size:11px;color:var(--text-3);font-family:var(--fm);">Career-Ops-India App v8.1</p>
     </div>
   </div>
 
@@ -1120,7 +1114,7 @@ Skills and certifications"></textarea>
   <span style="color:var(--border);">·</span>
   <span id="webgpu-badge-footer"></span>
   <span style="flex:1;"></span>
-  <span style="font-size:10px;color:var(--text-3);font-family:var(--fm);margin-right:8px;">v8.0</span>
+  <span style="font-size:10px;color:var(--text-3);font-family:var(--fm);margin-right:8px;">v8.1</span>
   <button onclick="openSyncModal()" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--text-3);font-family:var(--fm);padding:2px 6px;border-radius:var(--r-pill);border:1px solid var(--border);" id="sync-trigger-btn">⬇️ Sync</button>
 </div>
 
@@ -1275,7 +1269,6 @@ function mdown(t){
 }
 
 // ── ONBOARDING ──
-function nextOnb(){const steps=3;if(S.onbStep<steps-1){document.getElementById('os'+S.onbStep).className='onb-slide prev';document.getElementById('od'+S.onbStep).className='onb-dot';S.onbStep++;document.getElementById('os'+S.onbStep).className='onb-slide active';document.getElementById('od'+S.onbStep).className='onb-dot on';if(S.onbStep===steps-1)document.getElementById('onb-next').textContent='Start Evaluating 🚀';}else{skipOnb();}}
 function skipOnb(){document.getElementById('onb').classList.add('gone');localStorage.setItem('coi_onb','1');}
 (()=>{if(localStorage.getItem('coi_onb'))document.getElementById('onb').classList.add('gone');})();
 
@@ -1701,7 +1694,7 @@ function dlReport(){
 }
 function shareWhatsApp(){
   if(!S.eval)return;const ev=S.eval;
-  const msg=`I evaluated *${ev.company}* for *${ev.role}*\n\n📊 Score: ${ev.score?.toFixed(1)||'--'}/5 (${ev.grade})\n👻 Ghost Likelihood: ${ev.gls}/100 ${ev.gls<=25?'🟢':ev.gls<=50?'🟡':ev.gls<=75?'🟠':'🔴'}\n\n${ev.glsA}\n\nEvaluated on Career-Ops-India App v8.0`;
+  const msg=`I evaluated *${ev.company}* for *${ev.role}*\n\n📊 Score: ${ev.score?.toFixed(1)||'--'}/5 (${ev.grade})\n👻 Ghost Likelihood: ${ev.gls}/100 ${ev.gls<=25?'🟢':ev.gls<=50?'🟡':ev.gls<=75?'🟠':'🔴'}\n\n${ev.glsA}\n\nEvaluated on Career-Ops-India App v8.1`;
   const encoded=encodeURIComponent(msg);
   window.open(`https://wa.me/?text=${encoded}`,'_blank');
   toast('Opening WhatsApp...','ok');
@@ -2378,6 +2371,20 @@ async function saveGeminiKey(){
   localStorage.setItem('coi_gemini_enc',blob);
   document.getElementById('gemini-ak-ok').style.display='flex';
   toast('Gemini key encrypted ✓','ok');
+}
+async function inlineSaveKey(){
+  const inp=document.getElementById('inline-gemini-key');
+  const key=inp.value.trim();
+  if(!key){toast('Paste your API key first','err');return;}
+  if(key.startsWith('AIza')){
+    document.getElementById('gemini-key').value=key;
+    await saveGeminiKey();
+  }else if(key.startsWith('sk-ant-')){
+    document.getElementById('api-key').value=key;
+    await saveApiKey();
+  }else{toast('Key should start with AIza... (Gemini) or sk-ant-... (Claude)','err');return;}
+  inp.value='';
+  checkApiState();
 }
 async function getGeminiKey(){
   if(S.sessionKey){

@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" width="1200" height="627">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#161b22"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="15%" cy="20%">
+      <stop offset="0%" stop-color="#FF9933" stop-opacity="0.12"/>
+      <stop offset="60%" stop-color="#FF9933" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="85%" cy="80%">
+      <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.08"/>
+      <stop offset="60%" stop-color="#58a6ff" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="flagClip"><circle cx="80" cy="88" r="14"/></clipPath>
+  </defs>
+
+  <rect width="1200" height="627" fill="url(#bg)"/>
+  <rect width="1200" height="627" fill="url(#glow1)"/>
+  <rect width="1200" height="627" fill="url(#glow2)"/>
+
+  <rect x="0" y="0" width="1200" height="3" fill="#FF9933"/>
+
+  <!-- Indian flag circle -->
+  <g clip-path="url(#flagClip)">
+    <rect x="66" y="74" width="28" height="10" fill="#FF9933"/>
+    <rect x="66" y="84" width="28" height="9" fill="#fff"/>
+    <rect x="66" y="93" width="28" height="10" fill="#138808"/>
+  </g>
+  <circle cx="80" cy="88" r="14" fill="none" stroke="#21262d" stroke-width="1"/>
+  <circle cx="80" cy="88.5" r="2.5" fill="#000080"/>
+
+  <text x="106" y="96" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="32" font-weight="800" fill="#f0f6fc" letter-spacing="-1">COI-App</text>
+
+  <text x="68" y="150" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="26" font-weight="700" fill="#f0f6fc">Score any job in 60 seconds.</text>
+  <text x="68" y="185" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="26" font-weight="700" fill="#f0f6fc">Free. Private. On your phone.</text>
+
+  <!-- Feature pills: Capabilities -->
+  <rect x="68" y="210" width="120" height="24" rx="5" fill="rgba(255,153,51,0.12)"/>
+  <text x="79" y="227" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#FF9933">👻 Ghost Detection</text>
+  <rect x="196" y="210" width="96" height="24" rx="5" fill="rgba(255,153,51,0.12)"/>
+  <text x="207" y="227" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#FF9933">💰 Salary Calc</text>
+  <rect x="300" y="210" width="94" height="24" rx="5" fill="rgba(255,153,51,0.12)"/>
+  <text x="311" y="227" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#FF9933">📄 Tailored CV</text>
+  <rect x="402" y="210" width="110" height="24" rx="5" fill="rgba(255,153,51,0.12)"/>
+  <text x="413" y="227" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#FF9933">🎯 Interview Prep</text>
+
+  <!-- Privacy pills -->
+  <rect x="68" y="242" width="78" height="24" rx="5" fill="rgba(35,134,54,0.10)"/>
+  <text x="79" y="259" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#238636">🔒 No Login</text>
+  <rect x="154" y="242" width="86" height="24" rx="5" fill="rgba(35,134,54,0.10)"/>
+  <text x="165" y="259" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#238636">🚫 No Server</text>
+  <rect x="248" y="242" width="78" height="24" rx="5" fill="rgba(35,134,54,0.10)"/>
+  <text x="259" y="259" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#238636">🛡️ No Data</text>
+  <rect x="334" y="242" width="108" height="24" rx="5" fill="rgba(35,134,54,0.10)"/>
+  <text x="345" y="259" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#238636">🌐 Browser-only</text>
+
+  <!-- Tagline -->
+  <text x="68" y="335" font-family="system-ui,sans-serif" font-size="12" fill="#8b949e" font-style="italic">Made with Love and Innovation, driven by Intention,</text>
+  <text x="68" y="352" font-family="system-ui,sans-serif" font-size="12" fill="#8b949e" font-style="italic">dedicated to the Community 💜</text>
+
+  <!-- CTA Button -->
+  <rect x="68" y="375" width="180" height="40" rx="20" fill="#FF9933"/>
+  <text x="102" y="401" font-family="system-ui,sans-serif" font-size="15" font-weight="700" fill="#0d1117">Try it free  →</text>
+
+  <!-- URL -->
+  <text x="68" y="442" font-family="system-ui,sans-serif" font-size="12" fill="#58a6ff">itsmedhawal.github.io/career-ops-india-app</text>
+
+  <!-- Phone mockup -->
+  <rect x="598" y="68" width="220" height="440" rx="28" fill="#000" opacity="0.15"/>
+  <rect x="593" y="63" width="220" height="440" rx="26" fill="#1c1c1e" stroke="#3a3a3c" stroke-width="1.5"/>
+  <rect x="602" y="86" width="202" height="396" rx="18" fill="#0d1117"/>
+  <rect x="682" y="70" width="42" height="13" rx="6" fill="#1c1c1e"/>
+  <rect x="670" y="490" width="66" height="4" rx="2" fill="#3a3a3c"/>
+
+  <!-- Screen: status bar -->
+  <text x="616" y="108" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#f0f6fc">9:41</text>
+  <text x="792" y="108" font-family="system-ui,sans-serif" font-size="9" fill="#f0f6fc" text-anchor="end">🔋</text>
+
+  <!-- Screen: Sample Report badge -->
+  <rect x="616" y="118" width="104" height="20" rx="10" fill="rgba(255,153,51,0.15)"/>
+  <text x="630" y="132" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#FF9933">📋 SAMPLE REPORT</text>
+
+  <!-- Screen: Company -->
+  <text x="616" y="162" font-family="system-ui,sans-serif" font-size="15" font-weight="700" fill="#f0f6fc">TechCorp AI</text>
+  <text x="616" y="178" font-family="system-ui,sans-serif" font-size="10" fill="#8b949e">Senior AI/ML Engineer · Bangalore</text>
+
+  <line x1="616" y1="190" x2="790" y2="190" stroke="#21262d" stroke-width="1"/>
+
+  <!-- Screen: Job Fit -->
+  <text x="616" y="210" font-family="system-ui,sans-serif" font-size="9" fill="#8b949e" letter-spacing="1">JOB FIT</text>
+  <text x="616" y="246" font-family="system-ui,sans-serif" font-size="36" font-weight="800" fill="#FF9933">4.2</text>
+  <text x="682" y="246" font-family="system-ui,sans-serif" font-size="14" fill="#8b949e">/5</text>
+  <rect x="718" y="230" width="50" height="20" rx="5" fill="rgba(31,111,235,0.15)"/>
+  <text x="728" y="244" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#1f6feb">Grade B</text>
+
+  <!-- Screen: GLS -->
+  <text x="616" y="272" font-family="system-ui,sans-serif" font-size="9" fill="#8b949e" letter-spacing="1">GHOST LIKELIHOOD</text>
+  <rect x="616" y="280" width="160" height="7" rx="3" fill="#21262d"/>
+  <rect x="616" y="280" width="52" height="7" rx="3" fill="#238636"/>
+  <text x="616" y="302" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#238636">32/100</text>
+  <text x="674" y="302" font-family="system-ui,sans-serif" font-size="10" fill="#8b949e">Low Risk ✓</text>
+
+  <!-- Screen: Archetype -->
+  <text x="616" y="326" font-family="system-ui,sans-serif" font-size="9" fill="#8b949e" letter-spacing="1">ARCHETYPE</text>
+  <rect x="616" y="334" width="140" height="20" rx="5" fill="rgba(240,246,252,0.06)"/>
+  <text x="626" y="348" font-family="system-ui,sans-serif" font-size="10" font-weight="600" fill="#f0f6fc">🏢 GCC · Hybrid · Senior</text>
+
+  <!-- Screen: Take-home -->
+  <text x="616" y="376" font-family="system-ui,sans-serif" font-size="9" fill="#8b949e" letter-spacing="1">TAKE-HOME (EST.)</text>
+  <text x="616" y="396" font-family="system-ui,sans-serif" font-size="14" font-weight="700" fill="#f0f6fc">₹1,42,500</text>
+  <text x="710" y="396" font-family="system-ui,sans-serif" font-size="10" fill="#8b949e">/mo from ₹24L</text>
+
+  <!-- Screen: Provider -->
+  <rect x="616" y="410" width="96" height="18" rx="5" fill="rgba(88,166,255,0.1)"/>
+  <text x="626" y="423" font-family="system-ui,sans-serif" font-size="9" fill="#58a6ff">🔵 Gemini 2.5 Flash</text>
+
+  <!-- Footer -->
+  <text x="68" y="500" font-family="system-ui,sans-serif" font-size="11" fill="#484f58">Privacy-first PWA · Free · No dependencies · MIT Licensed · Open Source</text>
+</svg>

@@ -81,5 +81,5 @@
   <text x="816" y="252" font-family="system-ui,sans-serif" font-size="10" fill="#238636">📱 PWA</text>
 
   <!-- Bottom tagline -->
-  <text x="60" y="302" font-family="system-ui,sans-serif" font-size="12" fill="#484f58">COI-App · Single HTML file · No build step · No dependencies · PIN-encrypted · Works offline</text>
+  <text x="60" y="302" font-family="system-ui,sans-serif" font-size="12" fill="#484f58">COI-App · Privacy-first PWA · Free · No dependencies · PIN-encrypted · Works offline</text>
 </svg>

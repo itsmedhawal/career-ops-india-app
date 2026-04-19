@@ -11,16 +11,22 @@
   "categories": ["productivity", "utilities"],
   "icons": [
     {
-      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgcng9IjM4IiBmaWxsPSIjMGQxMTE3Ii8+PGNpcmNsZSBjeD0iNzIiIGN5PSI4OCIgcj0iMjQiIGZpbGw9InVybCgjZzEpIi8+PHRleHQgeD0iMTA0IiB5PSI5OCIgZm9udC1mYW1pbHk9IidTcGFjZSBHcm90ZXNrJyxzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iNzAwIiBmb250LXNpemU9IjM2IiBmaWxsPSIjZjBmNmZjIj5DT0k8L3RleHQ+PHRleHQgeD0iOTYiIHk9IjEzMCIgZm9udC1mYW1pbHk9IidETSBTYW5zJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmaWxsPSIjRkY5OTMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5BcHA8L3RleHQ+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnMSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI0ZGOTkzMyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U2N2UwMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjwvc3ZnPg==",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192'%3E%3Crect width='192' height='192' rx='38' fill='%230d1117'/%3E%3CclipPath id='f'%3E%3Ccircle cx='72' cy='80' r='24'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23f)'%3E%3Crect x='48' y='56' width='48' height='16' fill='%23FF9933'/%3E%3Crect x='48' y='72' width='48' height='16' fill='%23fff'/%3E%3Crect x='48' y='88' width='48' height='16' fill='%23138808'/%3E%3C/g%3E%3Ccircle cx='72' cy='80' r='24' fill='none' stroke='%2321262d' stroke-width='1.5'/%3E%3Ccircle cx='72' cy='80' r='4' fill='none' stroke='%23000080' stroke-width='1'/%3E%3Ctext x='104' y='90' font-family='sans-serif' font-weight='700' font-size='36' fill='%23f0f6fc'%3ECOI%3C/text%3E%3Ctext x='96' y='122' font-family='sans-serif' font-size='18' fill='%23FF9933' text-anchor='middle'%3EApp%3C/text%3E%3C/svg%3E",
       "sizes": "192x192",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjEwMiIgZmlsbD0iIzBkMTExNyIvPjxjaXJjbGUgY3g9IjE5MiIgY3k9IjIzMiIgcj0iNjQiIGZpbGw9InVybCgjZzIpIi8+PHRleHQgeD0iMjc2IiB5PSI2MCIgZm9udC1mYW1pbHk9IidTcGFjZSBHcm90ZXNrJyxzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iNzAwIiBmb250LXNpemU9Ijk2IiBmaWxsPSIjZjBmNmZjIj5DT0k8L3RleHQ+PHRleHQgeD0iMjU2IiB5PSIzNDgiIGZvbnQtZmFtaWx5PSInRE0gU2FucycsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDgiIGZpbGw9IiNGRjk5MzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkFwcDwvdGV4dD48dGV4dCB4PSIyNTYiIHk9IjQyMCIgZm9udC1mYW1pbHk9IidETSBTYW5zJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjI4IiBmaWxsPSIjOGI5NDllIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5jYXJlZXItb3BzLWluZGlhPC90ZXh0PjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZzIiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNGRjk5MzMiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlNjdlMDAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48L3N2Zz4=",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192'%3E%3Crect width='192' height='192' rx='38' fill='%230d1117'/%3E%3CclipPath id='fm'%3E%3Ccircle cx='96' cy='96' r='72'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23fm)'%3E%3Crect x='24' y='24' width='144' height='48' fill='%23FF9933'/%3E%3Crect x='24' y='72' width='144' height='48' fill='%23fff'/%3E%3Crect x='24' y='120' width='144' height='48' fill='%23138808'/%3E%3C/g%3E%3Ccircle cx='96' cy='96' r='10' fill='none' stroke='%23000080' stroke-width='2'/%3E%3Ccircle cx='96' cy='96' r='72' fill='none' stroke='%2321262d' stroke-width='2'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Crect width='512' height='512' rx='102' fill='%230d1117'/%3E%3CclipPath id='f5'%3E%3Ccircle cx='180' cy='220' r='64'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23f5)'%3E%3Crect x='116' y='156' width='128' height='43' fill='%23FF9933'/%3E%3Crect x='116' y='199' width='128' height='42' fill='%23fff'/%3E%3Crect x='116' y='241' width='128' height='43' fill='%23138808'/%3E%3C/g%3E%3Ccircle cx='180' cy='220' r='64' fill='none' stroke='%2321262d' stroke-width='2'/%3E%3Ccircle cx='180' cy='220' r='10' fill='none' stroke='%23000080' stroke-width='2'/%3E%3Ctext x='276' y='240' font-family='sans-serif' font-weight='700' font-size='96' fill='%23f0f6fc'%3ECOI%3C/text%3E%3Ctext x='256' y='320' font-family='sans-serif' font-size='48' fill='%23FF9933' text-anchor='middle'%3EApp%3C/text%3E%3Ctext x='256' y='390' font-family='sans-serif' font-size='28' fill='%238b949e' text-anchor='middle'%3Ecareer-ops-india%3C/text%3E%3C/svg%3E",
       "sizes": "512x512",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ],
   "shortcuts": [
